@@ -1,0 +1,27 @@
+@form-background: #fff;
+@form-color: @ccf-indigo;
+@form-focus-background: #fff;
+@form-focus-color: @ccf-indigo;
+@form-placeholder-color: @ccf-muted;
+@form-border-width: 1px;
+@form-border: @ccf-darker-gray;
+@form-focus-border: @ccf-violet;
+@form-disabled-border: @ccf-gray;
+@form-danger-border: @ccf-darker-red;
+@form-success-border: @ccf-ready;
+@form-label-color: @ccf-indigo;
+
+.hook-form() {
+  border: @form-border-width solid @form-border;
+}
+
+.hook-form-focus() {
+  border-color: @form-focus-border;
+  outline: .12rem solid fade(@ccf-violet, 28%);
+  outline-offset: .08rem;
+}
+
+.hook-form-disabled() { border-color: @form-disabled-border; }
+.hook-form-danger() { border-color: @form-danger-border; }
+.hook-form-success() { border-color: @form-success-border; }
+.hook-form-label() { color: @form-label-color; }

@@ -1,0 +1,16 @@
+@card-default-background: fade(@ccf-creme, 88%);
+@card-default-color: @ccf-indigo;
+@card-default-title-color: @ccf-indigo;
+@card-default-hover-background: @ccf-creme;
+@card-default-box-shadow: 0 1.2rem 4rem rgba(55, 47, 37, 0.04);
+@card-default-header-border: @ccf-gray;
+@card-default-footer-border: @ccf-gray;
+
+.hook-card-default() {
+  border: 1px solid @ccf-gray;
+  border-radius: .9rem;
+  box-shadow: @card-default-box-shadow;
+}
+
+.hook-card-default-header() { border-bottom: 1px solid @card-default-header-border; }
+.hook-card-default-footer() { border-top: 1px solid @card-default-footer-border; }

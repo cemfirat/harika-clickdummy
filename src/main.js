@@ -1,36 +1,68 @@
 import UIkit from "uikit";
 import Icons from "uikit/dist/js/uikit-icons";
-import "uikit/dist/css/uikit.min.css";
 import "./styles/main.less";
 import { activeContext, navigation } from "./data.js";
 import { harikaSource } from "./harika-source.js";
 import { bindInteractiveUi } from "./interactions.js";
 import { renderStyleguide } from "./prototype/styleguide.js";
-import { contextLabel, renderPromptModal, renderView } from "./views.js";
+import { viewIntroduction } from "./ui.js";
+import { renderPromptModal, renderView, viewMetadata } from "./views.js";
 
 UIkit.use(Icons);
 
 const app = document.querySelector("#app");
 const prototypeViews = new Set(["styleguide"]);
+const iconUrl = import.meta.env.BASE_URL + "icon.svg";
 
 function currentView() {
   const value = new URL(window.location.href).searchParams.get("view") || "overview";
   return navigation.some((item) => item[0] === value) || prototypeViews.has(value) ? value : "overview";
 }
 
+function navigationHref(view) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("view", view);
+  return url.pathname + url.search;
+}
+
 function navigate(view, push = true) {
   const url = new URL(window.location.href);
   url.searchParams.set("view", view);
   if (push) window.history.pushState({ view }, "", url);
+
+  const offcanvas = document.querySelector("#ccf-mobile-nav");
+  if (offcanvas) UIkit.offcanvas(offcanvas).hide();
+
   render();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  document.querySelector("#ccf-view-title")?.focus({ preventScroll: true });
+  document.querySelector("#main-content")?.scrollIntoView({ block: "start" });
 }
 
-function navMarkup(activeView) {
-  return navigation.map((item) => {
-    const active = item[0] === activeView ? " is-active" : "";
-    return '<li class="' + active + '"><a href="?view=' + item[0] + '" data-nav="' + item[0] + '"><span>' + item[2] + '</span><strong>' + item[1] + '</strong></a></li>';
-  }).join("");
+function navMarkup(activeView, className = "main-nav") {
+  return '<ul class="uk-nav uk-nav-default ' + className + '">' +
+    navigation.map(([id, label, number]) =>
+      '<li' + (id === activeView ? ' class="uk-active"' : '') + '>' +
+        '<a href="' + navigationHref(id) + '" data-nav="' + id + '"><span>' + number + '</span><strong>' + label + '</strong></a>' +
+      '</li>'
+    ).join("") +
+  '</ul>';
+}
+
+function brandMarkup(extraClass = "") {
+  return '<a class="uk-logo brand ' + extraClass + '" href="' + navigationHref("overview") + '" data-nav="overview" aria-label="Harika Startseite">' +
+    '<img class="brand-mark" src="' + iconUrl + '" alt="" width="64" height="64">' +
+    '<span class="brand-logo-copy"><strong>Harika</strong><small>Intelligence Center</small></span>' +
+  '</a>';
+}
+
+function userMarkup() {
+  return '<div class="aside-user">' +
+    '<a href="#account" class="user" data-profile-open aria-label="Konto öffnen">' +
+      '<span class="uk-icon-button user-icon" data-uk-icon="icon: user" aria-hidden="true"></span>' +
+      '<div><strong>Cem Firat</strong><small>Administrator</small></div>' +
+    '</a>' +
+    '<div class="aside-user-actions"><a class="uk-link-text" href="?view=styleguide" data-nav="styleguide">Styleguide</a><span class="uk-text-meta">UI-Labor</span></div>' +
+  '</div>';
 }
 
 function renderCurrentView(view) {
@@ -38,39 +70,42 @@ function renderCurrentView(view) {
 }
 
 function shell(view) {
-  return '<main class="app-shell">' +
-    '<aside class="sidebar">' +
-      '<a class="brand" href="?view=overview" data-nav="overview" aria-label="Harika Startseite"><span class="brand-mark">H</span><span><strong>HARIKA</strong><small>Intelligence Center</small></span></a>' +
-      '<ul class="main-nav">' + navMarkup(view) + '</ul>' +
-      '<div class="source-note"><span></span><div><strong>Clickdummy</strong><small>Harika ' + harikaSource.commit.slice(0, 7) + '</small></div></div>' +
-    '</aside>' +
-    '<section class="workspace">' +
-      '<header class="topbar">' +
-        '<button class="mobile-menu" type="button" data-toggle-nav aria-label="Navigation öffnen"><span></span><span></span><span></span></button>' +
-        '<div class="context"><span class="context__dot"></span><div><strong>' + contextLabel() + '</strong><small>' + activeContext.environment + ' · ' + activeContext.period + ' · Daten ' + activeContext.freshness + '</small></div></div>' +
-        '<div class="topbar__actions"><button class="uk-button uk-button-default uk-button-small" data-nav="customers">Kunde wechseln</button><button class="avatar" type="button" data-profile-open aria-label="Profil öffnen">CF</button></div>' +
-      '</header>' +
-      '<div class="demo-ribbon"><strong>UI-Labor</strong><span>Änderungen und Formulare bleiben lokal und werden beim Neuladen verworfen.</span></div>' +
-      '<div class="content">' + renderCurrentView(view) + '</div>' +
-      '<footer class="app-footer"><span>Harika Clickdummy · UI-Labor · <a href="?view=styleguide" data-nav="styleguide">Styleguide</a></span><span>Source: ccf-sites-ads@' + harikaSource.commit.slice(0, 7) + '</span></footer>' +
-    '</section>' +
-    '<div class="mobile-overlay" data-toggle-nav></div>' +
-    '<div class="prompt-modal" hidden></div>' +
-    '<div class="demo-toast" role="status" aria-live="polite" hidden></div>' +
-  '</main>';
+  const meta = viewMetadata[view] || viewMetadata.overview;
+  return '<a class="skip-link" href="#main-content">Zum Hauptinhalt</a>' +
+    '<div class="app-shell">' +
+      '<aside class="sidebar desktop-sidebar" aria-label="Harika Navigation">' +
+        brandMarkup() +
+        userMarkup() +
+        '<nav aria-label="Hauptnavigation">' + navMarkup(view) + '</nav>' +
+        '<div class="safety-note"><span class="safety-dot"></span><div><strong>Clickdummy</strong><small>Mockdaten · Harika ' + harikaSource.commit.slice(0, 7) + '</small></div></div>' +
+      '</aside>' +
+      '<main class="workspace" id="main-content" tabindex="-1">' +
+        '<button class="uk-icon-button mobile-nav-toggle" type="button" data-uk-icon="icon: menu" data-uk-toggle="target: #ccf-mobile-nav" aria-label="Navigation öffnen"></button>' +
+        '<header class="workspace-header">' +
+          viewIntroduction(meta.title, meta.description) +
+          '<div class="workspace-header-meta"><span class="runtime-version">Clickdummy · ' + activeContext.customer + '</span></div>' +
+        '</header>' +
+        '<div class="view-content">' + renderCurrentView(view) + '</div>' +
+        '<footer class="app-footer"><span>Harika Clickdummy · UIkit-first UI-Labor</span><span>Source: ccf-sites-ads@' + harikaSource.commit.slice(0, 7) + '</span></footer>' +
+      '</main>' +
+    '</div>' +
+    '<div id="ccf-mobile-nav" data-uk-offcanvas="overlay: true; flip: false">' +
+      '<div class="uk-offcanvas-bar">' +
+        '<button class="uk-offcanvas-close" type="button" data-uk-close aria-label="Navigation schließen"></button>' +
+        brandMarkup("uk-margin-medium-bottom") +
+        userMarkup() +
+        '<nav aria-label="Mobile Hauptnavigation">' + navMarkup(view, "main-nav mobile-nav") + '</nav>' +
+      '</div>' +
+    '</div>' +
+    '<div id="app-modal" class="uk-modal" data-uk-modal="bg-close: true; esc-close: true; stack: true" aria-labelledby="app-modal-title"></div>';
 }
 
 function bindEvents() {
   document.querySelectorAll("[data-nav]").forEach((element) => {
     element.addEventListener("click", (event) => {
       event.preventDefault();
-      document.body.classList.remove("nav-open");
       navigate(element.dataset.nav);
     });
-  });
-
-  document.querySelectorAll("[data-toggle-nav]").forEach((element) => {
-    element.addEventListener("click", () => document.body.classList.toggle("nav-open"));
   });
 
   document.querySelectorAll("[data-prompt-index]").forEach((element) => {
@@ -87,10 +122,10 @@ function bindEvents() {
 }
 
 function showModal(html) {
-  const modal = document.querySelector(".prompt-modal");
+  const modal = document.querySelector("#app-modal");
+  if (!modal) return;
   modal.innerHTML = html;
-  modal.hidden = false;
-  document.body.classList.add("modal-open");
+  UIkit.modal(modal).show();
 
   modal.querySelectorAll("[data-close-modal]").forEach((element) => {
     element.addEventListener("click", closeModal);
@@ -100,8 +135,8 @@ function showModal(html) {
 function openPrompt(index) {
   showModal(renderPromptModal(index));
 
-  const modal = document.querySelector(".prompt-modal");
-  const copy = modal.querySelector("[data-copy-prompt]");
+  const modal = document.querySelector("#app-modal");
+  const copy = modal?.querySelector("[data-copy-prompt]");
   if (copy) {
     copy.addEventListener("click", async () => {
       try {
@@ -115,24 +150,17 @@ function openPrompt(index) {
 }
 
 function closeModal() {
-  const modal = document.querySelector(".prompt-modal");
-  if (!modal || modal.hidden) return;
-  modal.hidden = true;
-  modal.innerHTML = "";
-  document.body.classList.remove("modal-open");
+  const modal = document.querySelector("#app-modal");
+  if (modal) UIkit.modal(modal).hide();
 }
 
-let toastTimer = null;
 function notify(message, tone = "success") {
-  const toast = document.querySelector(".demo-toast");
-  if (!toast) return;
-  toast.textContent = message;
-  toast.dataset.tone = tone;
-  toast.hidden = false;
-  if (toastTimer) window.clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => {
-    toast.hidden = true;
-  }, 2800);
+  UIkit.notification({
+    message,
+    status: tone === "warning" ? "warning" : "success",
+    pos: "bottom-right",
+    timeout: 2800
+  });
 }
 
 function render() {
@@ -141,11 +169,4 @@ function render() {
 }
 
 window.addEventListener("popstate", render);
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    document.body.classList.remove("nav-open");
-    closeModal();
-  }
-});
-
 render();
