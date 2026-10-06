@@ -107,7 +107,11 @@ assert(transferStatusSource.includes('"src/styles/prototype.less"'), "Prototype 
 assert(transferStatusSource.includes('"src/prototype/"'), "Prototype source must stay excluded from automatic transfer.");
 assert(viteConfigSource.includes('mode === "pages" ? "/harika-clickdummy/" : "/"'), "Vite Pages base path must remain explicit.");
 assert(pagesWorkflowSource.includes("workflow_dispatch:"), "Pages preview must remain manually deployable.");
-assert(!/^\s*push:/m.test(pagesWorkflowSource), "Pages preview must not auto-run while Pages activation is manual.");
+assert(/^\s*push:/m.test(pagesWorkflowSource), "Pages preview must auto-deploy relevant main changes.");
+assert(pagesWorkflowSource.includes("branches:\n      - main"), "Pages preview push trigger must stay limited to main.");
+assert(pagesWorkflowSource.includes('"src/**"'), "Pages preview must deploy source changes.");
+assert(pagesWorkflowSource.includes('"public/**"'), "Pages preview must deploy public asset changes.");
+assert(pagesWorkflowSource.includes('".github/workflows/pages-preview.yml"'), "Pages preview workflow changes must be deployable.");
 assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide must preserve permanent CI-before-PR rule.");
 
 console.log("Harika clickdummy UIkit-first static checks passed.");

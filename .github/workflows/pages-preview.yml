@@ -1,6 +1,16 @@
 name: Pages Preview
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "index.html"
+      - "package.json"
+      - "vite.config.js"
+      - "public/**"
+      - "src/**"
+      - ".github/workflows/pages-preview.yml"
   workflow_dispatch:
 
 permissions:
