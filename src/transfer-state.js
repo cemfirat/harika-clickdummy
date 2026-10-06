@@ -1,11 +1,11 @@
 export const transferState = Object.freeze({
   schemaVersion: 1,
 
-  // Initial UI-lab checkpoint. Changes after this commit are considered
-  // clickdummy UI experiments until a later promotion records a new checkpoint.
-  uiBaselineClickdummyCommit: "7ca420830f0512d9a701f1136e9cdcc0c2209754",
+  // Audited UIkit-first UI-lab baseline. This commit rebuilt the clickdummy
+  // from the current Harika shell, Product Blueprint and UI/UX issue rules.
+  uiBaselineClickdummyCommit: "16ed0edc22fe94c8bb5d0928cd86b7372048dd18",
 
-  // Set only after a clickdummy UI delta has been intentionally ported to
-  // production Harika and the target Harika commit is known.
+  // Set only after a later clickdummy UI delta has been intentionally ported
+  // to production Harika and the resulting Harika commit is known.
   lastPromotion: null
 });
