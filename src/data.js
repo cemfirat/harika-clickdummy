@@ -47,16 +47,101 @@ export const opportunities = [
 ];
 
 export const customers = [
-  { name: "AMBRA Sonnenschutzsysteme", contact: "Cem Firat", websites: 1, status: "Aktiv" },
-  { name: "People Matter", contact: "Katharina Weiner", websites: 2, status: "Aktiv" },
-  { name: "Eurocasher", contact: "Projektteam", websites: 1, status: "Aktiv" },
-  { name: "Mediarama", contact: "Intern", websites: 0, status: "Geplant" }
+  {
+    id: "ambra",
+    name: "AMBRA Sonnenschutzsysteme",
+    company: "AMBRA Sonnenschutzsysteme",
+    contact: "Cem Firat",
+    email: "office@ambra.example",
+    phone: "+43 1 555 0101",
+    websites: 1,
+    status: "Aktiv"
+  },
+  {
+    id: "people-matter",
+    name: "People Matter",
+    company: "Katharina Weiner GmbH",
+    contact: "Katharina Weiner",
+    email: "kontakt@peoplematter.example",
+    phone: "+43 1 555 0102",
+    websites: 2,
+    status: "Aktiv"
+  },
+  {
+    id: "eurocasher",
+    name: "Eurocasher",
+    company: "Eurocasher",
+    contact: "Projektteam",
+    email: "office@eurocasher.example",
+    phone: "",
+    websites: 1,
+    status: "Aktiv"
+  },
+  {
+    id: "mediarama",
+    name: "Mediarama",
+    company: "Mediarama",
+    contact: "Intern",
+    email: "",
+    phone: "",
+    websites: 0,
+    status: "Geplant"
+  }
 ];
 
 export const websites = [
-  { name: "AMBRA", origin: "https://ambra.at", customer: "AMBRA Sonnenschutzsysteme", environment: "Produktion", health: 86, status: "Aktiv", connectors: "4/4" },
-  { name: "People Matter", origin: "https://peoplematter.example", customer: "People Matter", environment: "Produktion", health: 78, status: "Aktiv", connectors: "3/4" },
-  { name: "People Matter Staging", origin: "https://staging.peoplematter.example", customer: "People Matter", environment: "Staging", health: 71, status: "Geplant", connectors: "2/4" }
+  {
+    id: "ambra-at",
+    name: "AMBRA",
+    origin: "https://ambra.at",
+    customer: "AMBRA Sonnenschutzsysteme",
+    environment: "Produktion",
+    health: 86,
+    status: "Aktiv",
+    connectors: "4/4",
+    wordpress: "6.9.1",
+    theme: "YOOtheme Pro",
+    lastCheck: "vor 18 Min."
+  },
+  {
+    id: "people-matter-live",
+    name: "People Matter",
+    origin: "https://peoplematter.example",
+    customer: "People Matter",
+    environment: "Produktion",
+    health: 78,
+    status: "Aktiv",
+    connectors: "3/4",
+    wordpress: "6.9.1",
+    theme: "YOOtheme Pro",
+    lastCheck: "vor 43 Min."
+  },
+  {
+    id: "people-matter-staging",
+    name: "People Matter Staging",
+    origin: "https://staging.peoplematter.example",
+    customer: "People Matter",
+    environment: "Staging",
+    health: 71,
+    status: "Geplant",
+    connectors: "2/4",
+    wordpress: "6.9.1",
+    theme: "YOOtheme Pro",
+    lastCheck: "gestern"
+  },
+  {
+    id: "eurocasher-shop",
+    name: "Eurocasher",
+    origin: "https://eurocasher.example",
+    customer: "Eurocasher",
+    environment: "Produktion",
+    health: 81,
+    status: "Aktiv",
+    connectors: "3/4",
+    wordpress: "6.9.1",
+    theme: "YOOtheme Pro",
+    lastCheck: "vor 2 Std."
+  }
 ];
 
 export const searchRows = [
@@ -66,10 +151,29 @@ export const searchRows = [
   { query: "fliegengitter plisse", clicks: 76, impressions: 940, ctr: "8,1 %", position: "4,7" }
 ];
 
+export const landingPages = [
+  { path: "/raffstores/", clicks: 488, impressions: 7130, ctr: "6,8 %", position: "5,9", trend: "+14 %" },
+  { path: "/markisen/", clicks: 361, impressions: 4980, ctr: "7,2 %", position: "6,2", trend: "+7 %" },
+  { path: "/pergolen/", clicks: 244, impressions: 4210, ctr: "5,8 %", position: "8,4", trend: "-3 %" }
+];
+
+export const searchMovers = [
+  { query: "raffstore wien", movement: "+2,1", status: "Gewinner" },
+  { query: "fliegengitter plisse", movement: "+1,4", status: "Gewinner" },
+  { query: "pergola beschattung", movement: "-2,8", status: "Verlierer" },
+  { query: "markise terrasse", movement: "-1,2", status: "Verlierer" }
+];
+
+export const indexation = [
+  { label: "Indexierte URLs", value: "38", detail: "Search Console" },
+  { label: "Nicht indexiert", value: "5", detail: "davon 3 bewusst ausgeschlossen" },
+  { label: "Sitemap", value: "Aktiv", detail: "zuletzt gelesen vor 2 Tagen" }
+];
+
 export const adCampaigns = [
-  { name: "Search | Raffstores", spend: "€ 684", conversions: "18", cpa: "€ 38,00", status: "Aktiv" },
-  { name: "Search | Markisen", spend: "€ 512", conversions: "13", cpa: "€ 39,38", status: "Aktiv" },
-  { name: "Search | Pergolen", spend: "€ 421", conversions: "9", cpa: "€ 46,78", status: "Aktiv" }
+  { id: "raffstores", name: "Search | Raffstores", spend: "€ 684", conversions: "18", cpa: "€ 38,00", status: "Aktiv", ctr: "7,8 %", landingpage: "/raffstores/" },
+  { id: "markisen", name: "Search | Markisen", spend: "€ 512", conversions: "13", cpa: "€ 39,38", status: "Aktiv", ctr: "6,9 %", landingpage: "/markisen/" },
+  { id: "pergolen", name: "Search | Pergolen", spend: "€ 421", conversions: "9", cpa: "€ 46,78", status: "Aktiv", ctr: "5,8 %", landingpage: "/pergolen/" }
 ];
 
 export const aiSystems = [
@@ -96,3 +200,36 @@ export const prompts = [
     text: "Bewerte die gemessenen Website-Health-Hinweise. Unterscheide Fehler, Chancen und nicht verifizierbare Zustände. Schlage zuerst nur sichere Prüf- und Verbesserungsmaßnahmen vor."
   }
 ];
+
+export const settingDetails = {
+  connections: {
+    title: "Verbindungen",
+    description: "WordPress, Search Console, GA4, Google Ads und AI Visibility werden hier pro Workspace verwaltet.",
+    status: "4 aktive Verbindungen"
+  },
+  users: {
+    title: "Benutzer & Rollen",
+    description: "Zugriffe und Rollen bleiben getrennt von Kundenkontakten und werden je Workspace verwaltet.",
+    status: "2 Benutzer"
+  },
+  security: {
+    title: "Login & Sicherheit",
+    description: "Passkeys, Sitzungen und weitere Sicherheitsoptionen werden hier gebündelt.",
+    status: "Passkey aktiv"
+  },
+  diagnostics: {
+    title: "Systemdiagnose",
+    description: "Technische Audit-, Request- und Diagnoseinformationen bleiben aus der Hauptnavigation heraus und sind hier erreichbar.",
+    status: "Keine kritischen Hinweise"
+  },
+  wordpress: {
+    title: "WordPress Connector",
+    description: "Version, erkannte Capabilities und Messbereitschaft des WordPress Connectors.",
+    status: "Verbunden"
+  },
+  retention: {
+    title: "Datenaufbewahrung",
+    description: "Konfiguration für historische Messdaten und spätere Snapshot-Aufbewahrung.",
+    status: "Standard"
+  }
+};

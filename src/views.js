@@ -3,13 +3,17 @@ import {
   adCampaigns,
   aiSystems,
   customers,
+  indexation,
+  landingPages,
   metrics,
   opportunities,
   prompts,
+  searchMovers,
   searchRows,
+  settingDetails,
   websites
 } from "./data.js";
-import { badge, emptyChart, escapeHtml, metricCard, panel, viewIntroduction } from "./ui.js";
+import { badge, emptyChart, escapeHtml, metricCard, modalShell, panel, viewIntroduction } from "./ui.js";
 
 function overview() {
   const metricGrid = '<div class="metric-grid">' + metrics.map(metricCard).join("") + '</div>';
@@ -31,14 +35,20 @@ function overview() {
 
 function customerView() {
   const rows = customers.map((customer) =>
-    '<tr><td><strong>' + escapeHtml(customer.name) + '</strong></td>' +
+    '<tr data-customer-row data-customer-name="' + escapeHtml(customer.name.toLowerCase()) + '" data-customer-status="' + escapeHtml(customer.status) + '">' +
+    '<td><strong>' + escapeHtml(customer.name) + '</strong><small class="table-secondary">' + escapeHtml(customer.company) + '</small></td>' +
     '<td>' + escapeHtml(customer.contact) + '</td>' +
     '<td>' + customer.websites + '</td>' +
     '<td>' + badge(customer.status, customer.status === "Aktiv" ? "success" : "warning") + '</td>' +
-    '<td class="table-actions"><button class="uk-button uk-button-small uk-button-default">Öffnen</button><button class="uk-button uk-button-small uk-button-text">Bearbeiten</button></td></tr>'
+    '<td class="table-actions"><button class="uk-button uk-button-small uk-button-default" data-customer-open="' + escapeHtml(customer.id) + '">Öffnen</button><button class="uk-button uk-button-small uk-button-text" data-customer-edit="' + escapeHtml(customer.id) + '">Bearbeiten</button></td></tr>'
   ).join("");
 
-  const toolbar = '<div class="list-toolbar"><input class="uk-input" type="search" placeholder="Kunden suchen…" aria-label="Kunden suchen"><select class="uk-select" aria-label="Status"><option>Alle Status</option><option>Aktiv</option><option>Geplant</option></select><button class="uk-button uk-button-primary">Neuer Kunde</button></div>';
+  const toolbar = '<div class="list-toolbar">' +
+    '<input class="uk-input" type="search" placeholder="Kunden suchen…" aria-label="Kunden suchen" data-customer-search>' +
+    '<select class="uk-select" aria-label="Status" data-customer-status-filter><option value="all">Alle Status</option><option value="Aktiv">Aktiv</option><option value="Geplant">Geplant</option></select>' +
+    '<button class="uk-button uk-button-primary" data-new-customer>Neuer Kunde</button></div>' +
+    '<p class="filter-result" data-customer-result aria-live="polite">' + customers.length + ' Kunden sichtbar</p>';
+
   return viewIntroduction("Kunden", "Welche Kunden betreue ich, wie bearbeite ich ihre Daten und welche Websites gehören dazu?") +
     panel("Kundenliste", customers.length + " Kunden", toolbar + '<div class="uk-overflow-auto"><table class="uk-table uk-table-divider uk-table-middle"><thead><tr><th>Kunde</th><th>Kontakt</th><th>Websites</th><th>Status</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>');
 }
@@ -51,31 +61,65 @@ function websitesView() {
       '<h3>' + escapeHtml(site.name) + '</h3><a href="' + escapeHtml(site.origin) + '" target="_blank" rel="noreferrer">' + escapeHtml(site.origin) + '</a>' +
       '<small>' + escapeHtml(site.customer) + ' · ' + escapeHtml(site.connectors) + ' Verbindungen</small></div>' +
       '<div class="website-card__score"><strong>' + site.health + '</strong><span>Health</span></div>' +
-      '<div class="website-card__actions"><button class="uk-button uk-button-default uk-button-small">Öffnen</button><button class="uk-button uk-button-text uk-button-small">Bearbeiten</button></div>' +
+      '<div class="website-card__actions"><button class="uk-button uk-button-default uk-button-small" data-website-open="' + escapeHtml(site.id) + '">Öffnen</button><button class="uk-button uk-button-text uk-button-small" data-website-edit="' + escapeHtml(site.id) + '">Bearbeiten</button></div>' +
     '</article>'
   ).join("");
 
   return viewIntroduction("Websites", "Ist diese Website technisch, inhaltlich und marketingseitig sauber aufgestellt?") +
-    '<div class="section-toolbar"><div><strong>' + websites.length + ' Websites</strong><span>über alle Kunden</span></div><button class="uk-button uk-button-primary">Website hinzufügen</button></div>' +
+    '<div class="section-toolbar"><div><strong>' + websites.length + ' Websites</strong><span>über alle Kunden</span></div><button class="uk-button uk-button-primary" data-new-website>Website hinzufügen</button></div>' +
     '<div class="website-list">' + cards + '</div>';
 }
 
-function searchView() {
+function keywordsTable() {
   const rows = searchRows.map((row) =>
     '<tr><td><strong>' + escapeHtml(row.query) + '</strong></td><td>' + row.clicks + '</td><td>' + row.impressions + '</td><td>' + escapeHtml(row.ctr) + '</td><td>' + escapeHtml(row.position) + '</td><td><button class="uk-button uk-button-text uk-button-small" data-prompt-index="0">Prompt anzeigen</button></td></tr>'
   ).join("");
+  return '<div class="uk-overflow-auto"><table class="uk-table uk-table-divider uk-table-middle"><thead><tr><th>Suchanfrage</th><th>Klicks</th><th>Impressionen</th><th>CTR</th><th>Ø Position</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+}
+
+function landingpageTable() {
+  const rows = landingPages.map((row) =>
+    '<tr><td><strong>' + escapeHtml(row.path) + '</strong></td><td>' + row.clicks + '</td><td>' + row.impressions + '</td><td>' + escapeHtml(row.ctr) + '</td><td>' + escapeHtml(row.position) + '</td><td>' + badge(row.trend, row.trend.startsWith("+") ? "success" : "warning") + '</td></tr>'
+  ).join("");
+  return '<div class="uk-overflow-auto"><table class="uk-table uk-table-divider uk-table-middle"><thead><tr><th>Landingpage</th><th>Klicks</th><th>Impressionen</th><th>CTR</th><th>Ø Position</th><th>Trend</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+}
+
+function searchView() {
+  const moverRows = searchMovers.map((item) =>
+    '<div class="mover-row"><span>' + escapeHtml(item.query) + '</span>' + badge(item.status, item.status === "Gewinner" ? "success" : "warning") + '<strong>' + escapeHtml(item.movement) + '</strong></div>'
+  ).join("");
+  const chanceRows = opportunities.filter((item) => item.area === "Search & SEO").map((item) =>
+    '<button class="opportunity-row" type="button" data-prompt-index="0"><span class="opportunity-row__area">' + escapeHtml(item.area) + '</span><span><strong>' + escapeHtml(item.title) + '</strong><small>' + escapeHtml(item.detail) + '</small></span>' + badge(item.impact, "warning") + '</button>'
+  ).join("");
+  const indexRows = indexation.map((item) =>
+    '<div class="compact-stat"><strong>' + escapeHtml(item.value) + '</strong><span><b>' + escapeHtml(item.label) + '</b><small>' + escapeHtml(item.detail) + '</small></span></div>'
+  ).join("");
+
   return viewIntroduction("Search & SEO", "Wie werde ich in Google gefunden, wo verliere ich Potenzial und was soll ich als Nächstes optimieren?") +
-    '<nav class="subnav" aria-label="Search Bereiche"><button class="is-active">Übersicht</button><button>Keywords</button><button>Landingpages</button><button>Gewinner & Verlierer</button><button>Chancen</button><button>Indexierung</button></nav>' +
-    '<div class="dashboard-grid">' +
-      panel("Organische Entwicklung", "Search Console", emptyChart("Search Console Entwicklung")) +
-      panel("SEO-Chancen", "Priorisiert", '<div class="compact-stat"><strong>14</strong><span>Keywords Position 4–15</span></div><div class="compact-stat"><strong>8</strong><span>hohe Impressionen + niedrige CTR</span></div><div class="compact-stat"><strong>3</strong><span>neue Gewinner</span></div>') +
+    '<nav class="subnav" aria-label="Search Bereiche" role="tablist">' +
+      '<button class="is-active" role="tab" aria-selected="true" data-search-tab="overview">Übersicht</button>' +
+      '<button role="tab" aria-selected="false" data-search-tab="keywords">Keywords</button>' +
+      '<button role="tab" aria-selected="false" data-search-tab="landingpages">Landingpages</button>' +
+      '<button role="tab" aria-selected="false" data-search-tab="movers">Gewinner & Verlierer</button>' +
+      '<button role="tab" aria-selected="false" data-search-tab="opportunities">Chancen</button>' +
+      '<button role="tab" aria-selected="false" data-search-tab="indexation">Indexierung</button>' +
+    '</nav>' +
+    '<div data-search-panel="overview">' +
+      '<div class="dashboard-grid">' +
+        panel("Organische Entwicklung", "Search Console", emptyChart("Search Console Entwicklung")) +
+        panel("SEO-Chancen", "Priorisiert", '<div class="compact-stat"><strong>14</strong><span>Keywords Position 4–15</span></div><div class="compact-stat"><strong>8</strong><span>hohe Impressionen + niedrige CTR</span></div><div class="compact-stat"><strong>3</strong><span>neue Gewinner</span></div>') +
+      '</div>' +
     '</div>' +
-    panel("Suchanfragen", "Aktuelle Daten", '<div class="uk-overflow-auto"><table class="uk-table uk-table-divider uk-table-middle"><thead><tr><th>Suchanfrage</th><th>Klicks</th><th>Impressionen</th><th>CTR</th><th>Ø Position</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>');
+    '<div data-search-panel="keywords" hidden>' + panel("Keywords", "Search Console", keywordsTable()) + '</div>' +
+    '<div data-search-panel="landingpages" hidden>' + panel("Landingpages", "Organische Einstiege", landingpageTable()) + '</div>' +
+    '<div data-search-panel="movers" hidden>' + panel("Gewinner & Verlierer", "Vergleich zum Vorzeitraum", '<div class="mover-list">' + moverRows + '</div>') + '</div>' +
+    '<div data-search-panel="opportunities" hidden>' + panel("Chancen", "Priorisiert", '<div class="opportunity-list">' + chanceRows + '</div>') + '</div>' +
+    '<div data-search-panel="indexation" hidden>' + panel("Indexierung", "Search Console", '<div class="indexation-grid">' + indexRows + '</div>') + '</div>';
 }
 
 function adsView() {
   const rows = adCampaigns.map((campaign) =>
-    '<tr><td><strong>' + escapeHtml(campaign.name) + '</strong></td><td>' + escapeHtml(campaign.spend) + '</td><td>' + escapeHtml(campaign.conversions) + '</td><td>' + escapeHtml(campaign.cpa) + '</td><td>' + badge(campaign.status, "success") + '</td><td><button class="uk-button uk-button-text uk-button-small">Öffnen</button></td></tr>'
+    '<tr><td><strong>' + escapeHtml(campaign.name) + '</strong></td><td>' + escapeHtml(campaign.spend) + '</td><td>' + escapeHtml(campaign.conversions) + '</td><td>' + escapeHtml(campaign.cpa) + '</td><td>' + badge(campaign.status, "success") + '</td><td><button class="uk-button uk-button-text uk-button-small" data-campaign-open="' + escapeHtml(campaign.id) + '">Öffnen</button></td></tr>'
   ).join("");
   return viewIntroduction("Ads", "Laufen meine bezahlten Kampagnen effizient und passen Anzeige, Landingpage und Conversion zusammen?") +
     '<div class="metric-grid metric-grid--three">' +
@@ -119,16 +163,11 @@ function developmentView() {
 }
 
 function settingsView() {
-  const items = [
-    ["Verbindungen", "WordPress, Search Console, GA4, Google Ads und AI Visibility verwalten."],
-    ["Benutzer & Rollen", "Zugriffe und Berechtigungen je Workspace verwalten."],
-    ["Login & Sicherheit", "Passkeys und Kontosicherheit konfigurieren."],
-    ["Systemdiagnose", "Technische Audit- und Request-Informationen einsehen."],
-    ["WordPress Connector", "Connector-Version und Capabilities prüfen."],
-    ["Datenaufbewahrung", "Historische Messdaten und Aufbewahrung steuern."]
-  ].map((item) =>
-    '<button class="settings-row" type="button"><span><strong>' + escapeHtml(item[0]) + '</strong><small>' + escapeHtml(item[1]) + '</small></span><span aria-hidden="true">→</span></button>'
-  ).join("");
+  const order = ["connections", "users", "security", "diagnostics", "wordpress", "retention"];
+  const items = order.map((key) => {
+    const item = settingDetails[key];
+    return '<button class="settings-row" type="button" data-setting-open="' + key + '"><span><strong>' + escapeHtml(item.title) + '</strong><small>' + escapeHtml(item.description) + '</small></span><span aria-hidden="true">→</span></button>';
+  }).join("");
   return viewIntroduction("Einstellungen", "Verbindungen, Benutzer, Sicherheit und technische Systembereiche verwalten.") +
     panel("Harika konfigurieren", "System", '<div class="settings-list">' + items + '</div>');
 }
@@ -151,14 +190,12 @@ export function renderView(view) {
 
 export function renderPromptModal(index) {
   const prompt = prompts[Number(index)] || prompts[0];
-  return '<div class="prompt-modal__backdrop" data-close-modal></div>' +
-    '<div class="prompt-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="prompt-title">' +
-      '<button class="prompt-modal__close" type="button" data-close-modal aria-label="Schließen">×</button>' +
-      '<p class="eyebrow">Prompt Center</p><h2 id="prompt-title">' + escapeHtml(prompt.title) + '</h2>' +
-      '<p class="uk-text-meta">' + escapeHtml(prompt.context) + '</p>' +
-      '<pre><code>' + escapeHtml(prompt.text) + '</code></pre>' +
-      '<div class="prompt-modal__footer"><small>Clickdummy: keine echte Aktion wird ausgeführt.</small><button class="uk-button uk-button-primary" type="button" data-copy-prompt="' + escapeHtml(prompt.text) + '">In Zwischenablage kopieren</button></div>' +
-    '</div>';
+  return modalShell({
+    eyebrow: "Prompt Center",
+    title: prompt.title,
+    body: '<p class="uk-text-meta">' + escapeHtml(prompt.context) + '</p><pre><code>' + escapeHtml(prompt.text) + '</code></pre>',
+    footer: '<small>Clickdummy: keine echte Aktion wird ausgeführt.</small><button class="uk-button uk-button-primary" type="button" data-copy-prompt="' + escapeHtml(prompt.text) + '">In Zwischenablage kopieren</button>'
+  });
 }
 
 export function contextLabel() {
