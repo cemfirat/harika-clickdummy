@@ -45,10 +45,11 @@ for (const id of ids) {
 
 const mainSource = await readFile(new URL("../src/main.js", import.meta.url), "utf8");
 const viewsSource = await readFile(new URL("../src/views.js", import.meta.url), "utf8");
+const interactionsSource = await readFile(new URL("../src/interactions.js", import.meta.url), "utf8");
 const lessEntry = await readFile(new URL("../src/styles/main.less", import.meta.url), "utf8");
 const transferGuide = await readFile(new URL("../docs/UI-TRANSFER.md", import.meta.url), "utf8");
 
-for (const source of [mainSource, viewsSource]) {
+for (const source of [mainSource, viewsSource, interactionsSource]) {
   assert(!/\bfetch\s*\(/.test(source), "Clickdummy must not call remote APIs.");
   assert(!/XMLHttpRequest/.test(source), "Clickdummy must not use XMLHttpRequest.");
 }
@@ -57,6 +58,18 @@ for (const file of ["tokens.less", "layout.less", "components.less", "views.less
   assert(lessEntry.includes(file), "LESS entry is missing " + file + ".");
 }
 
+for (const marker of [
+  "data-customer-search",
+  "data-new-customer",
+  "data-new-website",
+  "data-search-tab",
+  "data-campaign-open",
+  "data-setting-open"
+]) {
+  assert(viewsSource.includes(marker), "Expected interactive UI marker missing: " + marker);
+}
+
+assert(mainSource.includes("bindInteractiveUi"), "Main shell must bind clickdummy interactions.");
 assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide must preserve the permanent CI-before-PR rule.");
 assert(transferGuide.includes("src/data.js"), "Transfer guide must explicitly exclude mock data from automatic promotion.");
 

@@ -50,3 +50,14 @@ export function emptyChart(label) {
     '</svg>' +
   '</div>';
 }
+
+export function modalShell({ eyebrow, title, body, footer = "" }) {
+  return '<div class="prompt-modal__backdrop" data-close-modal></div>' +
+    '<div class="prompt-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="app-modal-title">' +
+      '<button class="prompt-modal__close" type="button" data-close-modal aria-label="Schließen">×</button>' +
+      '<p class="eyebrow">' + escapeHtml(eyebrow) + '</p>' +
+      '<h2 id="app-modal-title">' + escapeHtml(title) + '</h2>' +
+      '<div class="demo-modal__body">' + body + '</div>' +
+      (footer ? '<div class="prompt-modal__footer">' + footer + '</div>' : '') +
+    '</div>';
+}

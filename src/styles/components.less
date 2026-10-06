@@ -186,6 +186,22 @@
   }
 }
 
+.demo-ribbon {
+  display: flex;
+  gap: 10px;
+  padding: 8px 34px;
+  border-bottom: 1px solid @line;
+  background: @ccf-creme;
+  color: @muted;
+  font-size: 10px;
+
+  strong {
+    color: @accent;
+    text-transform: uppercase;
+    letter-spacing: .09em;
+  }
+}
+
 .section-toolbar,
 .list-toolbar {
   display: flex;
@@ -208,7 +224,7 @@
 }
 
 .list-toolbar {
-  margin-bottom: 18px;
+  margin-bottom: 8px;
   justify-content: flex-start;
 
   .uk-input {
@@ -222,6 +238,21 @@
   .uk-button {
     margin-left: auto;
   }
+}
+
+.filter-result,
+.table-secondary {
+  color: @muted;
+  font-size: 10px;
+}
+
+.filter-result {
+  margin: 0 0 14px;
+}
+
+.table-secondary {
+  display: block;
+  margin-top: 3px;
 }
 
 .table-actions {
@@ -253,6 +284,97 @@
     border-color: @accent;
     background: @accent;
     color: #fff;
+  }
+}
+
+.demo-form {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+
+  &__row {
+    display: grid;
+    gap: 6px;
+
+    > span {
+      color: @muted;
+      font-size: 11px;
+      font-weight: 700;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+  }
+}
+
+.demo-modal__body > p {
+  color: @muted;
+}
+
+.demo-detail-list {
+  display: grid;
+  gap: 0;
+  margin: 18px 0 0;
+
+  > div {
+    display: grid;
+    grid-template-columns: minmax(120px, .45fr) 1fr;
+    gap: 18px;
+    padding: 11px 0;
+    border-bottom: 1px solid fade(@line, 70%);
+  }
+
+  dt {
+    color: @muted;
+    font-size: 11px;
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 700;
+  }
+}
+
+.demo-status-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+  border: 1px solid @line;
+  border-radius: 10px;
+  padding: 14px;
+  background: @paper;
+
+  span {
+    color: @muted;
+    font-size: 11px;
+  }
+}
+
+.demo-toast {
+  position: fixed;
+  z-index: 120;
+  right: 22px;
+  bottom: 22px;
+  max-width: min(420px, calc(100vw - 44px));
+  border: 1px solid @ready-accent;
+  border-radius: 12px;
+  padding: 12px 16px;
+  background: @ready-soft;
+  color: @ready;
+  box-shadow: @shadow-soft;
+  font-size: 12px;
+  font-weight: 700;
+
+  &[data-tone="warning"] {
+    border-color: @warning-accent;
+    background: #fff3c4;
+    color: @warning;
   }
 }
 
@@ -291,5 +413,21 @@
     .uk-button {
       margin-left: 0;
     }
+  }
+
+  .demo-ribbon {
+    display: grid;
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .demo-form__actions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .demo-detail-list > div {
+    grid-template-columns: 1fr;
+    gap: 3px;
   }
 }

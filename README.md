@@ -42,6 +42,7 @@ src/
 ├── main.js
 ├── data.js
 ├── harika-source.js
+├── interactions.js
 ├── transfer-state.js
 ├── ui.js
 ├── views.js
@@ -61,14 +62,19 @@ The LESS split is deliberate: tokens and layout can be changed without mixing vi
 - responsive app shell
 - active customer / website context
 - overview with KPI cards, opportunities and mock trend
-- customer list
-- website list
-- Search & SEO
-- Ads
+- searchable/filterable customer list
+- local demo create/edit customer forms
+- website list with local demo add/edit flow
+- customer and website context switching
+- Search & SEO tabs with real click interactions
+- Ads campaign detail dialog
 - AI Visibility
 - Prompt Center with modal and clipboard interaction
 - development timeline
-- settings overview
+- settings detail dialogs
+- demo profile dialog
+
+All form changes exist only in the current browser session and are discarded on reload.
 
 ## Guardrails
 
