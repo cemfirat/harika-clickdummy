@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { navigation } from "../src/data.js";
 import { harikaSource } from "../src/harika-source.js";
 import { transferState } from "../src/transfer-state.js";
+import { renderStyleguide } from "../src/prototype/styleguide.js";
 import { renderView } from "../src/views.js";
 
 const expectedNavigation = [
@@ -43,10 +44,15 @@ for (const id of ids) {
   assert(html.includes("Harika Intelligence Center"), "View " + id + " is missing the Harika view introduction.");
 }
 
+const styleguideHtml = renderStyleguide();
+assert(styleguideHtml.includes("UI Styleguide"), "Prototype styleguide must render.");
+assert(styleguideHtml.includes("Prototype only"), "Styleguide must be clearly marked as prototype-only.");
+
 const mainSource = await readFile(new URL("../src/main.js", import.meta.url), "utf8");
 const viewsSource = await readFile(new URL("../src/views.js", import.meta.url), "utf8");
 const interactionsSource = await readFile(new URL("../src/interactions.js", import.meta.url), "utf8");
 const lessEntry = await readFile(new URL("../src/styles/main.less", import.meta.url), "utf8");
+const transferStatusSource = await readFile(new URL("./transfer-status.mjs", import.meta.url), "utf8");
 const transferGuide = await readFile(new URL("../docs/UI-TRANSFER.md", import.meta.url), "utf8");
 
 for (const source of [mainSource, viewsSource, interactionsSource]) {
@@ -54,9 +60,13 @@ for (const source of [mainSource, viewsSource, interactionsSource]) {
   assert(!/XMLHttpRequest/.test(source), "Clickdummy must not use XMLHttpRequest.");
 }
 
-for (const file of ["tokens.less", "layout.less", "components.less", "views.less"]) {
+for (const file of ["tokens.less", "layout.less", "components.less", "views.less", "prototype.less"]) {
   assert(lessEntry.includes(file), "LESS entry is missing " + file + ".");
 }
+
+assert(mainSource.includes('prototypeViews = new Set(["styleguide"])'), "Styleguide must remain outside primary navigation.");
+assert(transferStatusSource.includes('"src/styles/prototype.less"'), "Prototype LESS must be excluded from automatic Harika transfer.");
+assert(transferStatusSource.includes('"src/prototype/"'), "Prototype source must be excluded from automatic Harika transfer.");
 
 for (const marker of [
   "data-customer-search",
