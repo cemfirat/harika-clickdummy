@@ -8,7 +8,8 @@
     "dev": "vite",
     "check": "node scripts/check.mjs",
     "build": "vite build",
-    "verify": "npm run check && npm run build",
+    "build:pages": "vite build --mode pages",
+    "verify": "npm run check && npm run build && npm run build:pages",
     "transfer:status": "node scripts/transfer-status.mjs",
     "preview": "vite preview"
   },

@@ -15,6 +15,24 @@ This repository exists so layout, LESS, navigation and interaction patterns can 
 
 The clickdummy contains **mock data only**. It does not call production APIs and does not perform real writes.
 
+## Browser preview
+
+Immediate browser workspace:
+
+- StackBlitz: https://stackblitz.com/github/cemfirat/harika-clickdummy?startScript=dev
+
+Planned fixed preview URL:
+
+- GitHub Pages: https://cemfirat.github.io/harika-clickdummy/
+
+GitHub Pages is intentionally deployed by a manual workflow so a repository merge cannot create a failed Pages run while Pages is disabled. One-time activation:
+
+1. Repository → Settings → Pages.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+3. Open **Actions → Pages Preview → Run workflow**.
+
+After that deployment, the fixed Pages URL serves the current `main` build. Vite uses a dedicated Pages build mode so local development remains rooted at `/` while the Pages artifact uses `/harika-clickdummy/`.
+
 ## Local development
 
 ```bash
