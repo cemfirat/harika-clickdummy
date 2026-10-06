@@ -27,11 +27,11 @@ Immediate browser workspace:
 
 - https://stackblitz.com/github/cemfirat/harika-clickdummy?startScript=dev
 
-Planned GitHub Pages preview:
+GitHub Pages preview:
 
 - https://cemfirat.github.io/harika-clickdummy/
 
-Pages remains manually deployed while repository Pages activation is pending.
+Relevant UI changes merged to `main` deploy automatically to GitHub Pages. The workflow can also be started manually when a redeploy is needed. Documentation-only changes do not consume a Pages deploy run.
 
 ## Local development
 
