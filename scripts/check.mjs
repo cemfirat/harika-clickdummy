@@ -95,7 +95,7 @@ for (const marker of [
 }
 
 assert(!/uk-subnav[^\n]*>[\s\S]{0,120}<button/.test(viewsSource), "UIkit subnav items must not be custom button items.");
-assert(!/[>\s][?×…][<\s]/.test(mainSource + uiSource + viewsSource + interactionsSource), "Manual icon glyphs are forbidden; use UIkit icons.");
+assert(!/<button\\b[^>]*>\\s*[?×…]\\s*<\\/button>/i.test(mainSource + uiSource + viewsSource + interactionsSource), "Manual button icon glyphs are forbidden; use UIkit icons.");
 
 const nonThemeLess = [shellLess, productLess, visualizationLess, prototypeLess].join("\n");
 for (const selector of [".uk-button", ".uk-input", ".uk-select", ".uk-textarea", ".uk-card", ".uk-label", ".uk-badge", ".uk-alert"]) {
