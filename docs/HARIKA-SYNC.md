@@ -42,6 +42,8 @@ The sync is intentionally asymmetric:
 
 Never automatically overwrite production Harika UI with clickdummy code.
 
+The controlled reverse path is defined in [UI-TRANSFER.md](UI-TRANSFER.md), with successful promotions recorded in [UI-TRANSFER-LOG.md](UI-TRANSFER-LOG.md).
+
 ## Current navigation baseline
 
 1. Übersicht

@@ -9,6 +9,7 @@
     "check": "node scripts/check.mjs",
     "build": "vite build",
     "verify": "npm run check && npm run build",
+    "transfer:status": "node scripts/transfer-status.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -9,7 +9,9 @@ This repository exists so layout, LESS, navigation and interaction patterns can 
 - Product source of truth: `cemfirat/ccf-sites-ads`
 - Brand reference: `cemfirat/harika-site`
 - Current Harika baseline: `51ef80c3e68a77e9a34a97363c9ad3644619302c`
-- Sync rules: [docs/HARIKA-SYNC.md](docs/HARIKA-SYNC.md)
+- Harika → clickdummy sync: [docs/HARIKA-SYNC.md](docs/HARIKA-SYNC.md)
+- clickdummy → Harika transfer: [docs/UI-TRANSFER.md](docs/UI-TRANSFER.md)
+- promotion history: [docs/UI-TRANSFER-LOG.md](docs/UI-TRANSFER-LOG.md)
 
 The clickdummy contains **mock data only**. It does not call production APIs and does not perform real writes.
 
@@ -20,11 +22,17 @@ npm install
 npm run dev
 ```
 
-Production-style build:
+Production-style verification:
 
 ```bash
-npm run build
+npm run verify
 npm run preview
+```
+
+Show UI changes that are pending for an intentional Harika transfer:
+
+```bash
+npm run transfer:status
 ```
 
 ## UI structure
@@ -34,6 +42,7 @@ src/
 ├── main.js
 ├── data.js
 ├── harika-source.js
+├── transfer-state.js
 ├── ui.js
 ├── views.js
 └── styles/
@@ -68,3 +77,5 @@ The LESS split is deliberate: tokens and layout can be changed without mixing vi
 - no DNS/auth/runtime changes
 - no automatic promotion from clickdummy to Harika
 - source sync before each substantial UI round
+- exact commit-to-commit transfer tracking
+- no PR before green branch CI
