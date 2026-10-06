@@ -4,9 +4,15 @@ import { transferState } from "../src/transfer-state.js";
 
 const transferableExact = new Set([
   "index.html",
-  "src/main.js",
-  "src/ui.js",
-  "src/views.js"
+  "kunden.html",
+  "websites.html",
+  "search-seo.html",
+  "ads.html",
+  "ai-visibility.html",
+  "prompt-center.html",
+  "entwicklung.html",
+  "einstellungen.html",
+  "src/app.js"
 ]);
 
 const transferablePrefixes = [
@@ -14,12 +20,9 @@ const transferablePrefixes = [
 ];
 
 const prototypeOnlyExact = new Set([
+  "styleguide.html",
   "src/styles/prototype.less"
 ]);
-
-const prototypeOnlyPrefixes = [
-  "src/prototype/"
-];
 
 function git(args) {
   return execFileSync("git", args, {
@@ -34,7 +37,7 @@ function changedFiles(from, to) {
 }
 
 function isTransferable(path) {
-  if (prototypeOnlyExact.has(path) || prototypeOnlyPrefixes.some((prefix) => path.startsWith(prefix))) return false;
+  if (prototypeOnlyExact.has(path)) return false;
   return transferableExact.has(path) || transferablePrefixes.some((prefix) => path.startsWith(prefix));
 }
 
@@ -72,4 +75,4 @@ if (nonUiFiles.length > 0) {
 }
 
 console.log("");
-console.log("Mock data, transfer metadata and documentation are never promoted automatically.");
+console.log("HTML mock content, transfer metadata, prototype-only styleguide and documentation are never promoted blindly.");

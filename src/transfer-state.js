@@ -1,9 +1,9 @@
 export const transferState = Object.freeze({
   schemaVersion: 1,
 
-  // Audited UIkit-first UI-lab baseline. This commit rebuilt the clickdummy
-  // from the current Harika shell, Product Blueprint and UI/UX issue rules.
-  uiBaselineClickdummyCommit: "16ed0edc22fe94c8bb5d0928cd86b7372048dd18",
+  // HTML-first UI-lab baseline. Each Harika area is now directly editable
+  // as a root HTML file; JavaScript is behavior-only.
+  uiBaselineClickdummyCommit: "117621532bac10e9937b4c70a6e2e79517ef535e",
 
   // Set only after a later clickdummy UI delta has been intentionally ported
   // to production Harika and the resulting Harika commit is known.

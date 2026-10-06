@@ -6,7 +6,8 @@ UI decisions from `cemfirat/harika-clickdummy` to `cemfirat/ccf-sites-ads`.
 | Date | Clickdummy commit | Harika commit/source | Scope | Result |
 | --- | --- | --- | --- | --- |
 | 2026-10-06 | `7ca420830f0512d9a701f1136e9cdcc0c2209754` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | Initial UI-lab baseline | Superseded; baseline was not sufficiently faithful to Harika/UIkit |
-| 2026-10-06 | `16ed0edc22fe94c8bb5d0928cd86b7372048dd18` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | UIkit-first baseline rebuilt from productive shell, Product Blueprint, IA and UI/UX issues | Active baseline; no production promotion |
+| 2026-10-06 | `16ed0edc22fe94c8bb5d0928cd86b7372048dd18` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | UIkit-first baseline rebuilt from productive shell, Product Blueprint, IA and UI/UX issues | Superseded by HTML-first editing baseline |
+| 2026-10-06 | `117621532bac10e9937b4c70a6e2e79517ef535e` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | HTML-first multi-page UI lab: nine product HTML pages + styleguide, JS behavior only | Active baseline; no production promotion |
 
 ## Logging rule
 

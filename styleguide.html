@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Harika Clickdummy – Übersicht">
-  <title>Übersicht · Harika Clickdummy</title>
+  <meta name="description" content="Harika Clickdummy – UI Styleguide">
+  <title>UI Styleguide · Harika Clickdummy</title>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Zum Hauptinhalt</a>
@@ -27,7 +27,7 @@
         </div>
       <nav aria-label="Hauptnavigation">
         <ul class="uk-nav uk-nav-default main-nav">
-          <li class="uk-active"><a href="./index.html"><span>01</span><strong>Übersicht</strong></a></li>
+          <li><a href="./index.html"><span>01</span><strong>Übersicht</strong></a></li>
           <li><a href="./kunden.html"><span>02</span><strong>Kunden</strong></a></li>
           <li><a href="./websites.html"><span>03</span><strong>Websites</strong></a></li>
           <li><a href="./search-seo.html"><span>04</span><strong>Search & SEO</strong></a></li>
@@ -50,8 +50,8 @@
       <header class="workspace-header">
         <div class="view-introduction">
           <p class="eyebrow">Harika Intelligence Center</p>
-          <h1>Übersicht</h1>
-          <p>Wie steht der aktive Kunde gerade da und wo ist das größte Potenzial?</p>
+          <h1>UI Styleguide</h1>
+          <p>Clickdummy-only Labor für UIkit, LESS, Tokens und Harika-spezifische Layoutentscheidungen.</p>
         </div>
         <div class="workspace-header-meta">
           <span class="runtime-version">Clickdummy · AMBRA Sonnenschutzsysteme</span>
@@ -59,49 +59,61 @@
       </header>
 
       <div class="view-content">
-        
-<div class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-4@l uk-margin-medium-bottom" data-uk-grid>
-  <div><article class="uk-card uk-card-default uk-card-body metric-card">
+        <div class="uk-alert uk-alert-primary"><strong>Prototype only:</strong> Diese Seite testet das echte UIkit-Theme. Sie ist keine Harika-Produktfunktion.</div>
+<section class="uk-card uk-card-default">
+          <div class="uk-card-header">
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
+              <div>
+                <p class="eyebrow uk-margin-remove-bottom">UIkit Theme</p>
+                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Farb- und Semantik-Tokens</h2>
+              </div>
+              
+            </div>
+          </div>
+          <div class="uk-card-body">
+            <div class="styleguide-swatches"><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#20123a"></span><div><strong>Ink</strong><code>@ccf-indigo</code><small>#20123a</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#622064"></span><div><strong>Violet</strong><code>@ccf-violet</code><small>#622064</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#330033"></span><div><strong>Dark violet</strong><code>@ccf-darker-violet</code><small>#330033</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#fff9ee"></span><div><strong>Creme</strong><code>@ccf-creme</code><small>#fff9ee</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#f6f6f6"></span><div><strong>Light gray</strong><code>@ccf-light-gray</code><small>#f6f6f6</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#32d296"></span><div><strong>Mint</strong><code>@ccf-mint</code><small>#32d296</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#176044"></span><div><strong>Ready</strong><code>@ccf-ready</code><small>#176044</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#684900"></span><div><strong>Warning</strong><code>@ccf-warning</code><small>#684900</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#820033"></span><div><strong>Danger</strong><code>@ccf-darker-red</code><small>#820033</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#ff0066"></span><div><strong>Chart magenta</strong><code>@ccf-magenta</code><small>#ff0066</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#00ffff"></span><div><strong>Chart ice</strong><code>@ccf-ice</code><small>#00ffff</small></div></article></div>
+          </div>
+        </section>
+<div class="uk-margin-medium-top"><section class="uk-card uk-card-default">
+          <div class="uk-card-header">
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
+              <div>
+                <p class="eyebrow uk-margin-remove-bottom">Kein Parallel-Designsystem</p>
+                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Native UIkit-Komponenten</h2>
+              </div>
+              
+            </div>
+          </div>
+          <div class="uk-card-body">
+            <div class="uk-grid-medium uk-child-width-1-1 uk-child-width-1-2@m" data-uk-grid><div><section class="uk-card uk-card-default uk-card-body"><h3 class="uk-card-title">Buttons</h3><p class="uk-flex uk-flex-wrap harika-control-cluster"><button class="uk-button uk-button-primary">Primary</button><button class="uk-button uk-button-default">Default</button><button class="uk-button uk-button-danger">Danger</button><button class="uk-button uk-button-text">Text</button><button class="uk-icon-button" data-uk-icon="icon: info" aria-label="Info"></button></p></section></div><div><section class="uk-card uk-card-default uk-card-body"><h3 class="uk-card-title">Labels & Badge</h3><p class="uk-flex uk-flex-wrap harika-control-cluster"><span class="uk-label">Standard</span><span class="uk-label uk-label-success">Aktiv</span><span class="uk-label uk-label-warning">Hinweis</span><span class="uk-label uk-label-danger">Fehler</span><span class="uk-badge">12</span></p></section></div><div><section class="uk-card uk-card-default uk-card-body"><h3 class="uk-card-title">Form</h3><form class="uk-form-stacked"><div class="uk-margin"><label class="uk-form-label">Textfeld</label><input class="uk-input" value="ambra.at"></div><div class="uk-margin"><label class="uk-form-label">Auswahl</label><select class="uk-select"><option>Produktion</option></select></div></form></section></div><div><section class="uk-card uk-card-default uk-card-body"><h3 class="uk-card-title">Alerts</h3><div class="uk-alert uk-alert-primary">Primary</div><div class="uk-alert uk-alert-success">Success</div><div class="uk-alert uk-alert-warning">Warning</div><div class="uk-alert uk-alert-danger">Danger</div></section></div></div>
+          </div>
+        </section></div>
+<div class="uk-grid-medium uk-child-width-1-1 uk-child-width-1-2@l uk-margin-medium-top" data-uk-grid><div><section class="uk-card uk-card-default">
+          <div class="uk-card-header">
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
+              <div>
+                <p class="eyebrow uk-margin-remove-bottom">Harika-Spezialkomponente</p>
+                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Metric Card</h2>
+              </div>
+              
+            </div>
+          </div>
+          <div class="uk-card-body">
+            <article class="uk-card uk-card-default uk-card-body metric-card">
               <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
                 <span class="metric-source">Search Console</span>
                 <span class="uk-label uk-label-success">+12,4 %</span>
               </div>
               <strong class="metric-value">1.842</strong>
               <span class="metric-label">Organische Klicks</span>
-            </article></div>
-  <div><article class="uk-card uk-card-default uk-card-body metric-card">
-              <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-                <span class="metric-source">AI Visibility</span>
-                <span class="uk-label uk-label-success">+7 PP</span>
-              </div>
-              <strong class="metric-value">64 %</strong>
-              <span class="metric-label">AI Visibility</span>
-            </article></div>
-  <div><article class="uk-card uk-card-default uk-card-body metric-card">
-              <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-                <span class="metric-source">GA4 + Ads</span>
-                <span class="uk-label uk-label-success">+9,3 %</span>
-              </div>
-              <strong class="metric-value">47</strong>
-              <span class="metric-label">Conversions</span>
-            </article></div>
-  <div><article class="uk-card uk-card-default uk-card-body metric-card">
-              <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-                <span class="metric-source">Website Intelligence</span>
-                <span class="uk-label uk-label-warning">3 Hinweise</span>
-              </div>
-              <strong class="metric-value">86 / 100</strong>
-              <span class="metric-label">Website Health</span>
-            </article></div>
-</div>
-
-<div class="uk-grid-medium uk-child-width-1-1 uk-child-width-2-3@l" data-uk-grid>
-  <div><section class="uk-card uk-card-default">
+            </article>
+          </div>
+        </section></div><div><section class="uk-card uk-card-default">
           <div class="uk-card-header">
             <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
               <div>
-                <p class="eyebrow uk-margin-remove-bottom">Letzte 30 Tage</p>
-                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Entwicklung</h2>
+                <p class="eyebrow uk-margin-remove-bottom">Datenvisualisierung</p>
+                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Chart</h2>
               </div>
               
             </div>
@@ -109,35 +121,13 @@
           <div class="uk-card-body">
             <div class="mock-chart">
               <div class="mock-chart__grid"></div>
-              <svg viewBox="0 0 640 220" role="img" aria-label="Organische Klicks und Conversion-Entwicklung">
+              <svg viewBox="0 0 640 220" role="img" aria-label="Styleguide Trend">
                 <polyline points="18,176 96,160 164,170 238,124 318,136 404,92 490,108 620,54" fill="none"></polyline>
                 <circle cx="620" cy="54" r="5"></circle>
               </svg>
             </div>
           </div>
-        </section></div>
-  <div class="uk-width-expand@l">
-    <section class="uk-card uk-card-default">
-          <div class="uk-card-header">
-            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-              <div>
-                <p class="eyebrow uk-margin-remove-bottom">Nächste Schritte</p>
-                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Priorisierte Chancen</h2>
-              </div>
-              <a class="uk-button uk-button-text" href="./prompt-center.html">Prompt Center</a>
-            </div>
-          </div>
-          <div class="uk-card-body">
-            
-      <ul class="uk-list uk-list-divider uk-margin-remove">
-        <li><a class="uk-link-reset uk-display-block" href="./search-seo.html"><span class="eyebrow">Search &amp; SEO</span><strong class="uk-display-block">Raffstore-Landingpage hat hohe Impressionen, aber niedrige CTR</strong><small class="uk-text-meta">Position 6,8 bei 3.420 Impressionen. Title und Description zuerst prüfen.</small></a></li>
-        <li><a class="uk-link-reset uk-display-block" href="./websites.html"><span class="eyebrow">Website</span><strong class="uk-display-block">Core Web Vitals auf Mobil verbessern</strong><small class="uk-text-meta">LCP ist bei zwei zentralen Landingpages erhöht.</small></a></li>
-        <li><a class="uk-link-reset uk-display-block" href="./ai-visibility.html"><span class="eyebrow">AI Visibility</span><strong class="uk-display-block">Pergolen werden bei relevanten Fragen zu selten genannt</strong><small class="uk-text-meta">Mitbewerber werden in 8 von 12 beobachteten Antworten häufiger genannt.</small></a></li>
-      </ul>
-          </div>
-        </section>
-  </div>
-</div>
+        </section></div></div>
       </div>
 
       <footer class="app-footer">
@@ -166,7 +156,7 @@
         </div>
       <nav aria-label="Mobile Hauptnavigation">
         <ul class="uk-nav uk-nav-default main-nav">
-          <li class="uk-active"><a href="./index.html"><span>01</span><strong>Übersicht</strong></a></li>
+          <li><a href="./index.html"><span>01</span><strong>Übersicht</strong></a></li>
           <li><a href="./kunden.html"><span>02</span><strong>Kunden</strong></a></li>
           <li><a href="./websites.html"><span>03</span><strong>Websites</strong></a></li>
           <li><a href="./search-seo.html"><span>04</span><strong>Search & SEO</strong></a></li>

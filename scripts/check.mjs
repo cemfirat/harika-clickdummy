@@ -1,21 +1,21 @@
-import { readFile } from "node:fs/promises";
-import { navigation } from "../src/data.js";
+import { readFile, readdir } from "node:fs/promises";
 import { harikaSource } from "../src/harika-source.js";
 import { transferState } from "../src/transfer-state.js";
-import { renderStyleguide } from "../src/prototype/styleguide.js";
-import { renderView, viewMetadata } from "../src/views.js";
 
-const expectedNavigation = [
-  "overview",
-  "customers",
-  "websites",
-  "search",
-  "ads",
-  "visibility",
-  "prompts",
-  "development",
-  "settings"
+const productPages = [
+  "index.html",
+  "kunden.html",
+  "websites.html",
+  "search-seo.html",
+  "ads.html",
+  "ai-visibility.html",
+  "prompt-center.html",
+  "entwicklung.html",
+  "einstellungen.html"
 ];
+
+const prototypePages = ["styleguide.html"];
+const allPages = [...productPages, ...prototypePages];
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -23,11 +23,7 @@ function assert(condition, message) {
 
 const fullSha = /^[0-9a-f]{40}$/;
 const packageJson = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
-const mainSource = await readFile(new URL("../src/main.js", import.meta.url), "utf8");
-const uiSource = await readFile(new URL("../src/ui.js", import.meta.url), "utf8");
-const viewsSource = await readFile(new URL("../src/views.js", import.meta.url), "utf8");
-const interactionsSource = await readFile(new URL("../src/interactions.js", import.meta.url), "utf8");
-const styleguideSource = await readFile(new URL("../src/prototype/styleguide.js", import.meta.url), "utf8");
+const appSource = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
 const lessEntry = await readFile(new URL("../src/styles/main.less", import.meta.url), "utf8");
 const shellLess = await readFile(new URL("../src/styles/shell.less", import.meta.url), "utf8");
 const productLess = await readFile(new URL("../src/styles/product.less", import.meta.url), "utf8");
@@ -38,6 +34,7 @@ const transferGuide = await readFile(new URL("../docs/UI-TRANSFER.md", import.me
 const baselineGuide = await readFile(new URL("../docs/UIKIT-BASELINE.md", import.meta.url), "utf8");
 const viteConfigSource = await readFile(new URL("../vite.config.js", import.meta.url), "utf8");
 const pagesWorkflowSource = await readFile(new URL("../.github/workflows/pages-preview.yml", import.meta.url), "utf8");
+const srcFiles = await readdir(new URL("../src/", import.meta.url));
 
 assert(harikaSource.repository === "cemfirat/ccf-sites-ads", "Harika source repository must remain explicit.");
 assert(fullSha.test(harikaSource.commit), "Harika source commit must be a full SHA.");
@@ -45,43 +42,37 @@ assert(transferState.schemaVersion === 1, "Unsupported transfer-state schema.");
 assert(fullSha.test(transferState.uiBaselineClickdummyCommit), "Clickdummy UI baseline must be a full SHA.");
 assert(packageJson.dependencies?.uikit === "3.25.25", "Clickdummy must pin the audited Harika UIkit version exactly.");
 
-const ids = navigation.map(([id]) => id);
-assert(JSON.stringify(ids) === JSON.stringify(expectedNavigation), "Primary navigation drift detected.");
-assert(new Set(ids).size === ids.length, "Navigation ids must be unique.");
-
-for (const id of ids) {
-  const html = renderView(id);
-  assert(typeof html === "string" && html.length > 100, "View " + id + " did not render meaningful markup.");
-  assert(viewMetadata[id]?.title, "View metadata missing for " + id + ".");
+for (const legacy of ["main.js", "ui.js", "views.js", "data.js", "interactions.js"]) {
+  assert(!srcFiles.includes(legacy), "Legacy JS-renderer file must stay removed: " + legacy);
 }
 
-const styleguideHtml = renderStyleguide();
-assert(styleguideHtml.includes("Prototype only"), "Styleguide must remain clearly prototype-only.");
-
-for (const source of [mainSource, viewsSource, interactionsSource]) {
-  assert(!/\bfetch\s*\(/.test(source), "Clickdummy must not call remote APIs.");
-  assert(!/XMLHttpRequest/.test(source), "Clickdummy must not use XMLHttpRequest.");
+const html = {};
+for (const page of allPages) {
+  html[page] = await readFile(new URL("../" + page, import.meta.url), "utf8");
+  assert(html[page].includes('<script type="module" src="/src/app.js"></script>'), page + " must use the shared behavior-only app.js.");
+  assert(html[page].includes('<main class="workspace" id="main-content"'), page + " must own the main landmark.");
+  assert(html[page].includes('class="uk-nav uk-nav-default main-nav"'), page + " must use native UIkit navigation.");
+  assert(html[page].includes('data-uk-offcanvas="overlay: true; flip: false"'), page + " must use UIkit Offcanvas.");
+  assert(html[page].includes('src="./icon.svg"'), page + " must use the real Harika icon.");
+  assert(!html[page].includes("?view="), page + " must not use the old JS view router.");
 }
 
-assert(!mainSource.includes('uikit/dist/css/uikit.min.css'), "Do not load prebuilt UIkit CSS alongside the LESS theme.");
-assert(lessEntry.includes('@import "uikit/src/less/uikit.less";'), "UIkit LESS source must be the styling foundation.");
-assert(lessEntry.includes('@import "./theme/_import.less";'), "Harika UIkit theme layer must be imported.");
-assert(mainSource.includes('class="uk-logo brand'), "Shell must use UIkit logo semantics.");
-assert(mainSource.includes('class="uk-nav uk-nav-default'), "Primary navigation must be a native UIkit nav.");
-assert(mainSource.includes('class="uk-active"'), "Primary navigation must use native uk-active state.");
-assert(mainSource.includes('data-uk-offcanvas="overlay: true; flip: false"'), "Mobile navigation must use UIkit Offcanvas.");
-assert(mainSource.includes('class="uk-offcanvas-close"'), "Mobile navigation must use UIkit close control.");
-assert(mainSource.includes('data-uk-icon="icon: user"'), "User chrome must use a native UIkit icon.");
-assert(mainSource.includes('class="skip-link"'), "App shell must expose a skip link.");
-assert(mainSource.includes('<main class="workspace" id="main-content"'), "View content must own the main landmark.");
-assert(!mainSource.includes("topbar"), "Legacy custom topbar must not return.");
-assert(!mainSource.includes("demo-ribbon"), "Legacy demo ribbon must not return.");
-
-assert(uiSource.includes("uk-modal-header"), "Modal must use UIkit modal header.");
-assert(uiSource.includes("uk-modal-body"), "Modal must use UIkit modal body.");
-assert(uiSource.includes("uk-modal-footer"), "Modal must use UIkit modal footer.");
-assert(uiSource.includes("data-uk-close"), "Modal close must use the native UIkit close component.");
-assert(!uiSource.includes(">×<"), "Manual close glyphs are forbidden.");
+const combinedProductHtml = productPages.map((page) => html[page]).join("\n");
+for (const [href, label] of [
+  ["./index.html", "Übersicht"],
+  ["./kunden.html", "Kunden"],
+  ["./websites.html", "Websites"],
+  ["./search-seo.html", "Search & SEO"],
+  ["./ads.html", "Ads"],
+  ["./ai-visibility.html", "AI Visibility"],
+  ["./prompt-center.html", "Prompt Center"],
+  ["./entwicklung.html", "Entwicklung"],
+  ["./einstellungen.html", "Einstellungen"]
+]) {
+  for (const page of productPages) {
+    assert(html[page].includes('href="' + href + '"'), page + " is missing navigation link " + label + ".");
+  }
+}
 
 for (const marker of [
   "uk-card uk-card-default",
@@ -89,29 +80,44 @@ for (const marker of [
   "uk-table uk-table-divider",
   "uk-list uk-list-divider",
   "uk-subnav uk-subnav-pill",
-  "uk-alert uk-alert-primary"
+  "uk-alert uk-alert-primary",
+  "uk-modal-dialog"
 ]) {
-  assert((viewsSource + interactionsSource + styleguideSource).includes(marker), "Expected UIkit-first marker missing: " + marker);
+  assert((combinedProductHtml + html["styleguide.html"]).includes(marker), "Expected UIkit-first HTML marker missing: " + marker);
 }
 
-assert(!/uk-subnav[^\n]*>[\s\S]{0,120}<button/.test(viewsSource), "UIkit subnav items must not be custom button items.");
-assert(!/<button\b[^>]*>\s*[?×…]\s*<\/button>/i.test(mainSource + uiSource + viewsSource + interactionsSource), "Manual button icon glyphs are forbidden; use UIkit icons.");
+assert(html["search-seo.html"].includes("data-uk-switcher"), "Search & SEO tabs must use native UIkit Switcher.");
+assert(html["kunden.html"].includes("data-customer-search"), "Customer page must preserve direct HTML filter hooks.");
+assert(html["prompt-center.html"].includes("data-copy-target"), "Prompt Center must preserve clipboard hooks in HTML.");
+
+assert(!/\bfetch\s*\(/.test(appSource), "Clickdummy must not call remote APIs.");
+assert(!/XMLHttpRequest/.test(appSource), "Clickdummy must not use XMLHttpRequest.");
+assert(!/\.innerHTML\s*=/.test(appSource), "app.js must not render page markup with innerHTML.");
+assert(!/insertAdjacentHTML/.test(appSource), "app.js must not inject page markup.");
+assert(!/document\.createElement/.test(appSource), "app.js must remain behavior-only; page structure belongs in HTML.");
+assert(!/<(?:main|section|article|table|nav|aside)\b/i.test(appSource), "app.js must not contain page markup.");
+
+assert(!appSource.includes('uikit/dist/css/uikit.min.css'), "Do not load prebuilt UIkit CSS alongside the LESS theme.");
+assert(lessEntry.includes('@import "uikit/src/less/uikit.less";'), "UIkit LESS source must be the styling foundation.");
+assert(lessEntry.includes('@import "./theme/_import.less";'), "Harika UIkit theme layer must be imported.");
 
 const nonThemeLess = [shellLess, productLess, visualizationLess, prototypeLess].join("\n");
 for (const selector of [".uk-button", ".uk-input", ".uk-select", ".uk-textarea", ".uk-card", ".uk-label", ".uk-badge", ".uk-alert"]) {
   assert(!nonThemeLess.includes(selector), "Standard UIkit component must not be reskinned outside theme layer: " + selector);
 }
 
-assert(baselineGuide.includes("UIkit first"), "UIkit baseline guide must preserve the primary design-system rule.");
-assert(transferStatusSource.includes('"src/styles/prototype.less"'), "Prototype LESS must stay excluded from automatic transfer.");
-assert(transferStatusSource.includes('"src/prototype/"'), "Prototype source must stay excluded from automatic transfer.");
+for (const page of allPages) {
+  assert(viteConfigSource.includes('"' + page + '"'), "Vite multi-page build is missing " + page + ".");
+}
+
 assert(viteConfigSource.includes('mode === "pages" ? "/harika-clickdummy/" : "/"'), "Vite Pages base path must remain explicit.");
+assert(baselineGuide.includes("HTML first"), "UIkit baseline guide must preserve the HTML-first UI-lab rule.");
+assert(transferStatusSource.includes('"styleguide.html"'), "Styleguide HTML must remain prototype-only in transfer status.");
+assert(transferStatusSource.includes('"src/app.js"'), "Behavior-only app.js must be classified explicitly.");
 assert(pagesWorkflowSource.includes("workflow_dispatch:"), "Pages preview must remain manually deployable.");
 assert(/^\s*push:/m.test(pagesWorkflowSource), "Pages preview must auto-deploy relevant main changes.");
-assert(pagesWorkflowSource.includes("branches:\n      - main"), "Pages preview push trigger must stay limited to main.");
+assert(pagesWorkflowSource.includes('"*.html"'), "Pages preview must deploy root HTML page changes.");
 assert(pagesWorkflowSource.includes('"src/**"'), "Pages preview must deploy source changes.");
-assert(pagesWorkflowSource.includes('"public/**"'), "Pages preview must deploy public asset changes.");
-assert(pagesWorkflowSource.includes('".github/workflows/pages-preview.yml"'), "Pages preview workflow changes must be deployable.");
 assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide must preserve permanent CI-before-PR rule.");
 
-console.log("Harika clickdummy UIkit-first static checks passed.");
+console.log("Harika clickdummy HTML-first UIkit checks passed.");

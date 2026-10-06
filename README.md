@@ -1,37 +1,55 @@
 # Harika Clickdummy
 
-UI/UX laboratory for **Harika Intelligence Center**.
+Editable UI/UX laboratory for **Harika Intelligence Center**.
 
-The clickdummy mirrors the productive Harika information architecture and shell while using mock data only. It exists to test deliberate UI/LESS decisions without coupling experiments to production APIs, authentication or writes.
+The repository is intentionally a classic **multi-page HTML prototype**. The visible structure and UIkit classes live directly in individual HTML files so they can be edited precisely without digging through JavaScript render functions.
+
+## Edit these pages directly
+
+| Area | File |
+| --- | --- |
+| Übersicht | `index.html` |
+| Kunden | `kunden.html` |
+| Websites | `websites.html` |
+| Search & SEO | `search-seo.html` |
+| Ads | `ads.html` |
+| AI Visibility | `ai-visibility.html` |
+| Prompt Center | `prompt-center.html` |
+| Entwicklung | `entwicklung.html` |
+| Einstellungen | `einstellungen.html` |
+| UI-Labor | `styleguide.html` |
+
+Sidebar, Header, mobile Navigation and Footer are intentionally duplicated in these HTML files. For this repository that is a feature: the exact page markup must remain directly editable.
+
+## Rule
+
+**HTML = structure and UIkit classes**  
+**LESS = styling/theme**  
+**JavaScript = behavior only**
+
+`src/app.js` may initialize UIkit, filter a demo table, copy text or show a demo notification. It must not render page structure.
+
+No JSX, Nunjucks, Handlebars or JS page renderer.
 
 ## Source of truth
 
 - Product: `cemfirat/ccf-sites-ads`
-- Inspected Harika baseline: `51ef80c3e68a77e9a34a97363c9ad3644619302c`
-- UIkit baseline rules: [docs/UIKIT-BASELINE.md](docs/UIKIT-BASELINE.md)
-- Harika → clickdummy sync: [docs/HARIKA-SYNC.md](docs/HARIKA-SYNC.md)
-- clickdummy → Harika transfer: [docs/UI-TRANSFER.md](docs/UI-TRANSFER.md)
-- transfer history: [docs/UI-TRANSFER-LOG.md](docs/UI-TRANSFER-LOG.md)
+- inspected Harika baseline: `51ef80c3e68a77e9a34a97363c9ad3644619302c`
+- rules: [docs/UIKIT-BASELINE.md](docs/UIKIT-BASELINE.md)
+- Harika → clickdummy: [docs/HARIKA-SYNC.md](docs/HARIKA-SYNC.md)
+- clickdummy → Harika: [docs/UI-TRANSFER.md](docs/UI-TRANSFER.md)
 
-## Design-system rule
+## UIkit
 
-**UIkit first.**
+UIkit `3.25.25` is compiled from `uikit/src/less/uikit.less`. Harika theme values live in `src/styles/theme/`.
 
-The clickdummy compiles the unmodified UIkit LESS source and applies the Harika theme through UIkit variables/component theme files. It does not import the prebuilt UIkit CSS and then rebuild Cards, Forms, Navs, Modals or Status components with a second custom design system.
-
-Custom LESS is limited to Harika shell/layout, data visualization, true product-specific composition and clickdummy-only prototype layout.
+Custom LESS is limited to shell, true product-specific composition, visualizations and the prototype-only styleguide.
 
 ## Browser preview
 
-Immediate browser workspace:
-
-- https://stackblitz.com/github/cemfirat/harika-clickdummy?startScript=dev
-
-GitHub Pages preview:
-
 - https://cemfirat.github.io/harika-clickdummy/
 
-Relevant UI changes merged to `main` deploy automatically to GitHub Pages. The workflow can also be started manually when a redeploy is needed. Documentation-only changes do not consume a Pages deploy run.
+Relevant HTML/UI/LESS changes merged to `main` deploy automatically to GitHub Pages.
 
 ## Local development
 
@@ -47,65 +65,39 @@ npm run verify
 npm run transfer:status
 ```
 
-## UI structure
+## Source layout
 
 ```text
-src/
-├── main.js
-├── data.js
-├── harika-source.js
-├── interactions.js
-├── prototype/
-│   └── styleguide.js
-├── transfer-state.js
-├── ui.js
-├── views.js
-└── styles/
-    ├── main.less
-    ├── theme/
-    │   ├── _import.less
-    │   ├── variables.less
-    │   ├── base.less
-    │   ├── button.less
-    │   ├── card.less
-    │   ├── form.less
-    │   ├── label.less
-    │   ├── badge.less
-    │   ├── alert.less
-    │   ├── table.less
-    │   └── modal.less
-    ├── shell.less
-    ├── product.less
-    ├── visualizations.less
-    └── prototype.less
+/
+├── index.html
+├── kunden.html
+├── websites.html
+├── search-seo.html
+├── ads.html
+├── ai-visibility.html
+├── prompt-center.html
+├── entwicklung.html
+├── einstellungen.html
+├── styleguide.html
+└── src/
+    ├── app.js
+    ├── harika-source.js
+    ├── transfer-state.js
+    └── styles/
+        ├── main.less
+        ├── theme/
+        ├── shell.less
+        ├── product.less
+        ├── visualizations.less
+        └── prototype.less
 ```
-
-## Current scope
-
-- nine Harika primary areas
-- production-aligned desktop shell and mobile UIkit Offcanvas
-- real Harika icon
-- compact customer table/search/filter
-- website list
-- local demo customer/website forms
-- context switching
-- Search & SEO subnav
-- Ads details
-- AI Visibility
-- Prompt Center with native UIkit modal
-- development view
-- settings details
-- UIkit-first styleguide.
-
-All data changes are local to the browser session and disappear on reload.
 
 ## Guardrails
 
-- mock data only
-- no production credentials
-- no backend/API calls
-- no productive writes
+- mock content only
+- no production credentials/APIs/writes
+- no JavaScript-rendered page markup
 - no silent product/IA drift
 - no custom recreation of UIkit standard components
-- exact commit-to-commit transfer tracking
+- exact transfer checkpoints
 - **no PR before green branch CI**

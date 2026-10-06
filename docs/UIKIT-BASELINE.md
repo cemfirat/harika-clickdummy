@@ -1,12 +1,58 @@
-# Harika Clickdummy – UIkit-first baseline
+# Harika Clickdummy – UIkit-first / HTML-first baseline
 
 Stand: 2026-10-06
 
-This document locks the design-system rules for the Harika UI lab. The productive source of truth remains `cemfirat/ccf-sites-ads`.
+This document locks the design-system and editing rules for the Harika UI lab. The productive source of truth remains `cemfirat/ccf-sites-ads`.
+
+## Core editing rule
+
+**HTML first. UIkit first.**
+
+The clickdummy is intentionally a classic multi-page HTML prototype.
+
+Each Harika area has its own editable root HTML file:
+
+- `index.html` — Übersicht
+- `kunden.html`
+- `websites.html`
+- `search-seo.html`
+- `ads.html`
+- `ai-visibility.html`
+- `prompt-center.html`
+- `entwicklung.html`
+- `einstellungen.html`
+- `styleguide.html` — prototype-only UI lab.
+
+The visible page structure and UIkit classes must be readable directly in these files.
+
+### Deliberate duplication
+
+Sidebar, mobile navigation, workspace header and footer are deliberately duplicated across the HTML pages.
+
+That is normally not ideal application architecture, but it is correct for this UI lab because Cem must be able to directly edit the actual HTML structure and classes of every page without a template engine, JSX, render function or hidden partial.
+
+Do not introduce Nunjucks, Handlebars, JSX, React templates or JavaScript string rendering for page structure.
+
+## JavaScript boundary
+
+`src/app.js` is behavior-only.
+
+Allowed:
+- initialize UIkit and icons
+- customer table filtering
+- clipboard behavior
+- demo form submission notifications
+- small progressive-enhancement interactions.
+
+Not allowed:
+- `innerHTML` page rendering
+- HTML template strings for pages
+- creating structural DOM nodes in JavaScript
+- a JS router replacing the individual HTML pages.
 
 ## Audited Harika sources
 
-The baseline was rebuilt after reviewing:
+The baseline remains grounded in:
 
 - `docs/product-blueprint.md`
 - `docs/information-architecture.md`
@@ -16,35 +62,31 @@ The baseline was rebuilt after reviewing:
 - `apps/web/app/control-center.tsx`
 - `apps/web/app/globals.css`
 - `apps/web/components/control-center-ui.tsx`
-- current UI/UX issues, especially #66, #152, #300, #304, #306, #308, #309, #313, #318/#339, #324–#335, #342, #347 and #352.
+- relevant UI/UX issues, especially #66, #152, #300, #304, #306, #308, #309, #313, #318/#339, #324–#335, #342, #347 and #352.
 
 Inspected Harika commit:
 
 `51ef80c3e68a77e9a34a97363c9ad3644619302c`
 
-## Non-negotiable UI rule
-
-**UIkit first.**
+## UIkit rule
 
 Standard UI is built from UIkit primitives and semantics:
 
 - cards: `uk-card*`
 - grids/flex: `uk-grid*`, `uk-flex*`
 - navigation: `ul.uk-nav > li > a`, active state on `li.uk-active`
-- subnav: `uk-subnav` with native link items
+- subnav/switcher: native UIkit markup and behavior
 - forms: `uk-form-stacked`, `uk-input`, `uk-select`, `uk-textarea`
 - tables: `uk-table*`
 - lists: `uk-list*`
-- modals: `uk-modal-dialog`, `uk-modal-header`, `uk-modal-body`, `uk-modal-footer`
+- modals: `uk-modal*`
 - status: `uk-label*`, `uk-badge`, `uk-alert*`
-- icons/close controls: native UIkit icons and `data-uk-close`
-- spacing and typography: UIkit utilities wherever they express the requirement.
+- icons/close controls: UIkit icons and `data-uk-close`
+- spacing/typography: UIkit utilities where they express the requirement.
 
 A custom class must not recreate a standard UIkit component.
 
 ## LESS architecture
-
-The clickdummy follows the architecture decided in Harika issue #300:
 
 ```text
 src/styles/
@@ -67,66 +109,27 @@ src/styles/
 └── prototype.less
 ```
 
-`main.less` imports the unmodified UIkit LESS source first and the Harika theme layer afterwards:
+`main.less` imports the unmodified UIkit LESS source and then the Harika theme layer.
 
-```less
-@import "uikit/src/less/uikit.less";
-@import "./theme/_import.less";
-```
-
-LESS is the styling source. The clickdummy must not load `uikit/dist/css/uikit.min.css` in parallel.
-
-### Theme layer
-
-`theme/` owns UIkit variables and component theme values such as:
-
-- global palette and typography
-- buttons
-- forms/focus/placeholder
-- cards
-- labels
-- badges
-- alerts
-- tables
-- modals
-
-This prevents `shell.less` or `product.less` from becoming a second UIkit theme.
-
-### Custom CSS/LESS allowed only for
-
-- Harika app shell and sidebar
-- product-specific layout/composition
+Custom LESS is limited to:
+- Harika app shell
+- true product-specific composition
 - data visualization
 - true Harika-special components
-- clickdummy-only styleguide layout.
-
-## Shell baseline
-
-The clickdummy mirrors the productive Harika shell:
-
-- real Harika `icon.svg`
-- 16.5rem dark sidebar on desktop
-- native `ul.uk-nav.uk-nav-default`
-- native UIkit user icon
-- responsive UIkit Offcanvas on mobile
-- large workspace header instead of a custom sticky topbar
-- Harika radial workspace background
-- one content `main` landmark plus a visible-on-focus skip link, following open accessibility issue #334.
+- prototype-only styleguide layout.
 
 ## Accessibility baseline
 
-- native links for navigation; no buttons disguised as UIkit nav items
-- native HTML tables remain tables
-- horizontally scrollable table regions are keyboard focusable and named
-- status is text plus color, never color alone
-- full `uk-alert` base class with modifiers
-- modals use native UIkit header/body/footer and close controls
-- no manual `?`, `×` or `…` icon geometry
-- external links announce that they open a new tab
-- form labels are explicit and tied to controls.
+- native links for navigation
+- one `main` landmark per page
+- visible-on-focus skip link
+- native HTML tables
+- focusable/named horizontal table regions
+- status text in addition to color
+- native UIkit modals and close controls
+- external links announce new-tab behavior
+- labels tied to form controls.
 
-## Clickdummy-only behavior
+## Product authority
 
-Mock data, local mutations, demo notifications and the styleguide remain prototype behavior. They never imply production APIs or writes.
-
-The visual baseline is not a second product specification. Harika product semantics and the current repository issues remain authoritative.
+The HTML files are an editable UI lab, not a second product specification. Harika Product Blueprint, IA and current scoped issues remain authoritative.
