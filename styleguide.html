@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Harika Clickdummy – UI Styleguide">
+  <title>UI Styleguide · Harika Clickdummy</title>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Zum Hauptinhalt</a>
+
+  <div class="app-shell">
+    <aside class="sidebar desktop-sidebar" aria-label="Harika Navigation">
+      <a class="uk-logo brand" href="./index.html" aria-label="Harika Startseite">
+          <img class="brand-mark" src="./icon.svg" alt="" width="64" height="64">
+          <span class="brand-logo-copy"><strong>Harika</strong><small>Intelligence Center</small></span>
+        </a>
+      <div class="aside-user">
+          <a href="#profile-modal" class="user" data-uk-toggle aria-label="Konto öffnen">
+            <span class="uk-icon-button user-icon" data-uk-icon="icon: user" aria-hidden="true"></span>
+            <div><strong>Cem Firat</strong><small>Administrator</small></div>
+          </a>
+          <div class="aside-user-actions">
+            <a class="uk-link-text" href="./styleguide.html">Styleguide</a>
+            <span class="uk-text-meta">UI-Labor</span>
+          </div>
+        </div>
+      <nav aria-label="Hauptnavigation">
+        <ul class="uk-nav uk-nav-default main-nav">
+          <li><a href="./index.html"><span>01</span><strong>Übersicht</strong></a></li>
+          <li><a href="./kunden.html"><span>02</span><strong>Kunden</strong></a></li>
+          <li><a href="./websites.html"><span>03</span><strong>Websites</strong></a></li>
+          <li><a href="./search-seo.html"><span>04</span><strong>Search & SEO</strong></a></li>
+          <li><a href="./ads.html"><span>05</span><strong>Ads</strong></a></li>
+          <li><a href="./ai-visibility.html"><span>06</span><strong>AI Visibility</strong></a></li>
+          <li><a href="./prompt-center.html"><span>07</span><strong>Prompt Center</strong></a></li>
+          <li><a href="./entwicklung.html"><span>08</span><strong>Entwicklung</strong></a></li>
+          <li><a href="./einstellungen.html"><span>09</span><strong>Einstellungen</strong></a></li>
+        </ul>
+      </nav>
+      <div class="safety-note">
+        <span class="safety-dot"></span>
+        <div><strong>Clickdummy</strong><small>Mockdaten · Harika 51ef80c</small></div>
+      </div>
+    </aside>
+
+    <main class="workspace" id="main-content" tabindex="-1">
+      <button class="uk-icon-button mobile-nav-toggle" type="button" data-uk-icon="icon: menu" data-uk-toggle="target: #ccf-mobile-nav" aria-label="Navigation öffnen"></button>
+
+      <header class="workspace-header">
+        <div class="view-introduction">
+          <p class="eyebrow">Harika Intelligence Center</p>
+          <h1>UI Styleguide</h1>
+          <p>Clickdummy-only Labor für UIkit, LESS, Tokens und Harika-spezifische Layoutentscheidungen.</p>
+        </div>
+        <div class="workspace-header-meta">
+          <span class="runtime-version">Clickdummy · AMBRA Sonnenschutzsysteme</span>
+        </div>
+      </header>
+
+      <div class="view-content">
+        <div class="uk-alert uk-alert-primary"><strong>Prototype only:</strong> Diese Seite testet das echte UIkit-Theme. Sie ist keine Harika-Produktfunktion.</div>
+<section class="uk-card uk-card-default">
+          <div class="uk-card-header">
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
+              <div>
+                <p class="eyebrow uk-margin-remove-bottom">UIkit Theme</p>
+                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Farb- und Semantik-Tokens</h2>
+              </div>
+              
+            </div>
+          </div>
+          <div class="uk-card-body">
+            <div class="styleguide-swatches"><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#20123a"></span><div><strong>Ink</strong><code>@ccf-indigo</code><small>#20123a</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#622064"></span><div><strong>Violet</strong><code>@ccf-violet</code><small>#622064</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#330033"></span><div><strong>Dark violet</strong><code>@ccf-darker-violet</code><small>#330033</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#fff9ee"></span><div><strong>Creme</strong><code>@ccf-creme</code><small>#fff9ee</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#f6f6f6"></span><div><strong>Light gray</strong><code>@ccf-light-gray</code><small>#f6f6f6</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#32d296"></span><div><strong>Mint</strong><code>@ccf-mint</code><small>#32d296</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#176044"></span><div><strong>Ready</strong><code>@ccf-ready</code><small>#176044</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#684900"></span><div><strong>Warning</strong><code>@ccf-warning</code><small>#684900</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#820033"></span><div><strong>Danger</strong><code>@ccf-darker-red</code><small>#820033</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#ff0066"></span><div><strong>Chart magenta</strong><code>@ccf-magenta</code><small>#ff0066</small></div></article><article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#00ffff"></span><div><strong>Chart ice</strong><code>@ccf-ice</code><small>#00ffff</small></div></article></div>
+          </div>
+        </section>
+<div class="uk-margin-medium-top"><section class="uk-card uk-card-default">
+          <div class="uk-card-header">
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
+              <div>
+                <p class="eyebrow uk-margin-remove-bottom">Kein Parallel-Designsystem</p>
+                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Native UIkit-Komponenten</h2>
+              </div>
+              
+            </div>
+          </div>
+          <div class="uk-card-body">
+            <div class="uk-grid-medium uk-child-width-1-1 uk-child-width-1-2@m" data-uk-grid><div><section class="uk-card uk-card-default uk-card-body"><h3 class="uk-card-title">Buttons</h3><p class="uk-flex uk-flex-wrap harika-control-cluster"><button class="uk-button uk-button-primary">Primary</button><button class="uk-button uk-button-default">Default</button><button class="uk-button uk-button-danger">Danger</button><button class="uk-button uk-button-text">Text</button><button class="uk-icon-button" data-uk-icon="icon: info" aria-label="Info"></button></p></section></div><div><section class="uk-card uk-card-default uk-card-body"><h3 class="uk-card-title">Labels & Badge</h3><p class="uk-flex uk-flex-wrap harika-control-cluster"><span class="uk-label">Standard</span><span class="uk-label uk-label-success">Aktiv</span><span class="uk-label uk-label-warning">Hinweis</span><span class="uk-label uk-label-danger">Fehler</span><span class="uk-badge">12</span></p></section></div><div><section class="uk-card uk-card-default uk-card-body"><h3 class="uk-card-title">Form</h3><form class="uk-form-stacked"><div class="uk-margin"><label class="uk-form-label">Textfeld</label><input class="uk-input" value="ambra.at"></div><div class="uk-margin"><label class="uk-form-label">Auswahl</label><select class="uk-select"><option>Produktion</option></select></div></form></section></div><div><section class="uk-card uk-card-default uk-card-body"><h3 class="uk-card-title">Alerts</h3><div class="uk-alert uk-alert-primary">Primary</div><div class="uk-alert uk-alert-success">Success</div><div class="uk-alert uk-alert-warning">Warning</div><div class="uk-alert uk-alert-danger">Danger</div></section></div></div>
+          </div>
+        </section></div>
+<div class="uk-grid-medium uk-child-width-1-1 uk-child-width-1-2@l uk-margin-medium-top" data-uk-grid><div><section class="uk-card uk-card-default">
+          <div class="uk-card-header">
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
+              <div>
+                <p class="eyebrow uk-margin-remove-bottom">Harika-Spezialkomponente</p>
+                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Metric Card</h2>
+              </div>
+              
+            </div>
+          </div>
+          <div class="uk-card-body">
+            <article class="uk-card uk-card-default uk-card-body metric-card">
+              <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
+                <span class="metric-source">Search Console</span>
+                <span class="uk-label uk-label-success">+12,4 %</span>
+              </div>
+              <strong class="metric-value">1.842</strong>
+              <span class="metric-label">Organische Klicks</span>
+            </article>
+          </div>
+        </section></div><div><section class="uk-card uk-card-default">
+          <div class="uk-card-header">
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
+              <div>
+                <p class="eyebrow uk-margin-remove-bottom">Datenvisualisierung</p>
+                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Chart</h2>
+              </div>
+              
+            </div>
+          </div>
+          <div class="uk-card-body">
+            <div class="mock-chart">
+              <div class="mock-chart__grid"></div>
+              <svg viewBox="0 0 640 220" role="img" aria-label="Styleguide Trend">
+                <polyline points="18,176 96,160 164,170 238,124 318,136 404,92 490,108 620,54" fill="none"></polyline>
+                <circle cx="620" cy="54" r="5"></circle>
+              </svg>
+            </div>
+          </div>
+        </section></div></div>
+      </div>
+
+      <footer class="app-footer">
+        <span>Harika Clickdummy · UIkit-first UI-Labor</span>
+        <span>Source: ccf-sites-ads@51ef80c</span>
+      </footer>
+    </main>
+  </div>
+
+  <div id="ccf-mobile-nav" data-uk-offcanvas="overlay: true; flip: false">
+    <div class="uk-offcanvas-bar">
+      <button class="uk-offcanvas-close" type="button" data-uk-close aria-label="Navigation schließen"></button>
+      <a class="uk-logo brand uk-margin-medium-bottom" href="./index.html" aria-label="Harika Startseite">
+          <img class="brand-mark" src="./icon.svg" alt="" width="64" height="64">
+          <span class="brand-logo-copy"><strong>Harika</strong><small>Intelligence Center</small></span>
+        </a>
+      <div class="aside-user">
+          <a href="#profile-modal" class="user" data-uk-toggle aria-label="Konto öffnen">
+            <span class="uk-icon-button user-icon" data-uk-icon="icon: user" aria-hidden="true"></span>
+            <div><strong>Cem Firat</strong><small>Administrator</small></div>
+          </a>
+          <div class="aside-user-actions">
+            <a class="uk-link-text" href="./styleguide.html">Styleguide</a>
+            <span class="uk-text-meta">UI-Labor</span>
+          </div>
+        </div>
+      <nav aria-label="Mobile Hauptnavigation">
+        <ul class="uk-nav uk-nav-default main-nav">
+          <li><a href="./index.html"><span>01</span><strong>Übersicht</strong></a></li>
+          <li><a href="./kunden.html"><span>02</span><strong>Kunden</strong></a></li>
+          <li><a href="./websites.html"><span>03</span><strong>Websites</strong></a></li>
+          <li><a href="./search-seo.html"><span>04</span><strong>Search & SEO</strong></a></li>
+          <li><a href="./ads.html"><span>05</span><strong>Ads</strong></a></li>
+          <li><a href="./ai-visibility.html"><span>06</span><strong>AI Visibility</strong></a></li>
+          <li><a href="./prompt-center.html"><span>07</span><strong>Prompt Center</strong></a></li>
+          <li><a href="./entwicklung.html"><span>08</span><strong>Entwicklung</strong></a></li>
+          <li><a href="./einstellungen.html"><span>09</span><strong>Einstellungen</strong></a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div id="profile-modal" class="uk-modal" data-uk-modal>
+    <div class="uk-modal-dialog">
+      <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Schließen"></button>
+      <div class="uk-modal-header">
+        <p class="eyebrow uk-margin-remove-bottom">Konto</p>
+        <h2 class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Cem Firat</h2>
+      </div>
+      <div class="uk-modal-body">
+        <dl class="demo-detail-list">
+          <div><dt>Rolle</dt><dd>Administrator</dd></div>
+          <div><dt>Workspace</dt><dd>AMBRA Sonnenschutzsysteme</dd></div>
+          <div><dt>Demo-Modus</dt><dd>Aktiv</dd></div>
+        </dl>
+      </div>
+      <div class="uk-modal-footer uk-flex uk-flex-right">
+        <button class="uk-button uk-button-default uk-modal-close" type="button">Schließen</button>
+      </div>
+    </div>
+  </div>
+  
+
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>
