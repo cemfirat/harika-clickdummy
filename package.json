@@ -1,0 +1,22 @@
+{
+  "name": "harika-clickdummy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Interactive Harika Intelligence Center UI clickdummy.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "check": "node scripts/check.mjs",
+    "build": "vite build",
+    "verify": "npm run check && npm run build",
+    "transfer:status": "node scripts/transfer-status.mjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "uikit": "3.25.26"
+  },
+  "devDependencies": {
+    "less": "4.9.1",
+    "vite": "8.3.3"
+  }
+}
