@@ -1,145 +1,56 @@
 # Clickdummy → Harika UI transfer
 
-This document defines how an accepted UI experiment moves from `cemfirat/harika-clickdummy`
-into the productive Harika application in `cemfirat/ccf-sites-ads`.
+This document defines controlled promotion from `cemfirat/harika-clickdummy` into `cemfirat/ccf-sites-ads`.
 
-The process is deliberately controlled. There is no bidirectional file sync and no automatic
-overwrite of production code.
+## Principle
 
-## Why the transfer is not a copy operation
+The clickdummy is Vite + vanilla JavaScript + mock data. Harika is the productive React application with real auth, data, permissions and connectors.
 
-The clickdummy is optimized for fast UI work:
+Therefore accepted decisions are **ported**, never blindly copied.
 
-- Vite
-- UIkit
-- vanilla JavaScript
-- LESS
-- mock data
-- no productive API/auth/write behavior
+## UIkit-first mapping
 
-Harika is the productive application and owns:
-
-- React/Next application structure
-- real workspace and website data
-- authentication and authorization
-- production connectors and APIs
-- audit/change-control behavior
-- tests and deployment constraints
-
-Therefore a clickdummy decision is **ported**, not copied blindly.
-
-## Transfer checkpoint
-
-The technical checkpoint is stored in:
-
-- `src/transfer-state.js`
-
-It contains:
-
-- the initial clickdummy UI baseline;
-- after the first successful promotion, the last clickdummy commit that was promoted;
-- the corresponding Harika commit.
-
-The current pending UI delta is therefore:
-
-```text
-last promoted clickdummy commit (or initial UI baseline)
-                         ↓
-                  current clickdummy HEAD
-```
-
-Run locally:
-
-```bash
-npm run transfer:status
-```
-
-The command reports the UI files changed since that checkpoint.
-
-## Transferable UI paths
-
-These files are candidates for intentional promotion:
-
-| Clickdummy | Harika target / interpretation |
+| Clickdummy | Harika interpretation |
 | --- | --- |
-| `src/styles/tokens.less` | Harika design tokens / theme variables |
-| `src/styles/layout.less` | app shell, sidebar, topbar, responsive layout |
-| `src/styles/components.less` | reusable production UI components |
-| `src/styles/views.less` | view-specific Harika styling |
-| `src/ui.js` | component design to be translated into React/UIkit components |
-| `src/views.js` | view composition to be translated into production views |
-| `src/main.js` | shell/navigation interaction decisions only |
-| `index.html` | only structural/document-shell decisions that are relevant to Harika |
+| `src/styles/theme/**` | UIkit theme variables/hooks, aligned with issue #300 / future `packages/theme` |
+| `src/styles/shell.less` | app shell/sidebar/responsive layout |
+| `src/styles/product.less` | true product-specific layout only |
+| `src/styles/visualizations.less` | charts/data visualization |
+| `src/ui.js` | reusable component decisions translated into production React/UIkit |
+| `src/views.js` | view composition translated into production views |
+| `src/main.js` | shell/navigation semantics and interaction decisions only |
+
+Standard UIkit geometry/skin must not be promoted as custom CSS. If a change belongs to a UIkit component, prefer its LESS variable/hook in the Harika theme layer.
 
 ## Never promote automatically
 
-The following are reference or prototype material and are not production payload:
+- `src/data.js` mock data
+- demo names/metrics
+- browser-local mutation behavior
+- `src/interactions.js` demo implementation as code
+- `src/harika-source.js`
+- `src/transfer-state.js`
+- `src/prototype/**`
+- `src/styles/prototype.less`
+- documentation/scripts.
 
-- `src/data.js` mock data;
-- demo customer names and demo metrics;
-- clipboard/demo-only behavior that has no production equivalent;
-- `src/harika-source.js`;
-- `src/transfer-state.js`;
-- `src/prototype/` clickdummy-only UI-lab views;
-- `src/styles/prototype.less` clickdummy-only Styleguide styling;
-- documentation and repository scripts.
+## Required sequence
 
-## Required transfer sequence
+1. Freeze exact clickdummy source SHA.
+2. Refresh current `ccf-sites-ads/main` and re-read relevant Product Blueprint / IA / issue scope.
+3. Calculate the delta from the transfer checkpoint.
+4. Classify each decision: UIkit theme, shell, product layout, visualization, interaction, product semantics or demo-only.
+5. Create a focused Harika branch.
+6. Port into production React/UIkit while preserving auth, permissions, APIs and real data.
+7. Perform maximum static/build/browser checks before GitHub Actions.
+8. Run one strong final branch-CI candidate.
+9. **No PR before green branch CI.**
+10. After successful integration, append the exact clickdummy and Harika SHAs to `UI-TRANSFER-LOG.md` and update the checkpoint.
 
-1. **Freeze the clickdummy source commit**
-   - identify the exact clickdummy commit to promote;
-   - do not transfer from an uncommitted local state.
+## Parallel work
 
-2. **Refresh Harika first**
-   - read the current `ccf-sites-ads/main` SHA;
-   - compare it with `src/harika-source.js`;
-   - inspect product/navigation/style changes that happened in parallel.
-
-3. **Calculate the clickdummy delta**
-   - compare the transfer checkpoint with the selected clickdummy commit;
-   - review only the changed UI decisions.
-
-4. **Classify every change**
-   - visual token;
-   - layout;
-   - reusable component;
-   - view composition;
-   - interaction;
-   - product/information-architecture change;
-   - mock/demo-only change.
-
-5. **Create a Harika branch**
-   - use a focused branch such as `ui/port-clickdummy-sidebar`;
-   - never work directly on production `main`.
-
-6. **Port the design into Harika**
-   - preserve real data flows, auth, permissions and APIs;
-   - adapt the accepted UI decision to the production React/UIkit structure;
-   - do not replace production behavior with mock behavior.
-
-7. **Verify before PR**
-   - static checks first;
-   - build/tests next;
-   - GitHub Actions only when the branch is a final candidate;
-   - no trial-and-error Action runs.
-
-8. **No PR before green branch CI**
-   - this is a permanent repository rule;
-   - a PR is opened only after the relevant branch checks are green.
-
-9. **Record the successful promotion**
-   - append an entry to `docs/UI-TRANSFER-LOG.md`;
-   - update `src/transfer-state.js` with the promoted clickdummy commit and resulting Harika commit;
-   - refresh `src/harika-source.js` after the new Harika main state is known.
-
-## Handling parallel development
-
-If Harika changed while the clickdummy was being edited:
-
-- Harika product semantics remain authoritative;
-- clickdummy visual decisions are rebased conceptually onto the new production state;
-- conflicting information architecture is reviewed explicitly;
-- neither side is silently overwritten.
-
-This allows UI experimentation and production development to continue in parallel without
-turning the clickdummy into a competing source of product truth.
+If Harika changes while the clickdummy is edited:
+- refresh Harika before promotion;
+- Harika semantics remain authoritative;
+- resolve conflicting UI decisions explicitly;
+- never silently overwrite either side.

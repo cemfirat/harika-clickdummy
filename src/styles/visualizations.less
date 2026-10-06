@@ -1,0 +1,51 @@
+.metric-value {
+  display: block;
+  margin: .65rem 0 .15rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 3rem;
+  font-weight: 400;
+  letter-spacing: -.06em;
+}
+
+.metric-source,
+.metric-label,
+.metric-meta {
+  color: @ccf-muted;
+  font-size: .7rem;
+}
+
+.metric-card { min-height: 9.5rem; }
+
+.mock-chart {
+  position: relative;
+  min-height: 16rem;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, fade(@ccf-light-indigo, 30%), transparent),
+    #fff;
+}
+
+.mock-chart__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(fade(@ccf-light-indigo, 55%) 1px, transparent 1px),
+    linear-gradient(90deg, fade(@ccf-light-indigo, 45%) 1px, transparent 1px);
+  background-size: 100% 25%, 16.66% 100%;
+}
+
+.mock-chart svg {
+  position: absolute;
+  inset: 1rem;
+  width: calc(100% - 2rem);
+  height: calc(100% - 2rem);
+}
+
+.mock-chart polyline {
+  stroke: @ccf-violet;
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mock-chart circle { fill: @ccf-magenta; }

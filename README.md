@@ -1,37 +1,37 @@
 # Harika Clickdummy
 
-Interactive UI/UX prototype for **Harika Intelligence Center**.
+UI/UX laboratory for **Harika Intelligence Center**.
 
-This repository exists so layout, LESS, navigation and interaction patterns can be developed quickly without coupling design experiments to the productive Harika backend.
+The clickdummy mirrors the productive Harika information architecture and shell while using mock data only. It exists to test deliberate UI/LESS decisions without coupling experiments to production APIs, authentication or writes.
 
-## Relationship to Harika
+## Source of truth
 
-- Product source of truth: `cemfirat/ccf-sites-ads`
-- Brand reference: `cemfirat/harika-site`
-- Current Harika baseline: `51ef80c3e68a77e9a34a97363c9ad3644619302c`
+- Product: `cemfirat/ccf-sites-ads`
+- Inspected Harika baseline: `51ef80c3e68a77e9a34a97363c9ad3644619302c`
+- UIkit baseline rules: [docs/UIKIT-BASELINE.md](docs/UIKIT-BASELINE.md)
 - Harika → clickdummy sync: [docs/HARIKA-SYNC.md](docs/HARIKA-SYNC.md)
 - clickdummy → Harika transfer: [docs/UI-TRANSFER.md](docs/UI-TRANSFER.md)
-- promotion history: [docs/UI-TRANSFER-LOG.md](docs/UI-TRANSFER-LOG.md)
+- transfer history: [docs/UI-TRANSFER-LOG.md](docs/UI-TRANSFER-LOG.md)
 
-The clickdummy contains **mock data only**. It does not call production APIs and does not perform real writes.
+## Design-system rule
+
+**UIkit first.**
+
+The clickdummy compiles the unmodified UIkit LESS source and applies the Harika theme through UIkit variables/component theme files. It does not import the prebuilt UIkit CSS and then rebuild Cards, Forms, Navs, Modals or Status components with a second custom design system.
+
+Custom LESS is limited to Harika shell/layout, data visualization, true product-specific composition and clickdummy-only prototype layout.
 
 ## Browser preview
 
 Immediate browser workspace:
 
-- StackBlitz: https://stackblitz.com/github/cemfirat/harika-clickdummy?startScript=dev
+- https://stackblitz.com/github/cemfirat/harika-clickdummy?startScript=dev
 
-Planned fixed preview URL:
+Planned GitHub Pages preview:
 
-- GitHub Pages: https://cemfirat.github.io/harika-clickdummy/
+- https://cemfirat.github.io/harika-clickdummy/
 
-GitHub Pages is intentionally deployed by a manual workflow so a repository merge cannot create a failed Pages run while Pages is disabled. One-time activation:
-
-1. Repository → Settings → Pages.
-2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-3. Open **Actions → Pages Preview → Run workflow**.
-
-After that deployment, the fixed Pages URL serves the current `main` build. Vite uses a dedicated Pages build mode so local development remains rooted at `/` while the Pages artifact uses `/harika-clickdummy/`.
+Pages remains manually deployed while repository Pages activation is pending.
 
 ## Local development
 
@@ -40,16 +40,10 @@ npm install
 npm run dev
 ```
 
-Production-style verification:
+Verification:
 
 ```bash
 npm run verify
-npm run preview
-```
-
-Show UI changes that are pending for an intentional Harika transfer:
-
-```bash
 npm run transfer:status
 ```
 
@@ -67,43 +61,51 @@ src/
 ├── ui.js
 ├── views.js
 └── styles/
-    ├── tokens.less
-    ├── layout.less
-    ├── components.less
-    ├── views.less
-    ├── prototype.less
-    └── main.less
+    ├── main.less
+    ├── theme/
+    │   ├── _import.less
+    │   ├── variables.less
+    │   ├── base.less
+    │   ├── button.less
+    │   ├── card.less
+    │   ├── form.less
+    │   ├── label.less
+    │   ├── badge.less
+    │   ├── alert.less
+    │   ├── table.less
+    │   └── modal.less
+    ├── shell.less
+    ├── product.less
+    ├── visualizations.less
+    └── prototype.less
 ```
 
-The LESS split is deliberate: tokens and layout can be changed without mixing view-specific experiments into the whole interface.
+## Current scope
 
-## Current prototype scope
-
-- full nine-item Harika primary navigation
-- responsive app shell
-- active customer / website context
-- overview with KPI cards, opportunities and mock trend
-- searchable/filterable customer list
-- local demo create/edit customer forms
-- website list with local demo add/edit flow
-- customer and website context switching
-- Search & SEO tabs with real click interactions
-- Ads campaign detail dialog
+- nine Harika primary areas
+- production-aligned desktop shell and mobile UIkit Offcanvas
+- real Harika icon
+- compact customer table/search/filter
+- website list
+- local demo customer/website forms
+- context switching
+- Search & SEO subnav
+- Ads details
 - AI Visibility
-- Prompt Center with modal and clipboard interaction
-- development timeline
-- settings detail dialogs
-- demo profile dialog
-- clickdummy-only UI Styleguide for LESS/tokens/components (footer → Styleguide)
+- Prompt Center with native UIkit modal
+- development view
+- settings details
+- UIkit-first styleguide.
 
-All form changes exist only in the current browser session and are discarded on reload.
+All data changes are local to the browser session and disappear on reload.
 
 ## Guardrails
 
+- mock data only
 - no production credentials
-- no backend calls
-- no DNS/auth/runtime changes
-- no automatic promotion from clickdummy to Harika
-- source sync before each substantial UI round
+- no backend/API calls
+- no productive writes
+- no silent product/IA drift
+- no custom recreation of UIkit standard components
 - exact commit-to-commit transfer tracking
-- no PR before green branch CI
+- **no PR before green branch CI**
