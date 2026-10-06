@@ -1,8 +1,8 @@
 {
   "name": "harika-clickdummy",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "UIkit-first Harika Intelligence Center clickdummy.",
+  "description": "HTML-first UIkit Harika Intelligence Center clickdummy.",
   "type": "module",
   "scripts": {
     "dev": "vite",
