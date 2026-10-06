@@ -54,6 +54,8 @@ const interactionsSource = await readFile(new URL("../src/interactions.js", impo
 const lessEntry = await readFile(new URL("../src/styles/main.less", import.meta.url), "utf8");
 const transferStatusSource = await readFile(new URL("./transfer-status.mjs", import.meta.url), "utf8");
 const transferGuide = await readFile(new URL("../docs/UI-TRANSFER.md", import.meta.url), "utf8");
+const viteConfigSource = await readFile(new URL("../vite.config.js", import.meta.url), "utf8");
+const pagesWorkflowSource = await readFile(new URL("../.github/workflows/pages-preview.yml", import.meta.url), "utf8");
 
 for (const source of [mainSource, viewsSource, interactionsSource]) {
   assert(!/\bfetch\s*\(/.test(source), "Clickdummy must not call remote APIs.");
@@ -80,6 +82,10 @@ for (const marker of [
 }
 
 assert(mainSource.includes("bindInteractiveUi"), "Main shell must bind clickdummy interactions.");
+assert(viteConfigSource.includes('mode === "pages" ? "/harika-clickdummy/" : "/"'), "Vite Pages base path must remain explicit.");
+assert(pagesWorkflowSource.includes("workflow_dispatch:"), "Pages preview must remain manually deployable.");
+assert(!/^\s*push:/m.test(pagesWorkflowSource), "Pages preview must not auto-run while Pages activation is manual.");
+assert(pagesWorkflowSource.includes("actions/deploy-pages@v4"), "Pages preview must use the official deploy-pages action.");
 assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide must preserve the permanent CI-before-PR rule.");
 assert(transferGuide.includes("src/data.js"), "Transfer guide must explicitly exclude mock data from automatic promotion.");
 
