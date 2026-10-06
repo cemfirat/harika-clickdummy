@@ -34,14 +34,26 @@ function overview() {
 }
 
 function customerView() {
-  const rows = customers.map((customer) =>
-    '<tr data-customer-row data-customer-name="' + escapeHtml(customer.name.toLowerCase()) + '" data-customer-status="' + escapeHtml(customer.status) + '">' +
-    '<td><strong>' + escapeHtml(customer.name) + '</strong><small class="table-secondary">' + escapeHtml(customer.company) + '</small></td>' +
-    '<td>' + escapeHtml(customer.contact) + '</td>' +
-    '<td>' + customer.websites + '</td>' +
-    '<td>' + badge(customer.status, customer.status === "Aktiv" ? "success" : "warning") + '</td>' +
-    '<td class="table-actions"><button class="uk-button uk-button-small uk-button-default" data-customer-open="' + escapeHtml(customer.id) + '">Öffnen</button><button class="uk-button uk-button-small uk-button-text" data-customer-edit="' + escapeHtml(customer.id) + '">Bearbeiten</button></td></tr>'
-  ).join("");
+  const rows = customers.map((customer) => {
+    const relatedSites = websites
+      .filter((website) => website.customer === customer.name)
+      .flatMap((website) => [website.name, website.origin])
+      .join(" ");
+    const searchIndex = [
+      customer.name,
+      customer.company,
+      customer.contact,
+      customer.email,
+      relatedSites
+    ].join(" ").toLowerCase();
+
+    return '<tr data-customer-row data-customer-search-index="' + escapeHtml(searchIndex) + '" data-customer-status="' + escapeHtml(customer.status) + '">' +
+      '<td><strong>' + escapeHtml(customer.name) + '</strong><small class="table-secondary">' + escapeHtml(customer.company) + '</small></td>' +
+      '<td>' + escapeHtml(customer.contact) + '</td>' +
+      '<td>' + customer.websites + '</td>' +
+      '<td>' + badge(customer.status, customer.status === "Aktiv" ? "success" : "warning") + '</td>' +
+      '<td class="table-actions"><button class="uk-button uk-button-small uk-button-default" data-customer-open="' + escapeHtml(customer.id) + '">Öffnen</button><button class="uk-button uk-button-small uk-button-text" data-customer-edit="' + escapeHtml(customer.id) + '">Bearbeiten</button></td></tr>';
+  }).join("");
 
   const toolbar = '<div class="list-toolbar">' +
     '<input class="uk-input" type="search" placeholder="Kunden suchen…" aria-label="Kunden suchen" data-customer-search>' +

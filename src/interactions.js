@@ -44,7 +44,7 @@ export function bindInteractiveUi({ navigate, rerender, showModal, closeModal, n
       let visible = 0;
 
       for (const row of customerRows) {
-        const matchesText = !needle || row.dataset.customerName.includes(needle);
+        const matchesText = !needle || row.dataset.customerSearchIndex.includes(needle);
         const matchesStatus = selectedStatus === "all" || row.dataset.customerStatus === selectedStatus;
         row.hidden = !(matchesText && matchesStatus);
         if (!row.hidden) visible += 1;
@@ -192,12 +192,21 @@ export function bindInteractiveUi({ navigate, rerender, showModal, closeModal, n
       if (!name) return;
 
       if (editing) {
+        const previousName = customer.name;
         customer.name = name;
         customer.company = String(data.get("company") || "").trim() || name;
         customer.contact = String(data.get("contact") || "").trim();
         customer.email = String(data.get("email") || "").trim();
         customer.phone = String(data.get("phone") || "").trim();
         customer.status = String(data.get("status") || "Aktiv");
+
+        if (previousName !== customer.name) {
+          for (const website of websites) {
+            if (website.customer === previousName) website.customer = customer.name;
+          }
+          if (activeContext.customer === previousName) activeContext.customer = customer.name;
+        }
+        recountCustomerWebsites();
       } else {
         customers.push({
           id: nextId(name),
