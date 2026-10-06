@@ -80,6 +80,8 @@ The following are reference or prototype material and are not production payload
 - clipboard/demo-only behavior that has no production equivalent;
 - `src/harika-source.js`;
 - `src/transfer-state.js`;
+- `src/prototype/` clickdummy-only UI-lab views;
+- `src/styles/prototype.less` clickdummy-only Styleguide styling;
 - documentation and repository scripts.
 
 ## Required transfer sequence

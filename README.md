@@ -43,6 +43,8 @@ src/
 ├── data.js
 ├── harika-source.js
 ├── interactions.js
+├── prototype/
+│   └── styleguide.js
 ├── transfer-state.js
 ├── ui.js
 ├── views.js
@@ -51,6 +53,7 @@ src/
     ├── layout.less
     ├── components.less
     ├── views.less
+    ├── prototype.less
     └── main.less
 ```
 
@@ -73,6 +76,7 @@ The LESS split is deliberate: tokens and layout can be changed without mixing vi
 - development timeline
 - settings detail dialogs
 - demo profile dialog
+- clickdummy-only UI Styleguide for LESS/tokens/components (footer → Styleguide)
 
 All form changes exist only in the current browser session and are discarded on reload.
 

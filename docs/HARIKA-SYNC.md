@@ -66,6 +66,7 @@ The clickdummy deliberately separates styling into:
 - `src/styles/layout.less` — app shell, sidebar, topbar, responsive layout
 - `src/styles/components.less` — reusable UI building blocks
 - `src/styles/views.less` — view-specific compositions
+- `src/styles/prototype.less` — clickdummy-only Styleguide/UI-lab styling; not a Harika production transfer target
 - `src/styles/main.less` — import entry point
 
 This split is intended to make parallel UI work safe and easy to review.

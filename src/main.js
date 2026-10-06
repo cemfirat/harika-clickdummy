@@ -5,15 +5,17 @@ import "./styles/main.less";
 import { activeContext, navigation } from "./data.js";
 import { harikaSource } from "./harika-source.js";
 import { bindInteractiveUi } from "./interactions.js";
+import { renderStyleguide } from "./prototype/styleguide.js";
 import { contextLabel, renderPromptModal, renderView } from "./views.js";
 
 UIkit.use(Icons);
 
 const app = document.querySelector("#app");
+const prototypeViews = new Set(["styleguide"]);
 
 function currentView() {
   const value = new URL(window.location.href).searchParams.get("view") || "overview";
-  return navigation.some((item) => item[0] === value) ? value : "overview";
+  return navigation.some((item) => item[0] === value) || prototypeViews.has(value) ? value : "overview";
 }
 
 function navigate(view, push = true) {
@@ -31,6 +33,10 @@ function navMarkup(activeView) {
   }).join("");
 }
 
+function renderCurrentView(view) {
+  return view === "styleguide" ? renderStyleguide() : renderView(view);
+}
+
 function shell(view) {
   return '<main class="app-shell">' +
     '<aside class="sidebar">' +
@@ -45,8 +51,8 @@ function shell(view) {
         '<div class="topbar__actions"><button class="uk-button uk-button-default uk-button-small" data-nav="customers">Kunde wechseln</button><button class="avatar" type="button" data-profile-open aria-label="Profil öffnen">CF</button></div>' +
       '</header>' +
       '<div class="demo-ribbon"><strong>UI-Labor</strong><span>Änderungen und Formulare bleiben lokal und werden beim Neuladen verworfen.</span></div>' +
-      '<div class="content">' + renderView(view) + '</div>' +
-      '<footer class="app-footer"><span>Harika Clickdummy · UI-Labor</span><span>Source: ccf-sites-ads@' + harikaSource.commit.slice(0, 7) + '</span></footer>' +
+      '<div class="content">' + renderCurrentView(view) + '</div>' +
+      '<footer class="app-footer"><span>Harika Clickdummy · UI-Labor · <a href="?view=styleguide" data-nav="styleguide">Styleguide</a></span><span>Source: ccf-sites-ads@' + harikaSource.commit.slice(0, 7) + '</span></footer>' +
     '</section>' +
     '<div class="mobile-overlay" data-toggle-nav></div>' +
     '<div class="prompt-modal" hidden></div>' +
