@@ -1,37 +1,45 @@
 # Harika Clickdummy – UIkit-first / HTML-first baseline
 
-Stand: 2026-10-06
+Stand: 2026-10-07
 
 This document locks the design-system and editing rules for the Harika UI lab. The productive source of truth remains `cemfirat/ccf-sites-ads`.
 
 ## Core editing rule
 
-**HTML first. UIkit first.**
+**HTML first. UIkit first. Shared only where it is truly global.**
 
-The clickdummy is intentionally a classic multi-page HTML prototype.
+Each Harika area remains its own editable root HTML file. The actual page content remains visible directly in that file.
 
-Each Harika area has its own editable root HTML file:
+Repeated application chrome is centralized in small HTML partials:
 
-- `index.html` — Übersicht
-- `kunden.html`
-- `websites.html`
-- `search-seo.html`
-- `ads.html`
-- `ai-visibility.html`
-- `prompt-center.html`
-- `entwicklung.html`
-- `einstellungen.html`
-- `styleguide.html` — prototype-only UI lab.
+- `partials/brand.html`
+- `partials/user.html`
+- `partials/navigation.html`
+- `partials/sidebar.html`
+- `partials/workspace-header.html`
+- `partials/footer.html`
+- `partials/mobile-nav.html`
+- `partials/profile-modal.html`
 
-The visible page structure and UIkit classes must be readable directly in these files.
+This solves the practical problem of changing a global header, footer or navigation in ten files while preserving direct page-level HTML editing.
 
-### Deliberate duplication
+## Minimal include rule
 
-Sidebar, mobile navigation, workspace header and footer are deliberately duplicated across the HTML pages.
+The repository uses one intentionally small build-time include syntax:
 
-That is normally not ideal application architecture, but it is correct for this UI lab because Cem must be able to directly edit the actual HTML structure and classes of every page without a template engine, JSX, render function or hidden partial.
+```html
+<!-- @include partials/footer.html -->
+```
 
-Do not introduce Nunjucks, Handlebars, JSX, React templates or JavaScript string rendering for page structure.
+Header text can be passed as escaped variables:
+
+```html
+<!-- @include partials/workspace-header.html {"title":"Kunden","description":"..."} -->
+```
+
+Vite expands these includes during development/build.
+
+This is **not** permission to introduce a general template framework. Do not add React templates, JSX, Nunjucks, Handlebars or JavaScript string rendering for page structure.
 
 ## JavaScript boundary
 
@@ -39,9 +47,10 @@ Do not introduce Nunjucks, Handlebars, JSX, React templates or JavaScript string
 
 Allowed:
 - initialize UIkit and icons
+- mark the current shared navigation item active from `body[data-page]`
 - customer table filtering
 - clipboard behavior
-- demo form submission notifications
+- demo form notifications
 - small progressive-enhancement interactions.
 
 Not allowed:
@@ -92,17 +101,6 @@ A custom class must not recreate a standard UIkit component.
 src/styles/
 ├── main.less
 ├── theme/
-│   ├── _import.less
-│   ├── variables.less
-│   ├── base.less
-│   ├── button.less
-│   ├── card.less
-│   ├── form.less
-│   ├── label.less
-│   ├── badge.less
-│   ├── alert.less
-│   ├── table.less
-│   └── modal.less
 ├── shell.less
 ├── product.less
 ├── visualizations.less
@@ -132,4 +130,4 @@ Custom LESS is limited to:
 
 ## Product authority
 
-The HTML files are an editable UI lab, not a second product specification. Harika Product Blueprint, IA and current scoped issues remain authoritative.
+The HTML pages and partials are an editable UI lab, not a second product specification. Harika Product Blueprint, IA and current scoped issues remain authoritative.
