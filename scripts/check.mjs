@@ -1,4 +1,7 @@
 import { readFile, readdir } from "node:fs/promises";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import less from "less";
 import { harikaSource } from "../src/harika-source.js";
 import { transferState } from "../src/transfer-state.js";
 
@@ -33,9 +36,12 @@ function assert(condition, message) {
 }
 
 const fullSha = /^[0-9a-f]{40}$/;
+const rootDirectory = fileURLToPath(new URL("..", import.meta.url));
 const packageJson = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
 
 const appSource = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
+const studioSource = await readFile(new URL("../src/studio.js", import.meta.url), "utf8");
+const themeStudioPartial = await readFile(new URL("../partials/theme-studio.html", import.meta.url), "utf8");
 
 const standardThemeSource = await readFile(new URL("../src/themes/standard.less", import.meta.url), "utf8");
 const harikaThemeSource = await readFile(new URL("../src/themes/harika.less", import.meta.url), "utf8");
@@ -58,6 +64,7 @@ const baselineGuide = await readFile(new URL("../docs/UIKIT-BASELINE.md", import
 const editingGuide = await readFile(new URL("../docs/EDITING-GUIDE.md", import.meta.url), "utf8");
 const themesGuide = await readFile(new URL("../docs/THEMES.md", import.meta.url), "utf8");
 const styleguideGuide = await readFile(new URL("../docs/STYLEGUIDE.md", import.meta.url), "utf8");
+const themeStudioGuide = await readFile(new URL("../docs/THEME-STUDIO.md", import.meta.url), "utf8");
 const viteConfigSource = await readFile(new URL("../vite.config.js", import.meta.url), "utf8");
 const pagesWorkflowSource = await readFile(new URL("../.github/workflows/pages-preview.yml", import.meta.url), "utf8");
 
@@ -176,6 +183,8 @@ assert(packageJson.scripts?.["dev:standard"] === "vite --mode standard", "Standa
 assert(packageJson.scripts?.["dev:customer:ambra"] === "vite --mode customer-ambra", "AMBRA customer theme dev mode must remain explicit.");
 assert(packageJson.scripts?.["build:standard"] === "vite build --mode standard", "Standard theme build mode must remain explicit.");
 assert(packageJson.scripts?.["build:customer:ambra"] === "vite build --mode customer-ambra", "AMBRA customer theme build mode must remain explicit.");
+assert(packageJson.scripts?.studio === "vite --mode harika --host 127.0.0.1", "Theme Studio must bind explicitly to loopback.");
+assert(packageJson.scripts?.["studio:customer:ambra"] === "vite --mode customer-ambra --host 127.0.0.1", "AMBRA Theme Studio must bind explicitly to loopback.");
 
 const nonThemeLess = [shellLess, productLess, visualizationLess, prototypeLess].join("\n");
 for (const selector of [".uk-button", ".uk-input", ".uk-select", ".uk-textarea", ".uk-card", ".uk-label", ".uk-badge", ".uk-alert"]) {
@@ -187,6 +196,19 @@ for (const [page] of allPages) {
 }
 
 assert(viteConfigSource.includes('name: "harika-html-partials"'), "Vite must keep the small HTML partial plugin.");
+assert(viteConfigSource.includes('name: "harika-theme-studio"'), "Vite must keep the local Theme Studio plugin.");
+assert(viteConfigSource.includes('apply: "serve"'), "Theme Studio plugin must be development-server only.");
+assert(viteConfigSource.includes("isLoopbackRequest"), "Theme Studio must enforce loopback requests.");
+assert(viteConfigSource.includes('address === "127.0.0.1" || address === "::1"'), "Theme Studio loopback allowlist must remain explicit.");
+assert(viteConfigSource.includes("assertThemeStudioFile"), "Theme Studio must validate every editable path against an allowlist.");
+assert(viteConfigSource.includes('const files = ["src/themes/harika.less"]'), "Theme Studio allowlist must start at Harika, not UIkit Standard.");
+assert(!viteConfigSource.includes('const files = ["src/themes/standard.less"]'), "UIkit Standard must stay read-only in Theme Studio.");
+assert(viteConfigSource.includes('requestUrl.pathname === "/__studio/status"'), "Theme Studio status endpoint is missing.");
+assert(viteConfigSource.includes('requestUrl.pathname === "/__studio/file"'), "Theme Studio file endpoint is missing.");
+assert(viteConfigSource.includes("raw.length > 512 * 1024"), "Theme Studio request-size guard is missing.");
+assert(viteConfigSource.includes("await less.render"), "Theme Studio saves must validate LESS directly.");
+assert(viteConfigSource.includes("writeFileSync(absolutePath, previousContent"), "Theme Studio must roll back invalid LESS writes.");
+assert(viteConfigSource.includes("rolledBack: true"), "Theme Studio must report compile rollback.");
 assert(viteConfigSource.includes("expandHtmlPartials"), "Vite must expand shared HTML partials.");
 assert(viteConfigSource.includes("includeCodePattern"), "Vite must support styleguide code includes.");
 assert(viteConfigSource.includes("expandCodePartials"), "Vite must render styleguide markup from the same example source.");
@@ -211,6 +233,10 @@ assert(themesGuide.includes("Hooks second"), "Theme guide must document the hook
 assert(themeReadme.includes("UIkit's documented custom-theme structure"), "Theme source README must explain its UIkit alignment.");
 assert(styleguideGuide.includes("Single source for Preview + Markup"), "Styleguide guide must document synchronized Preview/Markup.");
 assert(styleguideGuide.includes("@include-code"), "Styleguide guide must document the code include directive.");
+assert(themeStudioGuide.includes("Theme Studio is the local editing mode"), "Theme Studio guide must document local-only editing.");
+assert(themeStudioGuide.includes("No PR before green branch CI"), "Theme Studio guide must preserve CI-before-PR.");
+assert(themeStudioGuide.includes("127.0.0.1"), "Theme Studio guide must document the loopback boundary.");
+assert(themeStudioGuide.includes("does **not** currently"), "Theme Studio guide must state its current non-goals.");
 
 for (const example of [
   "typography.html",
@@ -246,12 +272,29 @@ for (const section of [
 
 assert(html["styleguide.html"].includes("@include-code partials/styleguide/"), "Styleguide must expose Markup from shared example files.");
 assert(html["styleguide.html"].includes("data-active-theme"), "Styleguide must expose the active compiled theme.");
+assert(html["styleguide.html"].includes("@include partials/theme-studio.html"), "Styleguide must include the Theme Studio offcanvas.");
+assert(html["styleguide.html"].includes('src="/src/studio.js"'), "Styleguide must load the local Theme Studio client.");
+assert(html["styleguide.html"].includes("data-studio-open"), "Styleguide must expose Theme Studio entry buttons.");
+
+assert(themeStudioPartial.includes('id="theme-studio"'), "Theme Studio partial must use its own UIkit Offcanvas.");
+assert(themeStudioPartial.includes("data-studio-editor"), "Theme Studio editor is missing.");
+assert(themeStudioPartial.includes("data-studio-save"), "Theme Studio save action is missing.");
+assert(themeStudioPartial.includes("data-studio-diff"), "Theme Studio Git diff area is missing.");
+
+assert(studioSource.includes('const endpoint = "/__studio"'), "Theme Studio client must use only the local Studio endpoint.");
+assert(!studioSource.includes("api.github.com"), "Theme Studio client must not talk directly to GitHub.");
+assert(!studioSource.includes("github.com/"), "Theme Studio client must not embed GitHub write endpoints.");
+assert(studioSource.includes("Speichern & kompilieren") || themeStudioPartial.includes("Speichern &amp; kompilieren"), "Theme Studio must expose explicit save/compile semantics.");
+assert(studioSource.includes('event.key === "Tab"'), "Theme Studio editor must preserve Tab indentation.");
+assert(studioSource.includes('event.metaKey || event.ctrlKey'), "Theme Studio editor must support Cmd/Ctrl+S.");
 assert(customerThemeReadme.includes("entry-file +"), "Customer theme README must explain the entry-file + folder convention.");
 
 assert(transferStatusSource.includes('"partials/"'), "Shared partials must be classified for UI transfer.");
 assert(transferStatusSource.includes('"src/styles/"'), "Structural styles must be classified for UI transfer.");
 assert(transferStatusSource.includes('"src/themes/"'), "Theme changes must be classified for UI transfer.");
 assert(transferStatusSource.includes('"styleguide.html"'), "Styleguide HTML must remain prototype-only in transfer status.");
+assert(transferStatusSource.includes('"partials/theme-studio.html"'), "Theme Studio partial must remain prototype/local-only in transfer status.");
+assert(transferStatusSource.includes('"src/studio.js"'), "Theme Studio client must remain prototype/local-only in transfer status.");
 assert(transferStatusSource.includes('"partials/styleguide/"'), "Styleguide example partials must remain prototype-only in transfer status.");
 assert(transferStatusSource.includes('"src/app.js"'), "Behavior-only app.js must be classified explicitly.");
 
@@ -262,4 +305,20 @@ assert(pagesWorkflowSource.includes('"partials/**"'), "Pages preview must deploy
 assert(pagesWorkflowSource.includes('"src/**"'), "Pages preview must deploy source/theme changes.");
 assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide must preserve permanent CI-before-PR rule.");
 
-console.log("Harika clickdummy HTML-first + UIkit theme structure checks passed.");
+for (const relativePath of [
+  "src/themes/harika.less",
+  "src/themes/customers/ambra.less"
+]) {
+  const filename = resolve(rootDirectory, relativePath);
+  const source = await readFile(filename, "utf8");
+  await less.render(source, {
+    filename,
+    javascriptEnabled: false,
+    paths: [
+      rootDirectory,
+      resolve(rootDirectory, "node_modules")
+    ]
+  });
+}
+
+console.log("Harika clickdummy HTML-first + UIkit theme structure + local Theme Studio checks passed.");
