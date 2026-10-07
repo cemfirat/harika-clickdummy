@@ -167,8 +167,8 @@ assert(viteConfigSource.includes('name: "harika-html-partials"'), "Vite must kee
 assert(viteConfigSource.includes("expandHtmlPartials"), "Vite must expand shared HTML partials.");
 assert(viteConfigSource.includes("server.watcher.add(partialsDirectory)"), "Vite dev server must watch shared partials.");
 assert(viteConfigSource.includes('mode === "pages" ? "/harika-clickdummy/" : "/"'), "Vite Pages base path must remain explicit.");
-assert(viteConfigSource.includes('"standard": "src/styles/themes/standard.less"'), "Vite must expose the standard theme mode.");
-assert(viteConfigSource.includes('"interface": "src/styles/themes/interface.less"'), "Vite must expose the interface theme mode.");
+assert(/\bstandard:\s*"src\/styles\/themes\/standard\.less"/.test(viteConfigSource), "Vite must expose the standard theme mode.");
+assert(/\binterface:\s*"src\/styles\/themes\/interface\.less"/.test(viteConfigSource), "Vite must expose the interface theme mode.");
 assert(viteConfigSource.includes('"customer-ambra": "src/styles/themes/customers/ambra.less"'), "Vite must expose the AMBRA customer theme mode.");
 assert(viteConfigSource.includes('"@harika-theme": resolveThemeEntry(mode)'), "Vite must resolve the active theme through one alias.");
 
