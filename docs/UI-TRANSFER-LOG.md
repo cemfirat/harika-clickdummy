@@ -11,7 +11,9 @@ UI decisions from `cemfirat/harika-clickdummy` to `cemfirat/ccf-sites-ads`.
 
 | 2026-10-07 | `84360449ab6dc741212a63800651c75c0564e716` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | Shared HTML partial baseline: global header/footer/sidebar/nav centralized, page content remains direct HTML | Superseded by UIkit theme hierarchy baseline |
 
-| 2026-10-07 | `44bdf68af81eecaf3121c4f9005ec9951a895107` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | UIkit theme hierarchy: Standard → Harika interface → customer child theme | Active baseline; no production promotion |
+| 2026-10-07 | `44bdf68af81eecaf3121c4f9005ec9951a895107` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | UIkit theme hierarchy: Standard → Harika interface → customer child theme | Superseded by semantically named UIkit-aligned theme baseline |
+
+| 2026-10-07 | `bb84e431eee6085847b46a26abef29e4ec928b2b` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | UIkit-aligned naming and structure: Standard → Harika → Customer under `src/themes/` | Active baseline; no production promotion |
 
 ## Logging rule
 

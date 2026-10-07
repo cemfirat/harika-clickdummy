@@ -98,20 +98,20 @@ A custom class must not recreate a standard UIkit component.
 ## LESS architecture
 
 ```text
-src/styles/
-├── main.less
+src/
 ├── themes/
 │   ├── standard.less
-│   ├── interface.less
-│   ├── interface/
+│   ├── harika.less
+│   ├── harika/
 │   └── customers/
-├── shell.less
-├── product.less
-├── visualizations.less
-└── prototype.less
+└── styles/
+    ├── shell.less
+    ├── product.less
+    ├── visualizations.less
+    └── prototype.less
 ```
 
-`main.less` is only a compatibility alias to `themes/interface.less`. The framework baseline itself is `themes/standard.less`, which imports UIkit's official `uikit.theme.less`.
+The framework baseline is `src/themes/standard.less`, which imports UIkit's official `uikit.theme.less`. Harika inherits it through `src/themes/harika.less`.
 
 Custom LESS is limited to:
 - Harika app shell
@@ -141,10 +141,10 @@ The HTML pages and partials are an editable UI lab, not a second product specifi
 The theme hierarchy is intentionally aligned with UIkit's Less documentation:
 
 1. `standard.less` imports `uikit/src/less/uikit.theme.less`.
-2. `interface.less` inherits Standard and applies Harika variables/hooks.
-3. `customers/<slug>.less` inherits Interface and applies narrow customer variables.
+2. `harika.less` inherits Standard and applies Harika variables/hooks.
+3. `customers/<slug>.less` inherits Harika and applies narrow customer variables.
 
-The old flat `src/styles/theme/` directory is forbidden. Harika UIkit component overrides live under `src/styles/themes/interface/`.
+The old flat `src/styles/theme/` directory is forbidden. Harika UIkit component overrides live under `src/themes/harika/`.
 
 Customer themes are branding layers, not alternate product UIs. They must not copy UIkit source or fork Harika shell/product structure.
 

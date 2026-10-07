@@ -14,7 +14,7 @@ Accepted decisions are **ported**, never copied blindly.
 | --- | --- |
 | root product `*.html` pages | page-specific HTML/UIkit structure and view composition translated into production React/UIkit |
 | `partials/**` | shared shell/header/footer/navigation decisions translated into production shared components |
-| `src/styles/themes/interface/**` | UIkit theme variables/hooks |
+| `src/themes/harika/**` | UIkit theme variables/hooks |
 | `src/styles/shell.less` | app shell/sidebar/responsive layout |
 | `src/styles/product.less` | true product-specific layout only |
 | `src/styles/visualizations.less` | charts/data visualization |
@@ -47,9 +47,9 @@ The build-time include mechanism itself is a clickdummy editing aid and is not a
 
 ## Theme transfer classification
 
-- `src/styles/themes/standard.less`: framework reference layer; normally no Harika promotion change.
-- `src/styles/themes/interface/**`: Harika application-theme decisions.
-- `src/styles/themes/customers/**`: customer branding only.
+- `src/themes/standard.less`: framework reference layer; normally no Harika promotion change.
+- `src/themes/harika/**`: Harika application-theme decisions.
+- `src/themes/customers/**`: customer branding only.
 - `src/styles/shell.less` and `product.less`: product-specific structure, not customer branding.
 
 When promoting a clickdummy change, preserve this ownership boundary instead of flattening theme layers.

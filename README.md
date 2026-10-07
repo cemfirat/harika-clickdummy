@@ -52,7 +52,7 @@ Changing the classes or structure in `partials/workspace-header.html` updates th
 
 ## UIkit
 
-UIkit `3.25.25` is compiled from `uikit/src/less/uikit.theme.less`. Harika theme values live in `src/styles/themes/interface/`.
+UIkit `3.25.25` is compiled from `uikit/src/less/uikit.theme.less`. Harika theme values live in `src/themes/harika/`.
 
 Custom LESS is limited to shell, true product-specific composition, visualizations and the prototype-only styleguide.
 
@@ -103,17 +103,16 @@ npm run transfer:status
     ├── app.js
     ├── harika-source.js
     ├── transfer-state.js
-    └── styles/
-        ├── main.less
-        ├── themes/
-        │   ├── standard.less
-        │   ├── interface.less
-        │   ├── interface/
-        │   └── customers/
-        ├── shell.less
-        ├── product.less
-        ├── visualizations.less
-        └── prototype.less
+    ├── styles/
+    │   ├── shell.less
+    │   ├── product.less
+    │   ├── visualizations.less
+    │   └── prototype.less
+    └── themes/
+        ├── standard.less
+        ├── harika.less
+        ├── harika/
+        └── customers/
 ```
 
 ## Guardrails
@@ -140,11 +139,11 @@ Harika Benutzeroberfläche
 Kunden-Childtheme
 ```
 
-- Standard: `src/styles/themes/standard.less`
-- Harika UI: `src/styles/themes/interface.less`
-- Customer themes: `src/styles/themes/customers/`
+- Standard: `src/themes/standard.less`
+- Harika: `src/themes/harika.less`
+- Customer themes: `src/themes/customers/`
 
-The Standard level imports UIkit's official `uikit.theme.less`. Harika then customizes UIkit through variables/hooks, following the UIkit documentation instead of maintaining a parallel component skin.
+The Standard level imports UIkit's official `uikit.theme.less`. Harika customizes UIkit through variables/hooks, following the UIkit documentation instead of maintaining a parallel component skin.
 
 Preview commands:
 
