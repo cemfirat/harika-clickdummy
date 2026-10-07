@@ -15,6 +15,13 @@ const htmlEntries = {
   styleguide: "styleguide.html"
 };
 
+const themeEntries = {
+  standard: "src/styles/themes/standard.less",
+  interface: "src/styles/themes/interface.less",
+  "customer-ambra": "src/styles/themes/customers/ambra.less",
+  pages: "src/styles/themes/interface.less"
+};
+
 const includePattern = /<!--\s*@include\s+([^\s]+)(?:\s+(\{[\s\S]*?\}))?\s*-->/g;
 
 function escapeHtml(value) {
@@ -64,9 +71,22 @@ function htmlPartialsPlugin() {
   };
 }
 
+function resolveThemeEntry(mode) {
+  const relative = themeEntries[mode] ?? themeEntries.interface;
+  return resolve(process.cwd(), relative);
+}
+
 export default defineConfig(({ mode }) => ({
   base: mode === "pages" ? "/harika-clickdummy/" : "/",
   plugins: [htmlPartialsPlugin()],
+  resolve: {
+    alias: {
+      "@harika-theme": resolveThemeEntry(mode)
+    }
+  },
+  define: {
+    __HARIKA_THEME__: JSON.stringify(mode === "pages" ? "interface" : (themeEntries[mode] ? mode : "interface"))
+  },
   build: {
     rollupOptions: {
       input: Object.fromEntries(
