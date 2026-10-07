@@ -14,7 +14,7 @@ Accepted decisions are **ported**, never copied blindly.
 | --- | --- |
 | root product `*.html` pages | page-specific HTML/UIkit structure and view composition translated into production React/UIkit |
 | `partials/**` | shared shell/header/footer/navigation decisions translated into production shared components |
-| `src/styles/theme/**` | UIkit theme variables/hooks |
+| `src/styles/themes/interface/**` | UIkit theme variables/hooks |
 | `src/styles/shell.less` | app shell/sidebar/responsive layout |
 | `src/styles/product.less` | true product-specific layout only |
 | `src/styles/visualizations.less` | charts/data visualization |
