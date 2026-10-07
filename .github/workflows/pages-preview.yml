@@ -9,6 +9,7 @@ on:
       - "package.json"
       - "vite.config.js"
       - "public/**"
+      - "partials/**"
       - "src/**"
       - ".github/workflows/pages-preview.yml"
   workflow_dispatch:

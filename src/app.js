@@ -4,6 +4,19 @@ import "./styles/main.less";
 
 UIkit.use(Icons);
 
+const currentPage = document.body.dataset.page;
+document.querySelectorAll("[data-nav-page]").forEach((item) => {
+  const active = item.dataset.navPage === currentPage;
+  item.classList.toggle("uk-active", active);
+
+  const link = item.querySelector("a");
+  if (link) {
+    if (active) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  }
+});
+
+
 const customerSearch = document.querySelector("[data-customer-search]");
 const customerStatus = document.querySelector("[data-customer-status-filter]");
 const customerRows = [...document.querySelectorAll("[data-customer-row]")];

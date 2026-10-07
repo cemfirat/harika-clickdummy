@@ -4,7 +4,7 @@ This document defines controlled promotion from `cemfirat/harika-clickdummy` int
 
 ## Principle
 
-The clickdummy is a Vite-served **multi-page HTML UI lab** with mock content. Harika is the productive React application with real auth, data, permissions and connectors.
+The clickdummy is a Vite-served HTML UI lab with directly editable page HTML and small shared build-time partials. Harika is the productive React application with real auth, data, permissions and connectors.
 
 Accepted decisions are **ported**, never copied blindly.
 
@@ -12,14 +12,15 @@ Accepted decisions are **ported**, never copied blindly.
 
 | Clickdummy | Harika interpretation |
 | --- | --- |
-| root product `*.html` pages | visible HTML/UIkit structure and view composition translated into production React/UIkit |
+| root product `*.html` pages | page-specific HTML/UIkit structure and view composition translated into production React/UIkit |
+| `partials/**` | shared shell/header/footer/navigation decisions translated into production shared components |
 | `src/styles/theme/**` | UIkit theme variables/hooks |
 | `src/styles/shell.less` | app shell/sidebar/responsive layout |
 | `src/styles/product.less` | true product-specific layout only |
 | `src/styles/visualizations.less` | charts/data visualization |
 | `src/app.js` | behavior decisions only; never production data/auth logic |
 
-The deliberate HTML duplication in the clickdummy is an editing aid and must not be copied into production architecture.
+The build-time include mechanism itself is a clickdummy editing aid and is not a production architecture requirement.
 
 ## Never promote automatically
 
@@ -36,18 +37,10 @@ The deliberate HTML duplication in the clickdummy is an editing aid and must not
 1. Freeze exact clickdummy source SHA.
 2. Refresh current `ccf-sites-ads/main` and relevant Product Blueprint / IA / issue scope.
 3. Calculate the delta from the transfer checkpoint.
-4. Classify each decision: HTML/UIkit structure, theme, shell, product layout, visualization, behavior or demo-only.
+4. Classify each decision: page HTML, shared partial, theme, shell, product layout, visualization, behavior or demo-only.
 5. Create a focused Harika branch.
-6. Port the accepted decision into production React/UIkit while preserving auth, permissions, APIs and real data.
+6. Port accepted decisions into production React/UIkit while preserving auth, permissions, APIs and real data.
 7. Perform maximum static/build/browser checks before GitHub Actions.
 8. Run one strong final branch-CI candidate.
 9. **No PR before green branch CI.**
 10. Log exact clickdummy and Harika SHAs after successful integration.
-
-## Parallel work
-
-If Harika changes while the clickdummy is edited:
-- refresh Harika before promotion;
-- Harika semantics remain authoritative;
-- resolve conflicts explicitly;
-- never silently overwrite either side.

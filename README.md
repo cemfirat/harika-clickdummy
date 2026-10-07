@@ -2,9 +2,35 @@
 
 Editable UI/UX laboratory for **Harika Intelligence Center**.
 
-The repository is intentionally a classic **multi-page HTML prototype**. The visible structure and UIkit classes live directly in individual HTML files so they can be edited precisely without digging through JavaScript render functions.
+The repository is an **HTML-first multi-page prototype**. Product content remains directly editable in individual HTML files. Truly global shell elements are shared as small HTML partials and expanded by Vite at dev/build time.
 
-## Edit these pages directly
+No React, JSX, Handlebars, Nunjucks or JavaScript page renderer.
+
+## Was ändere ich wo?
+
+| Ich möchte ändern | Datei |
+| --- | --- |
+| Header-Struktur / Header-Klassen auf allen Seiten | `partials/workspace-header.html` |
+| Header-Titel / Beschreibung nur einer Seite | Include-Zeile in der jeweiligen `*.html`-Datei |
+| Footer auf allen Seiten | `partials/footer.html` |
+| Sidebar auf allen Seiten | `partials/sidebar.html` |
+| Hauptnavigation / Reihenfolge / Links | `partials/navigation.html` |
+| Logo / Brand-Markup | `partials/brand.html` |
+| Benutzerbereich in Sidebar/Mobilmenü | `partials/user.html` |
+| Mobile Navigation | `partials/mobile-nav.html` |
+| Profil-Modal | `partials/profile-modal.html` |
+| Inhalt einer einzelnen Seite | jeweilige root-`*.html`-Datei |
+| Farben / globale Theme-Werte | `src/styles/theme/variables.less` |
+| UIkit Buttons, Forms, Cards usw. | passende Datei in `src/styles/theme/` |
+| Sidebar / Workspace / Shell-Layout | `src/styles/shell.less` |
+| Harika-spezifische Inhaltslayouts | `src/styles/product.less` |
+| Charts / Visualisierung | `src/styles/visualizations.less` |
+| Styleguide-only CSS | `src/styles/prototype.less` |
+| Verhalten wie Filter / Clipboard | `src/app.js` |
+
+Mehr Details: [docs/EDITING-GUIDE.md](docs/EDITING-GUIDE.md)
+
+## Seiten direkt bearbeiten
 
 | Area | File |
 | --- | --- |
@@ -19,17 +45,26 @@ The repository is intentionally a classic **multi-page HTML prototype**. The vis
 | Einstellungen | `einstellungen.html` |
 | UI-Labor | `styleguide.html` |
 
-Sidebar, Header, mobile Navigation and Footer are intentionally duplicated in these HTML files. For this repository that is a feature: the exact page markup must remain directly editable.
+Example:
+
+```html
+<!-- @include partials/workspace-header.html {"title":"Kunden","description":"Welche Kunden betreue ich?"} -->
+
+<div class="view-content">
+  <!-- Dieser Bereich bleibt direkt editierbares Seiten-HTML. -->
+</div>
+```
+
+Changing the classes or structure in `partials/workspace-header.html` updates the header on every page. Changing the values in the include line affects only that page.
 
 ## Rule
 
-**HTML = structure and UIkit classes**  
+**Page HTML = page structure/content**  
+**Partials = global repeated HTML**  
 **LESS = styling/theme**  
 **JavaScript = behavior only**
 
-`src/app.js` may initialize UIkit, filter a demo table, copy text or show a demo notification. It must not render page structure.
-
-No JSX, Nunjucks, Handlebars or JS page renderer.
+`src/app.js` may initialize UIkit, activate the current navigation item, filter a demo table, copy text or show a demo notification. It must not render page structure.
 
 ## Source of truth
 
@@ -49,7 +84,7 @@ Custom LESS is limited to shell, true product-specific composition, visualizatio
 
 - https://cemfirat.github.io/harika-clickdummy/
 
-Relevant HTML/UI/LESS changes merged to `main` deploy automatically to GitHub Pages.
+Relevant HTML, partial, UI and LESS changes merged to `main` deploy automatically to GitHub Pages.
 
 ## Local development
 
@@ -79,6 +114,15 @@ npm run transfer:status
 ├── entwicklung.html
 ├── einstellungen.html
 ├── styleguide.html
+├── partials/
+│   ├── brand.html
+│   ├── user.html
+│   ├── navigation.html
+│   ├── sidebar.html
+│   ├── workspace-header.html
+│   ├── footer.html
+│   ├── mobile-nav.html
+│   └── profile-modal.html
 └── src/
     ├── app.js
     ├── harika-source.js
@@ -97,6 +141,8 @@ npm run transfer:status
 - mock content only
 - no production credentials/APIs/writes
 - no JavaScript-rendered page markup
+- shared HTML only through the tiny build-time partial include
+- no full template framework
 - no silent product/IA drift
 - no custom recreation of UIkit standard components
 - exact transfer checkpoints
