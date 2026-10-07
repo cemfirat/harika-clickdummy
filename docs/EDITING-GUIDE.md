@@ -98,3 +98,18 @@ Nested includes are supported so Sidebar and Mobile Navigation can reuse the sam
 If you want to visually change **one page**, start in that page's HTML.
 
 If you want to visually change **every page**, first check `partials/` or `src/styles/theme/` before touching individual pages.
+
+## Theme level
+
+Before editing styling, decide which inheritance level owns the change:
+
+| Change | Level / file |
+| --- | --- |
+| UIkit default behavior/reference | Standard — do not customize |
+| Harika application appearance | `src/styles/themes/interface/` |
+| One customer's branding | `src/styles/themes/customers/<slug>/variables.less` |
+| Harika shell/layout | `src/styles/shell.less` |
+| Harika product-specific composition | `src/styles/product.less` |
+
+Do not solve a customer branding requirement in the interface theme. Do not solve a Harika interface requirement in a customer theme.
+
