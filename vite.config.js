@@ -294,7 +294,6 @@ function themeStudioPlugin(mode) {
                 await compileThemeEntry(entry);
               }
 
-              server.ws.send({ type: "full-reload" });
               sendJson(res, 200, {
                 ok: true,
                 compiled,
