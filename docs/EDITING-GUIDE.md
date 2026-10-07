@@ -67,7 +67,7 @@ Each page has a simple identifier on `body`, for example:
 
 Use the narrowest correct layer:
 
-- UIkit/global token → `src/styles/theme/`
+- UIkit/global token → `src/styles/themes/interface/`
 - shell/sidebar/workspace → `src/styles/shell.less`
 - product-specific layout → `src/styles/product.less`
 - charts → `src/styles/visualizations.less`
@@ -97,7 +97,7 @@ Nested includes are supported so Sidebar and Mobile Navigation can reuse the sam
 
 If you want to visually change **one page**, start in that page's HTML.
 
-If you want to visually change **every page**, first check `partials/` or `src/styles/theme/` before touching individual pages.
+If you want to visually change **every page**, first check `partials/` or `src/styles/themes/interface/` before touching individual pages.
 
 ## Theme level
 
