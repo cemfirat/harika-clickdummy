@@ -17,9 +17,24 @@ Before substantial UI work inspect:
 
 ## HTML-first sync rule
 
-Harika → clickdummy sync updates the actual root HTML files directly.
+Harika → clickdummy sync updates either:
 
-Do not hide synchronized structure in JavaScript render functions or a template engine. The purpose of the clickdummy is to make HTML structure and UIkit classes directly editable.
+- the relevant root HTML page for page-specific structure, or
+- a file in `partials/` when the productive change is genuinely global.
+
+Do not hide synchronized structure in browser JavaScript.
+
+## Shared shell rule
+
+Global shell elements are centralized so they can be edited once:
+
+- Header → `partials/workspace-header.html`
+- Footer → `partials/footer.html`
+- Sidebar → `partials/sidebar.html`
+- Navigation → `partials/navigation.html`
+- Mobile Navigation → `partials/mobile-nav.html`
+
+Page content remains directly in each root HTML page.
 
 ## Navigation baseline
 
@@ -33,7 +48,7 @@ Do not hide synchronized structure in JavaScript render functions or a template 
 8. `entwicklung.html`
 9. `einstellungen.html`
 
-`styleguide.html` is prototype-only and not a tenth product-navigation item.
+`styleguide.html` is prototype-only.
 
 ## Styling contract
 
