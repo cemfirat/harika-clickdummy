@@ -9,7 +9,9 @@ UI decisions from `cemfirat/harika-clickdummy` to `cemfirat/ccf-sites-ads`.
 | 2026-10-06 | `16ed0edc22fe94c8bb5d0928cd86b7372048dd18` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | UIkit-first baseline rebuilt from productive shell, Product Blueprint, IA and UI/UX issues | Superseded by HTML-first editing baseline |
 | 2026-10-06 | `117621532bac10e9937b4c70a6e2e79517ef535e` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | HTML-first multi-page UI lab: nine product HTML pages + styleguide, JS behavior only | Superseded by shared-partial editing baseline |
 
-| 2026-10-07 | `84360449ab6dc741212a63800651c75c0564e716` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | Shared HTML partial baseline: global header/footer/sidebar/nav centralized, page content remains direct HTML | Active baseline; no production promotion |
+| 2026-10-07 | `84360449ab6dc741212a63800651c75c0564e716` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | Shared HTML partial baseline: global header/footer/sidebar/nav centralized, page content remains direct HTML | Superseded by UIkit theme hierarchy baseline |
+
+| 2026-10-07 | `44bdf68af81eecaf3121c4f9005ec9951a895107` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | UIkit theme hierarchy: Standard → Harika interface → customer child theme | Active baseline; no production promotion |
 
 ## Logging rule
 
