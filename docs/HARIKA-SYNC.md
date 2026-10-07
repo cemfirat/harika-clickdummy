@@ -53,8 +53,10 @@ Page content remains directly in each root HTML page.
 ## Styling contract
 
 - UIkit source remains unmodified.
-- `src/styles/main.less` imports `uikit/src/less/uikit.less`.
-- `src/styles/theme/` owns UIkit theme values.
+- `src/styles/themes/standard.less` imports UIkit's official `uikit.theme.less`.
+- `src/styles/themes/interface.less` inherits Standard.
+- `src/styles/themes/interface/` owns Harika UIkit variables/hooks.
+- `src/styles/themes/customers/` contains narrow customer branding child themes.
 - `shell.less` owns app shell/layout.
 - `product.less` owns real Harika-specific composition only.
 - `visualizations.less` owns charts.

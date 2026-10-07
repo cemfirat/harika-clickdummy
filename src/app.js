@@ -1,8 +1,10 @@
 import UIkit from "uikit";
 import Icons from "uikit/dist/js/uikit-icons";
-import "./styles/main.less";
+import "@harika-theme";
 
 UIkit.use(Icons);
+
+document.documentElement.dataset.theme = __HARIKA_THEME__;
 
 const currentPage = document.body.dataset.page;
 document.querySelectorAll("[data-nav-page]").forEach((item) => {
