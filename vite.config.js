@@ -1,6 +1,10 @@
-import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
+import less from "less";
 import { defineConfig } from "vite";
+
+const rootDirectory = process.cwd();
 
 const htmlEntries = {
   overview: "index.html",
@@ -42,7 +46,7 @@ function applyVariables(source, variables) {
 }
 
 function readPartial(relativePath, rawVariables) {
-  const partialPath = resolve(process.cwd(), relativePath);
+  const partialPath = resolve(rootDirectory, relativePath);
   const variables = rawVariables ? JSON.parse(rawVariables) : {};
   return applyVariables(readFileSync(partialPath, "utf8"), variables);
 }
@@ -64,7 +68,7 @@ function expandCodePartials(source) {
 }
 
 function htmlPartialsPlugin() {
-  const partialsDirectory = resolve(process.cwd(), "partials");
+  const partialsDirectory = resolve(rootDirectory, "partials");
 
   return {
     name: "harika-html-partials",
@@ -83,14 +87,267 @@ function htmlPartialsPlugin() {
   };
 }
 
+function normalizeStudioPath(value) {
+  return String(value ?? "").replaceAll("\\", "/").replace(/^\.\//, "");
+}
+
+function listThemeStudioFiles() {
+  const files = ["src/themes/harika.less"];
+  const harikaDirectory = resolve(rootDirectory, "src/themes/harika");
+
+  for (const entry of readdirSync(harikaDirectory, { withFileTypes: true })) {
+    if (entry.isFile() && entry.name.endsWith(".less")) {
+      files.push("src/themes/harika/" + entry.name);
+    }
+  }
+
+  const customersDirectory = resolve(rootDirectory, "src/themes/customers");
+  for (const entry of readdirSync(customersDirectory, { withFileTypes: true })) {
+    if (entry.isFile() && entry.name.endsWith(".less")) {
+      files.push("src/themes/customers/" + entry.name);
+    }
+
+    if (!entry.isDirectory()) continue;
+
+    const customerDirectory = resolve(customersDirectory, entry.name);
+    for (const child of readdirSync(customerDirectory, { withFileTypes: true })) {
+      if (child.isFile() && child.name.endsWith(".less")) {
+        files.push("src/themes/customers/" + entry.name + "/" + child.name);
+      }
+    }
+  }
+
+  return [...new Set(files)].sort();
+}
+
+function assertThemeStudioFile(value) {
+  const relativePath = normalizeStudioPath(value);
+  if (!listThemeStudioFiles().includes(relativePath)) {
+    throw new Error("Theme Studio path is not editable: " + relativePath);
+  }
+  return relativePath;
+}
+
+function customerThemeEntries() {
+  const customersDirectory = resolve(rootDirectory, "src/themes/customers");
+  return readdirSync(customersDirectory, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".less"))
+    .map((entry) => "src/themes/customers/" + entry.name)
+    .sort();
+}
+
+function affectedThemeEntries(relativePath) {
+  if (relativePath === "src/themes/harika.less" || relativePath.startsWith("src/themes/harika/")) {
+    return ["src/themes/harika.less", ...customerThemeEntries()];
+  }
+
+  const customerMatch = relativePath.match(/^src\/themes\/customers\/([^/]+)(?:\/|\.less$)/);
+  if (customerMatch) {
+    const entry = "src/themes/customers/" + customerMatch[1] + ".less";
+    return [entry];
+  }
+
+  return [];
+}
+
+async function compileThemeEntry(relativePath) {
+  const filename = resolve(rootDirectory, relativePath);
+  await less.render(readFileSync(filename, "utf8"), {
+    filename,
+    javascriptEnabled: false,
+    paths: [
+      rootDirectory,
+      resolve(rootDirectory, "node_modules")
+    ]
+  });
+}
+
+function gitRaw(args) {
+  return execFileSync("git", args, {
+    cwd: rootDirectory,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"]
+  });
+}
+
+function git(args) {
+  return gitRaw(args).trim();
+}
+
+function gitOptional(args) {
+  try {
+    return git(args);
+  } catch {
+    return "";
+  }
+}
+
+function gitRawOptional(args) {
+  try {
+    return gitRaw(args);
+  } catch {
+    return "";
+  }
+}
+
+function readHeadFile(relativePath) {
+  return gitRawOptional(["show", "HEAD:" + relativePath]);
+}
+
+function studioFilePayload(relativePath) {
+  const absolutePath = resolve(rootDirectory, relativePath);
+  const content = readFileSync(absolutePath, "utf8");
+  const headContent = readHeadFile(relativePath);
+
+  return {
+    path: relativePath,
+    content,
+    headContent,
+    modified: content !== headContent,
+    gitStatus: gitOptional(["status", "--short", "--", relativePath]),
+    diff: gitOptional(["diff", "--", relativePath])
+  };
+}
+
+function isLoopbackRequest(req) {
+  const address = String(req.socket.remoteAddress ?? "").replace(/^::ffff:/, "");
+  return address === "127.0.0.1" || address === "::1";
+}
+
+function sendJson(res, statusCode, payload) {
+  res.statusCode = statusCode;
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  res.setHeader("Cache-Control", "no-store");
+  res.end(JSON.stringify(payload));
+}
+
+function readJsonBody(req) {
+  return new Promise((resolveBody, rejectBody) => {
+    let raw = "";
+
+    req.on("data", (chunk) => {
+      raw += chunk;
+      if (raw.length > 512 * 1024) {
+        rejectBody(new Error("Theme Studio request body is too large."));
+        req.destroy();
+      }
+    });
+
+    req.on("end", () => {
+      try {
+        resolveBody(raw ? JSON.parse(raw) : {});
+      } catch {
+        rejectBody(new Error("Invalid JSON request."));
+      }
+    });
+
+    req.on("error", rejectBody);
+  });
+}
+
+function themeStudioPlugin(mode) {
+  return {
+    name: "harika-theme-studio",
+    apply: "serve",
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const requestUrl = new URL(req.url ?? "/", "http://127.0.0.1");
+        if (!requestUrl.pathname.startsWith("/__studio/")) {
+          next();
+          return;
+        }
+
+        const handle = async () => {
+          if (!isLoopbackRequest(req)) {
+            sendJson(res, 403, { ok: false, error: "Theme Studio is local-only." });
+            return;
+          }
+
+          if (req.method === "GET" && requestUrl.pathname === "/__studio/status") {
+            const files = listThemeStudioFiles();
+            sendJson(res, 200, {
+              ok: true,
+              mode,
+              branch: gitOptional(["branch", "--show-current"]),
+              head: gitOptional(["rev-parse", "--short", "HEAD"]),
+              files,
+              modifiedFiles: files.filter((path) => Boolean(gitOptional(["status", "--short", "--", path])))
+            });
+            return;
+          }
+
+          if (req.method === "GET" && requestUrl.pathname === "/__studio/file") {
+            const relativePath = assertThemeStudioFile(requestUrl.searchParams.get("path"));
+            sendJson(res, 200, { ok: true, file: studioFilePayload(relativePath) });
+            return;
+          }
+
+          if (req.method === "PUT" && requestUrl.pathname === "/__studio/file") {
+            const body = await readJsonBody(req);
+            const relativePath = assertThemeStudioFile(body.path);
+            const nextContent = String(body.content ?? "");
+            const absolutePath = resolve(rootDirectory, relativePath);
+            const previousContent = readFileSync(absolutePath, "utf8");
+
+            if (nextContent === previousContent) {
+              sendJson(res, 200, {
+                ok: true,
+                compiled: [],
+                file: studioFilePayload(relativePath)
+              });
+              return;
+            }
+
+            writeFileSync(absolutePath, nextContent, "utf8");
+
+            try {
+              const compiled = affectedThemeEntries(relativePath);
+              for (const entry of compiled) {
+                await compileThemeEntry(entry);
+              }
+
+              sendJson(res, 200, {
+                ok: true,
+                compiled,
+                file: studioFilePayload(relativePath)
+              });
+            } catch (error) {
+              writeFileSync(absolutePath, previousContent, "utf8");
+              sendJson(res, 422, {
+                ok: false,
+                error: error instanceof Error ? error.message : String(error),
+                rolledBack: true,
+                file: studioFilePayload(relativePath)
+              });
+            }
+            return;
+          }
+
+          sendJson(res, 404, { ok: false, error: "Unknown Theme Studio endpoint." });
+        };
+
+        handle().catch((error) => {
+          sendJson(res, 500, {
+            ok: false,
+            error: error instanceof Error ? error.message : String(error)
+          });
+        });
+      });
+    }
+  };
+}
+
 function resolveThemeEntry(mode) {
   const relative = themeEntries[mode] ?? themeEntries.harika;
-  return resolve(process.cwd(), relative);
+  return resolve(rootDirectory, relative);
 }
 
 export default defineConfig(({ mode }) => ({
   base: mode === "pages" ? "/harika-clickdummy/" : "/",
-  plugins: [htmlPartialsPlugin()],
+  plugins: [
+    htmlPartialsPlugin(),
+    themeStudioPlugin(mode)
+  ],
   resolve: {
     alias: {
       "@harika-theme": resolveThemeEntry(mode)
@@ -102,7 +359,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       input: Object.fromEntries(
-        Object.entries(htmlEntries).map(([name, file]) => [name, resolve(process.cwd(), file)])
+        Object.entries(htmlEntries).map(([name, file]) => [name, resolve(rootDirectory, file)])
       )
     }
   }

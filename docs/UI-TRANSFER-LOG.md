@@ -15,7 +15,9 @@ UI decisions from `cemfirat/harika-clickdummy` to `cemfirat/ccf-sites-ads`.
 
 | 2026-10-07 | `bb84e431eee6085847b46a26abef29e4ec928b2b` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | UIkit-aligned naming and structure: Standard → Harika → Customer under `src/themes/` | Superseded by expanded UIkit-style styleguide baseline |
 
-| 2026-10-07 | `bf0f54f8b68c66423c7477cdcaaa73f1639c89d0` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | Expanded UIkit-style component reference with synchronized Preview/Markup examples | Active baseline; no production promotion |
+| 2026-10-07 | `bf0f54f8b68c66423c7477cdcaaa73f1639c89d0` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | Expanded UIkit-style component reference with synchronized Preview/Markup examples | Superseded by local Theme Studio baseline |
+
+| 2026-10-07 | `6d56f88f846ca5d27f7ec3af9e29366c72c3da18` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | Local Theme Studio: Styleguide-integrated LESS editing, compile validation, rollback and Git diff | Active baseline; no production promotion |
 
 ## Logging rule
 

@@ -48,6 +48,7 @@ Changing the classes or structure in `partials/workspace-header.html` updates th
 - inspected Harika baseline: `51ef80c3e68a77e9a34a97363c9ad3644619302c`
 - rules: [docs/UIKIT-BASELINE.md](docs/UIKIT-BASELINE.md)
 - styleguide: [docs/STYLEGUIDE.md](docs/STYLEGUIDE.md)
+- local Theme Studio: [docs/THEME-STUDIO.md](docs/THEME-STUDIO.md)
 - Harika → clickdummy: [docs/HARIKA-SYNC.md](docs/HARIKA-SYNC.md)
 - clickdummy → Harika: [docs/UI-TRANSFER.md](docs/UI-TRANSFER.md)
 

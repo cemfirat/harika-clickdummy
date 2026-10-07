@@ -1,9 +1,9 @@
 export const transferState = Object.freeze({
   schemaVersion: 1,
 
-  // UIkit-style component documentation baseline:
-  // expanded Styleguide with synchronized Preview + Markup examples.
-  uiBaselineClickdummyCommit: "bf0f54f8b68c66423c7477cdcaaa73f1639c89d0",
+  // Local Theme Studio baseline:
+  // Styleguide-integrated LESS editor with local compile validation and Git diff.
+  uiBaselineClickdummyCommit: "6d56f88f846ca5d27f7ec3af9e29366c72c3da18",
 
   // Set only after a later clickdummy UI delta has been intentionally ported
   // to production Harika and the resulting Harika commit is known.

@@ -23,7 +23,9 @@ const transferablePrefixes = [
 
 const prototypeOnlyExact = new Set([
   "styleguide.html",
-  "src/styles/prototype.less"
+  "src/styles/prototype.less",
+  "partials/theme-studio.html",
+  "src/studio.js"
 ]);
 
 const prototypeOnlyPrefixes = [
