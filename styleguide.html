@@ -17,9 +17,19 @@
 
       <div class="view-content">
         <div class="uk-alert uk-alert-primary">
-          <strong>UI-Labor:</strong> Dieser Styleguide dokumentiert das aktuell kompilierte Theme.
-          Aktiv: <span class="uk-label" data-active-theme>harika</span>.
-          UIkit bleibt Framework-Referenz; Harika dokumentiert nur bewusste Theme- und Produktentscheidungen.
+          <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
+            <div>
+              <strong>UI-Labor:</strong> Dieser Styleguide dokumentiert das aktuell kompilierte Theme.
+              Aktiv: <span class="uk-label" data-active-theme>harika</span>.
+              UIkit bleibt Framework-Referenz; Harika dokumentiert nur bewusste Theme- und Produktentscheidungen.
+            </div>
+            <button
+              class="uk-button uk-button-primary uk-button-small"
+              type="button"
+              data-studio-open="src/themes/harika/variables.less"
+              disabled
+            >Theme Studio</button>
+          </div>
         </div>
 
         <div class="styleguide-doc-layout" data-uk-grid>
@@ -71,6 +81,12 @@
                     <h3 class="uk-card-title">Harika</h3>
                     <code>src/themes/harika.less</code>
                     <p>Variablen und Hooks für die Harika Benutzeroberfläche.</p>
+                    <button
+                      class="uk-button uk-button-default uk-button-small"
+                      type="button"
+                      data-studio-open="src/themes/harika/variables.less"
+                      disabled
+                    >Theme bearbeiten</button>
                   </article>
                 </div>
                 <div>
@@ -91,7 +107,15 @@
             <section id="tokens" class="styleguide-section">
               <p class="eyebrow uk-margin-remove-bottom">Theme Tokens</p>
               <h2 class="uk-heading-small uk-margin-small-top">Farben & Semantik</h2>
-              <p>Diese Tokens gehören zur Harika-Ebene. Der Styleguide zeigt bewusst Name, LESS-Variable und aktuellen Wert.</p>
+              <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
+                <p>Diese Tokens gehören zur Harika-Ebene. Der Styleguide zeigt bewusst Name, LESS-Variable und aktuellen Wert.</p>
+                <button
+                  class="uk-button uk-button-text"
+                  type="button"
+                  data-studio-open="src/themes/harika/variables.less"
+                  disabled
+                >variables.less bearbeiten</button>
+              </div>
 
               <div class="styleguide-swatches">
                 <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#20123a"></span><div><strong>Ink</strong><code>@ccf-indigo</code><small>#20123a</small></div></article>
@@ -439,7 +463,9 @@
 
   <!-- @include partials/mobile-nav.html -->
   <!-- @include partials/profile-modal.html -->
+  <!-- @include partials/theme-studio.html -->
 
   <script type="module" src="/src/app.js"></script>
+  <script type="module" src="/src/studio.js"></script>
 </body>
 </html>
