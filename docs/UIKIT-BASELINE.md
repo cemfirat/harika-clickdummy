@@ -131,3 +131,18 @@ Custom LESS is limited to:
 ## Product authority
 
 The HTML pages and partials are an editable UI lab, not a second product specification. Harika Product Blueprint, IA and current scoped issues remain authoritative.
+
+## UIkit theme inheritance
+
+The theme hierarchy is intentionally aligned with UIkit's Less documentation:
+
+1. `standard.less` imports `uikit/src/less/uikit.theme.less`.
+2. `interface.less` inherits Standard and applies Harika variables/hooks.
+3. `customers/<slug>.less` inherits Interface and applies narrow customer variables.
+
+The old flat `src/styles/theme/` directory is forbidden. UIkit component overrides live under `src/styles/themes/interface/`.
+
+Customer themes are branding layers, not alternate product UIs. They must not copy UIkit source or fork Harika shell/product structure.
+
+See `docs/THEMES.md`.
+
