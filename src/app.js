@@ -6,6 +6,10 @@ UIkit.use(Icons);
 
 document.documentElement.dataset.theme = __HARIKA_THEME__;
 
+document.querySelectorAll("[data-active-theme]").forEach((node) => {
+  node.textContent = __HARIKA_THEME__;
+});
+
 const currentPage = document.body.dataset.page;
 document.querySelectorAll("[data-nav-page]").forEach((item) => {
   const active = item.dataset.navPage === currentPage;

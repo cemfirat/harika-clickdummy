@@ -23,6 +23,7 @@ const themeEntries = {
 };
 
 const includePattern = /<!--\s*@include\s+([^\s]+)(?:\s+(\{[\s\S]*?\}))?\s*-->/g;
+const includeCodePattern = /<!--\s*@include-code\s+([^\s]+)(?:\s+(\{[\s\S]*?\}))?\s*-->/g;
 
 function escapeHtml(value) {
   return String(value)
@@ -40,14 +41,25 @@ function applyVariables(source, variables) {
   });
 }
 
+function readPartial(relativePath, rawVariables) {
+  const partialPath = resolve(process.cwd(), relativePath);
+  const variables = rawVariables ? JSON.parse(rawVariables) : {};
+  return applyVariables(readFileSync(partialPath, "utf8"), variables);
+}
+
 function expandHtmlPartials(source, depth = 0) {
   if (depth > 12) throw new Error("HTML partial nesting is too deep.");
 
   return source.replace(includePattern, (_, relativePath, rawVariables) => {
-    const partialPath = resolve(process.cwd(), relativePath);
-    const variables = rawVariables ? JSON.parse(rawVariables) : {};
-    const partial = applyVariables(readFileSync(partialPath, "utf8"), variables);
+    const partial = readPartial(relativePath, rawVariables);
     return expandHtmlPartials(partial, depth + 1);
+  });
+}
+
+function expandCodePartials(source) {
+  return source.replace(includeCodePattern, (_, relativePath, rawVariables) => {
+    const partial = readPartial(relativePath, rawVariables).trim();
+    return escapeHtml(partial);
   });
 }
 
@@ -58,7 +70,7 @@ function htmlPartialsPlugin() {
     name: "harika-html-partials",
     enforce: "pre",
     transformIndexHtml(html) {
-      return expandHtmlPartials(html);
+      return expandHtmlPartials(expandCodePartials(html));
     },
     configureServer(server) {
       server.watcher.add(partialsDirectory);

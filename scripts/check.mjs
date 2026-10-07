@@ -57,12 +57,14 @@ const transferGuide = await readFile(new URL("../docs/UI-TRANSFER.md", import.me
 const baselineGuide = await readFile(new URL("../docs/UIKIT-BASELINE.md", import.meta.url), "utf8");
 const editingGuide = await readFile(new URL("../docs/EDITING-GUIDE.md", import.meta.url), "utf8");
 const themesGuide = await readFile(new URL("../docs/THEMES.md", import.meta.url), "utf8");
+const styleguideGuide = await readFile(new URL("../docs/STYLEGUIDE.md", import.meta.url), "utf8");
 const viteConfigSource = await readFile(new URL("../vite.config.js", import.meta.url), "utf8");
 const pagesWorkflowSource = await readFile(new URL("../.github/workflows/pages-preview.yml", import.meta.url), "utf8");
 
 const srcEntries = await readdir(new URL("../src/", import.meta.url));
 const stylesEntries = await readdir(new URL("../src/styles/", import.meta.url));
 const themesEntries = await readdir(new URL("../src/themes/", import.meta.url));
+const styleguideExampleFiles = await readdir(new URL("../partials/styleguide/", import.meta.url));
 
 assert(harikaSource.repository === "cemfirat/ccf-sites-ads", "Harika source repository must remain explicit.");
 assert(fullSha.test(harikaSource.commit), "Harika source commit must be a full SHA.");
@@ -186,6 +188,8 @@ for (const [page] of allPages) {
 
 assert(viteConfigSource.includes('name: "harika-html-partials"'), "Vite must keep the small HTML partial plugin.");
 assert(viteConfigSource.includes("expandHtmlPartials"), "Vite must expand shared HTML partials.");
+assert(viteConfigSource.includes("includeCodePattern"), "Vite must support styleguide code includes.");
+assert(viteConfigSource.includes("expandCodePartials"), "Vite must render styleguide markup from the same example source.");
 assert(viteConfigSource.includes("server.watcher.add(partialsDirectory)"), "Vite dev server must watch shared partials.");
 assert(viteConfigSource.includes('mode === "pages" ? "/harika-clickdummy/" : "/"'), "Vite Pages base path must remain explicit.");
 assert(/\bstandard:\s*"src\/themes\/standard\.less"/.test(viteConfigSource), "Vite must expose the standard theme mode.");
@@ -205,12 +209,50 @@ assert(themesGuide.includes("src/themes/customers/ambra.less"), "Theme guide mus
 assert(themesGuide.includes("Variables first"), "Theme guide must document the variables-first rule.");
 assert(themesGuide.includes("Hooks second"), "Theme guide must document the hooks-second rule.");
 assert(themeReadme.includes("UIkit's documented custom-theme structure"), "Theme source README must explain its UIkit alignment.");
+assert(styleguideGuide.includes("Single source for Preview + Markup"), "Styleguide guide must document synchronized Preview/Markup.");
+assert(styleguideGuide.includes("@include-code"), "Styleguide guide must document the code include directive.");
+
+for (const example of [
+  "typography.html",
+  "buttons.html",
+  "cards.html",
+  "forms.html",
+  "status.html",
+  "tables-lists.html",
+  "navigation.html",
+  "layout.html",
+  "feedback.html",
+  "harika.html"
+]) {
+  assert(styleguideExampleFiles.includes(example), "Missing styleguide example: " + example);
+}
+
+for (const section of [
+  'id="theme"',
+  'id="tokens"',
+  'id="typography"',
+  'id="layout"',
+  'id="buttons"',
+  'id="cards"',
+  'id="forms"',
+  'id="status"',
+  'id="tables-lists"',
+  'id="navigation"',
+  'id="feedback"',
+  'id="harika-components"'
+]) {
+  assert(html["styleguide.html"].includes(section), "Missing styleguide section: " + section);
+}
+
+assert(html["styleguide.html"].includes("@include-code partials/styleguide/"), "Styleguide must expose Markup from shared example files.");
+assert(html["styleguide.html"].includes("data-active-theme"), "Styleguide must expose the active compiled theme.");
 assert(customerThemeReadme.includes("entry-file +"), "Customer theme README must explain the entry-file + folder convention.");
 
 assert(transferStatusSource.includes('"partials/"'), "Shared partials must be classified for UI transfer.");
 assert(transferStatusSource.includes('"src/styles/"'), "Structural styles must be classified for UI transfer.");
 assert(transferStatusSource.includes('"src/themes/"'), "Theme changes must be classified for UI transfer.");
 assert(transferStatusSource.includes('"styleguide.html"'), "Styleguide HTML must remain prototype-only in transfer status.");
+assert(transferStatusSource.includes('"partials/styleguide/"'), "Styleguide example partials must remain prototype-only in transfer status.");
 assert(transferStatusSource.includes('"src/app.js"'), "Behavior-only app.js must be classified explicitly.");
 
 assert(pagesWorkflowSource.includes("workflow_dispatch:"), "Pages preview must remain manually deployable.");

@@ -26,6 +26,10 @@ const prototypeOnlyExact = new Set([
   "src/styles/prototype.less"
 ]);
 
+const prototypeOnlyPrefixes = [
+  "partials/styleguide/"
+];
+
 function git(args) {
   return execFileSync("git", args, {
     encoding: "utf8",
@@ -39,7 +43,7 @@ function changedFiles(from, to) {
 }
 
 function isTransferable(path) {
-  if (prototypeOnlyExact.has(path)) return false;
+  if (prototypeOnlyExact.has(path) || prototypeOnlyPrefixes.some((prefix) => path.startsWith(prefix))) return false;
   return transferableExact.has(path) || transferablePrefixes.some((prefix) => path.startsWith(prefix));
 }
 

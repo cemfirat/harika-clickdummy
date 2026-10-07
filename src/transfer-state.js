@@ -1,9 +1,9 @@
 export const transferState = Object.freeze({
   schemaVersion: 1,
 
-  // UIkit-aligned theme baseline:
-  // Standard UIkit -> Harika -> optional customer theme.
-  uiBaselineClickdummyCommit: "bb84e431eee6085847b46a26abef29e4ec928b2b",
+  // UIkit-style component documentation baseline:
+  // expanded Styleguide with synchronized Preview + Markup examples.
+  uiBaselineClickdummyCommit: "bf0f54f8b68c66423c7477cdcaaa73f1639c89d0",
 
   // Set only after a later clickdummy UI delta has been intentionally ported
   // to production Harika and the resulting Harika commit is known.
