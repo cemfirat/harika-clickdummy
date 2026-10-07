@@ -129,7 +129,11 @@ npm run transfer:status
     ├── transfer-state.js
     └── styles/
         ├── main.less
-        ├── themes/interface/
+        ├── themes/
+        │   ├── standard.less
+        │   ├── interface.less
+        │   ├── interface/
+        │   └── customers/
         ├── shell.less
         ├── product.less
         ├── visualizations.less
