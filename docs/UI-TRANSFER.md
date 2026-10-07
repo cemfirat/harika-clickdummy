@@ -44,3 +44,13 @@ The build-time include mechanism itself is a clickdummy editing aid and is not a
 8. Run one strong final branch-CI candidate.
 9. **No PR before green branch CI.**
 10. Log exact clickdummy and Harika SHAs after successful integration.
+
+## Theme transfer classification
+
+- `src/styles/themes/standard.less`: framework reference layer; normally no Harika promotion change.
+- `src/styles/themes/interface/**`: Harika application-theme decisions.
+- `src/styles/themes/customers/**`: customer branding only.
+- `src/styles/shell.less` and `product.less`: product-specific structure, not customer branding.
+
+When promoting a clickdummy change, preserve this ownership boundary instead of flattening theme layers.
+
