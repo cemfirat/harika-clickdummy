@@ -6,57 +6,14 @@
   <meta name="description" content="Harika Clickdummy – AI Visibility">
   <title>AI Visibility · Harika Clickdummy</title>
 </head>
-<body>
+<body data-page="ai-visibility">
   <a class="skip-link" href="#main-content">Zum Hauptinhalt</a>
 
   <div class="app-shell">
-    <aside class="sidebar desktop-sidebar" aria-label="Harika Navigation">
-      <a class="uk-logo brand" href="./index.html" aria-label="Harika Startseite">
-          <img class="brand-mark" src="./icon.svg" alt="" width="64" height="64">
-          <span class="brand-logo-copy"><strong>Harika</strong><small>Intelligence Center</small></span>
-        </a>
-      <div class="aside-user">
-          <a href="#profile-modal" class="user" data-uk-toggle aria-label="Konto öffnen">
-            <span class="uk-icon-button user-icon" data-uk-icon="icon: user" aria-hidden="true"></span>
-            <div><strong>Cem Firat</strong><small>Administrator</small></div>
-          </a>
-          <div class="aside-user-actions">
-            <a class="uk-link-text" href="./styleguide.html">Styleguide</a>
-            <span class="uk-text-meta">UI-Labor</span>
-          </div>
-        </div>
-      <nav aria-label="Hauptnavigation">
-        <ul class="uk-nav uk-nav-default main-nav">
-          <li><a href="./index.html"><span>01</span><strong>Übersicht</strong></a></li>
-          <li><a href="./kunden.html"><span>02</span><strong>Kunden</strong></a></li>
-          <li><a href="./websites.html"><span>03</span><strong>Websites</strong></a></li>
-          <li><a href="./search-seo.html"><span>04</span><strong>Search & SEO</strong></a></li>
-          <li><a href="./ads.html"><span>05</span><strong>Ads</strong></a></li>
-          <li class="uk-active"><a href="./ai-visibility.html"><span>06</span><strong>AI Visibility</strong></a></li>
-          <li><a href="./prompt-center.html"><span>07</span><strong>Prompt Center</strong></a></li>
-          <li><a href="./entwicklung.html"><span>08</span><strong>Entwicklung</strong></a></li>
-          <li><a href="./einstellungen.html"><span>09</span><strong>Einstellungen</strong></a></li>
-        </ul>
-      </nav>
-      <div class="safety-note">
-        <span class="safety-dot"></span>
-        <div><strong>Clickdummy</strong><small>Mockdaten · Harika 51ef80c</small></div>
-      </div>
-    </aside>
+    <!-- @include partials/sidebar.html -->
 
     <main class="workspace" id="main-content" tabindex="-1">
-      <button class="uk-icon-button mobile-nav-toggle" type="button" data-uk-icon="icon: menu" data-uk-toggle="target: #ccf-mobile-nav" aria-label="Navigation öffnen"></button>
-
-      <header class="workspace-header">
-        <div class="view-introduction">
-          <p class="eyebrow">Harika Intelligence Center</p>
-          <h1>AI Visibility</h1>
-          <p>Wie sichtbar ist die Marke in relevanten AI-Systemen und wer wird stattdessen genannt?</p>
-        </div>
-        <div class="workspace-header-meta">
-          <span class="runtime-version">Clickdummy · AMBRA Sonnenschutzsysteme</span>
-        </div>
-      </header>
+      <!-- @include partials/workspace-header.html {"title":"AI Visibility","description":"Wie sichtbar ist die Marke in relevanten AI-Systemen und wer wird stattdessen genannt?"} -->
 
       <div class="view-content">
         <section class="uk-card uk-card-default">
@@ -108,65 +65,13 @@
         </section></div></div>
       </div>
 
-      <footer class="app-footer">
-        <span>Harika Clickdummy · UIkit-first UI-Labor</span>
-        <span>Source: ccf-sites-ads@51ef80c</span>
-      </footer>
+      <!-- @include partials/footer.html -->
     </main>
   </div>
 
-  <div id="ccf-mobile-nav" data-uk-offcanvas="overlay: true; flip: false">
-    <div class="uk-offcanvas-bar">
-      <button class="uk-offcanvas-close" type="button" data-uk-close aria-label="Navigation schließen"></button>
-      <a class="uk-logo brand uk-margin-medium-bottom" href="./index.html" aria-label="Harika Startseite">
-          <img class="brand-mark" src="./icon.svg" alt="" width="64" height="64">
-          <span class="brand-logo-copy"><strong>Harika</strong><small>Intelligence Center</small></span>
-        </a>
-      <div class="aside-user">
-          <a href="#profile-modal" class="user" data-uk-toggle aria-label="Konto öffnen">
-            <span class="uk-icon-button user-icon" data-uk-icon="icon: user" aria-hidden="true"></span>
-            <div><strong>Cem Firat</strong><small>Administrator</small></div>
-          </a>
-          <div class="aside-user-actions">
-            <a class="uk-link-text" href="./styleguide.html">Styleguide</a>
-            <span class="uk-text-meta">UI-Labor</span>
-          </div>
-        </div>
-      <nav aria-label="Mobile Hauptnavigation">
-        <ul class="uk-nav uk-nav-default main-nav">
-          <li><a href="./index.html"><span>01</span><strong>Übersicht</strong></a></li>
-          <li><a href="./kunden.html"><span>02</span><strong>Kunden</strong></a></li>
-          <li><a href="./websites.html"><span>03</span><strong>Websites</strong></a></li>
-          <li><a href="./search-seo.html"><span>04</span><strong>Search & SEO</strong></a></li>
-          <li><a href="./ads.html"><span>05</span><strong>Ads</strong></a></li>
-          <li class="uk-active"><a href="./ai-visibility.html"><span>06</span><strong>AI Visibility</strong></a></li>
-          <li><a href="./prompt-center.html"><span>07</span><strong>Prompt Center</strong></a></li>
-          <li><a href="./entwicklung.html"><span>08</span><strong>Entwicklung</strong></a></li>
-          <li><a href="./einstellungen.html"><span>09</span><strong>Einstellungen</strong></a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
+  <!-- @include partials/mobile-nav.html -->
 
-  <div id="profile-modal" class="uk-modal" data-uk-modal>
-    <div class="uk-modal-dialog">
-      <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Schließen"></button>
-      <div class="uk-modal-header">
-        <p class="eyebrow uk-margin-remove-bottom">Konto</p>
-        <h2 class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Cem Firat</h2>
-      </div>
-      <div class="uk-modal-body">
-        <dl class="demo-detail-list">
-          <div><dt>Rolle</dt><dd>Administrator</dd></div>
-          <div><dt>Workspace</dt><dd>AMBRA Sonnenschutzsysteme</dd></div>
-          <div><dt>Demo-Modus</dt><dd>Aktiv</dd></div>
-        </dl>
-      </div>
-      <div class="uk-modal-footer uk-flex uk-flex-right">
-        <button class="uk-button uk-button-default uk-modal-close" type="button">Schließen</button>
-      </div>
-    </div>
-  </div>
+  <!-- @include partials/profile-modal.html -->
   
 
   <script type="module" src="/src/app.js"></script>
