@@ -39,6 +39,7 @@ const lessEntry = await readFile(new URL("../src/styles/main.less", import.meta.
 const standardThemeSource = await readFile(new URL("../src/styles/themes/standard.less", import.meta.url), "utf8");
 const interfaceThemeSource = await readFile(new URL("../src/styles/themes/interface.less", import.meta.url), "utf8");
 const interfaceImportSource = await readFile(new URL("../src/styles/themes/interface/_import.less", import.meta.url), "utf8");
+const interfaceOffcanvasSource = await readFile(new URL("../src/styles/themes/interface/offcanvas.less", import.meta.url), "utf8");
 const customerThemeSource = await readFile(new URL("../src/styles/themes/customers/ambra.less", import.meta.url), "utf8");
 const customerVariablesSource = await readFile(new URL("../src/styles/themes/customers/ambra/variables.less", import.meta.url), "utf8");
 const shellLess = await readFile(new URL("../src/styles/shell.less", import.meta.url), "utf8");
@@ -124,6 +125,7 @@ assert(!/document\.createElement/.test(appSource), "app.js must remain behavior-
 assert(!/<(?:main|section|article|table|nav|aside)\b/i.test(appSource), "app.js must not contain page markup.");
 assert(appSource.includes('document.body.dataset.page'), "app.js must activate shared navigation from the page id.");
 assert(appSource.includes('[data-nav-page]'), "app.js must target shared navigation metadata.");
+assert(appSource.includes("document.documentElement.dataset.theme = __HARIKA_THEME__"), "app.js must expose the selected theme for inspection.");
 
 assert(!appSource.includes('uikit/dist/css/uikit.min.css'), "Do not load prebuilt UIkit CSS alongside the Less theme.");
 assert(appSource.includes('import "@harika-theme";'), "app.js must load the selected Vite theme alias.");
@@ -134,6 +136,10 @@ assert(!standardThemeSource.includes('@import "uikit/src/less/uikit.less";'), "S
 assert(interfaceThemeSource.includes('@import "standard.less";'), "Harika interface theme must inherit the standard theme.");
 assert(interfaceThemeSource.includes('@import "interface/_import.less";'), "Harika interface theme must load component customizations.");
 assert(interfaceImportSource.includes('@import "variables.less";'), "Interface theme must preserve component-structured imports.");
+assert(interfaceImportSource.includes('@import "offcanvas.less";'), "Interface theme must keep Offcanvas customization in the UIkit theme layer.");
+assert(interfaceOffcanvasSource.includes("@offcanvas-bar-background"), "Offcanvas theme must use the official UIkit variable.");
+assert(interfaceOffcanvasSource.includes(".hook-offcanvas-bar()"), "Offcanvas theme must use the official UIkit hook.");
+assert(!shellLess.includes(".uk-offcanvas-bar"), "Shell LESS must not directly reskin UIkit Offcanvas.");
 
 assert(customerThemeSource.includes('@import "../interface.less";'), "Customer theme must inherit the Harika interface theme.");
 assert(customerThemeSource.includes('@import "ambra/variables.less";'), "AMBRA customer theme must keep its overrides isolated.");
