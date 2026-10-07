@@ -16,10 +16,10 @@ const htmlEntries = {
 };
 
 const themeEntries = {
-  standard: "src/styles/themes/standard.less",
-  interface: "src/styles/themes/interface.less",
-  "customer-ambra": "src/styles/themes/customers/ambra.less",
-  pages: "src/styles/themes/interface.less"
+  standard: "src/themes/standard.less",
+  harika: "src/themes/harika.less",
+  "customer-ambra": "src/themes/customers/ambra.less",
+  pages: "src/themes/harika.less"
 };
 
 const includePattern = /<!--\s*@include\s+([^\s]+)(?:\s+(\{[\s\S]*?\}))?\s*-->/g;
@@ -72,7 +72,7 @@ function htmlPartialsPlugin() {
 }
 
 function resolveThemeEntry(mode) {
-  const relative = themeEntries[mode] ?? themeEntries.interface;
+  const relative = themeEntries[mode] ?? themeEntries.harika;
   return resolve(process.cwd(), relative);
 }
 
@@ -85,7 +85,7 @@ export default defineConfig(({ mode }) => ({
     }
   },
   define: {
-    __HARIKA_THEME__: JSON.stringify(mode === "pages" ? "interface" : (themeEntries[mode] ? mode : "interface"))
+    __HARIKA_THEME__: JSON.stringify(mode === "pages" ? "harika" : (themeEntries[mode] ? mode : "harika"))
   },
   build: {
     rollupOptions: {
