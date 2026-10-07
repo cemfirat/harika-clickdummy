@@ -20,8 +20,8 @@ No React, JSX, Handlebars, Nunjucks or JavaScript page renderer.
 | Mobile Navigation | `partials/mobile-nav.html` |
 | Profil-Modal | `partials/profile-modal.html` |
 | Inhalt einer einzelnen Seite | jeweilige root-`*.html`-Datei |
-| Farben / globale Theme-Werte | `src/styles/theme/variables.less` |
-| UIkit Buttons, Forms, Cards usw. | passende Datei in `src/styles/theme/` |
+| Farben / globale Theme-Werte | `src/styles/themes/interface/variables.less` |
+| UIkit Buttons, Forms, Cards usw. | passende Datei in `src/styles/themes/interface/` |
 | Sidebar / Workspace / Shell-Layout | `src/styles/shell.less` |
 | Harika-spezifische Inhaltslayouts | `src/styles/product.less` |
 | Charts / Visualisierung | `src/styles/visualizations.less` |
@@ -76,7 +76,7 @@ Changing the classes or structure in `partials/workspace-header.html` updates th
 
 ## UIkit
 
-UIkit `3.25.25` is compiled from `uikit/src/less/uikit.less`. Harika theme values live in `src/styles/theme/`.
+UIkit `3.25.25` is compiled from `uikit/src/less/uikit.theme.less`. Harika theme values live in `src/styles/themes/interface/`.
 
 Custom LESS is limited to shell, true product-specific composition, visualizations and the prototype-only styleguide.
 
@@ -129,7 +129,7 @@ npm run transfer:status
     ├── transfer-state.js
     └── styles/
         ├── main.less
-        ├── theme/
+        ├── themes/interface/
         ├── shell.less
         ├── product.less
         ├── visualizations.less
