@@ -61,3 +61,23 @@ intended to duplicate all of UIkit documentation.
 
 Harika-specific examples belong in the final Harika section and should exist
 only when UIkit alone does not express the product pattern.
+
+## Local Theme Studio
+
+When the Styleguide runs through the local Vite development server, Theme Studio
+can open approved Harika/customer LESS files directly from the page.
+
+Typical entry points:
+
+- the global **Theme Studio** button
+- **Theme bearbeiten** in the Harika theme card
+- **variables.less bearbeiten** in the token section.
+
+The editor is intentionally unavailable on GitHub Pages.
+
+Theme Studio is documented separately in:
+
+`docs/THEME-STUDIO.md`
+
+The Styleguide remains the visual reference; Theme Studio is only its local
+editing surface.
