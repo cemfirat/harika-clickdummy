@@ -1,8 +1,8 @@
 {
   "name": "harika-clickdummy",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "private": true,
-  "description": "HTML-first UIkit Harika clickdummy with standard, Harika and customer themes.",
+  "description": "HTML-first UIkit Harika clickdummy with local Theme Studio.",
   "type": "module",
   "scripts": {
     "dev": "vite --mode harika",
@@ -15,7 +15,9 @@
     "build:pages": "vite build --mode pages",
     "verify": "npm run check && npm run build:standard && npm run build && npm run build:customer:ambra && npm run build:pages",
     "transfer:status": "node scripts/transfer-status.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "studio": "vite --mode harika --host 127.0.0.1",
+    "studio:customer:ambra": "vite --mode customer-ambra --host 127.0.0.1"
   },
   "dependencies": {
     "uikit": "3.25.25"
