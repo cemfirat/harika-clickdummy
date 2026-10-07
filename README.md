@@ -103,11 +103,11 @@ npm run transfer:status
     ├── app.js
     ├── harika-source.js
     ├── transfer-state.js
-    └── styles/
-        ├── shell.less
-        ├── product.less
-        ├── visualizations.less
-        └── prototype.less
+    ├── styles/
+    │   ├── shell.less
+    │   ├── product.less
+    │   ├── visualizations.less
+    │   └── prototype.less
     └── themes/
         ├── standard.less
         ├── harika.less
