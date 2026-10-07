@@ -17,7 +17,7 @@ UI decisions from `cemfirat/harika-clickdummy` to `cemfirat/ccf-sites-ads`.
 
 | 2026-10-07 | `bf0f54f8b68c66423c7477cdcaaa73f1639c89d0` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | Expanded UIkit-style component reference with synchronized Preview/Markup examples | Superseded by local Theme Studio baseline |
 
-| 2026-10-07 | `ee6b1b4573aa3ee2084eb77beceee4ca1c953e1e` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | Local Theme Studio: Styleguide-integrated LESS editing, compile validation, rollback and Git diff | Active baseline; no production promotion |
+| 2026-10-07 | `058c74d59a9de1cc2cec921994b83a9790bb2e0d` | `51ef80c3e68a77e9a34a97363c9ad3644619302c` | Local Theme Studio: Styleguide-integrated LESS editing, compile validation, rollback and Git diff | Active baseline; no production promotion |
 
 ## Logging rule
 
