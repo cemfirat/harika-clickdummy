@@ -147,3 +147,32 @@ npm run transfer:status
 - no custom recreation of UIkit standard components
 - exact transfer checkpoints
 - **no PR before green branch CI**
+
+## Theme system
+
+The styling hierarchy follows UIkit's Less theme model:
+
+```text
+UIkit Standard Theme
+        ↓
+Harika Benutzeroberfläche
+        ↓
+Kunden-Childtheme
+```
+
+- Standard: `src/styles/themes/standard.less`
+- Harika UI: `src/styles/themes/interface.less`
+- Customer themes: `src/styles/themes/customers/`
+
+The Standard level imports UIkit's official `uikit.theme.less`. Harika then customizes UIkit through variables/hooks, following the UIkit documentation instead of maintaining a parallel component skin.
+
+Preview commands:
+
+```bash
+npm run dev                 # Harika Benutzeroberfläche
+npm run dev:standard        # UIkit Standard reference
+npm run dev:customer:ambra  # customer child theme
+```
+
+See [docs/THEMES.md](docs/THEMES.md).
+
