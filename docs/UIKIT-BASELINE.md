@@ -100,7 +100,7 @@ A custom class must not recreate a standard UIkit component.
 ```text
 src/styles/
 ├── main.less
-├── theme/
+├── themes/interface/
 ├── shell.less
 ├── product.less
 ├── visualizations.less
@@ -140,7 +140,7 @@ The theme hierarchy is intentionally aligned with UIkit's Less documentation:
 2. `interface.less` inherits Standard and applies Harika variables/hooks.
 3. `customers/<slug>.less` inherits Interface and applies narrow customer variables.
 
-The old flat `src/styles/theme/` directory is forbidden. UIkit component overrides live under `src/styles/themes/interface/`.
+The old flat `src/styles/themes/interface/` directory is forbidden. UIkit component overrides live under `src/styles/themes/interface/`.
 
 Customer themes are branding layers, not alternate product UIs. They must not copy UIkit source or fork Harika shell/product structure.
 
