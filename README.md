@@ -6,30 +6,6 @@ The repository is an **HTML-first multi-page prototype**. Product content remain
 
 No React, JSX, Handlebars, Nunjucks or JavaScript page renderer.
 
-## Was ändere ich wo?
-
-| Ich möchte ändern | Datei |
-| --- | --- |
-| Header-Struktur / Header-Klassen auf allen Seiten | `partials/workspace-header.html` |
-| Header-Titel / Beschreibung nur einer Seite | Include-Zeile in der jeweiligen `*.html`-Datei |
-| Footer auf allen Seiten | `partials/footer.html` |
-| Sidebar auf allen Seiten | `partials/sidebar.html` |
-| Hauptnavigation / Reihenfolge / Links | `partials/navigation.html` |
-| Logo / Brand-Markup | `partials/brand.html` |
-| Benutzerbereich in Sidebar/Mobilmenü | `partials/user.html` |
-| Mobile Navigation | `partials/mobile-nav.html` |
-| Profil-Modal | `partials/profile-modal.html` |
-| Inhalt einer einzelnen Seite | jeweilige root-`*.html`-Datei |
-| Farben / globale Theme-Werte | `src/styles/themes/interface/variables.less` |
-| UIkit Buttons, Forms, Cards usw. | passende Datei in `src/styles/themes/interface/` |
-| Sidebar / Workspace / Shell-Layout | `src/styles/shell.less` |
-| Harika-spezifische Inhaltslayouts | `src/styles/product.less` |
-| Charts / Visualisierung | `src/styles/visualizations.less` |
-| Styleguide-only CSS | `src/styles/prototype.less` |
-| Verhalten wie Filter / Clipboard | `src/app.js` |
-
-Mehr Details: [docs/EDITING-GUIDE.md](docs/EDITING-GUIDE.md)
-
 ## Seiten direkt bearbeiten
 
 | Area | File |
