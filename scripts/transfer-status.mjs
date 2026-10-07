@@ -17,7 +17,8 @@ const transferableExact = new Set([
 
 const transferablePrefixes = [
   "partials/",
-  "src/styles/"
+  "src/styles/",
+  "src/themes/"
 ];
 
 const prototypeOnlyExact = new Set([
