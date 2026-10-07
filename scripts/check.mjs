@@ -36,6 +36,11 @@ const fullSha = /^[0-9a-f]{40}$/;
 const packageJson = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
 const appSource = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
 const lessEntry = await readFile(new URL("../src/styles/main.less", import.meta.url), "utf8");
+const standardThemeSource = await readFile(new URL("../src/styles/themes/standard.less", import.meta.url), "utf8");
+const interfaceThemeSource = await readFile(new URL("../src/styles/themes/interface.less", import.meta.url), "utf8");
+const interfaceImportSource = await readFile(new URL("../src/styles/themes/interface/_import.less", import.meta.url), "utf8");
+const customerThemeSource = await readFile(new URL("../src/styles/themes/customers/ambra.less", import.meta.url), "utf8");
+const customerVariablesSource = await readFile(new URL("../src/styles/themes/customers/ambra/variables.less", import.meta.url), "utf8");
 const shellLess = await readFile(new URL("../src/styles/shell.less", import.meta.url), "utf8");
 const productLess = await readFile(new URL("../src/styles/product.less", import.meta.url), "utf8");
 const visualizationLess = await readFile(new URL("../src/styles/visualizations.less", import.meta.url), "utf8");
@@ -44,9 +49,11 @@ const transferStatusSource = await readFile(new URL("./transfer-status.mjs", imp
 const transferGuide = await readFile(new URL("../docs/UI-TRANSFER.md", import.meta.url), "utf8");
 const baselineGuide = await readFile(new URL("../docs/UIKIT-BASELINE.md", import.meta.url), "utf8");
 const editingGuide = await readFile(new URL("../docs/EDITING-GUIDE.md", import.meta.url), "utf8");
+const themesGuide = await readFile(new URL("../docs/THEMES.md", import.meta.url), "utf8");
 const viteConfigSource = await readFile(new URL("../vite.config.js", import.meta.url), "utf8");
 const pagesWorkflowSource = await readFile(new URL("../.github/workflows/pages-preview.yml", import.meta.url), "utf8");
 const srcFiles = await readdir(new URL("../src/", import.meta.url));
+const stylesDirectories = await readdir(new URL("../src/styles/", import.meta.url));
 
 assert(harikaSource.repository === "cemfirat/ccf-sites-ads", "Harika source repository must remain explicit.");
 assert(fullSha.test(harikaSource.commit), "Harika source commit must be a full SHA.");
@@ -118,9 +125,28 @@ assert(!/<(?:main|section|article|table|nav|aside)\b/i.test(appSource), "app.js 
 assert(appSource.includes('document.body.dataset.page'), "app.js must activate shared navigation from the page id.");
 assert(appSource.includes('[data-nav-page]'), "app.js must target shared navigation metadata.");
 
-assert(!appSource.includes('uikit/dist/css/uikit.min.css'), "Do not load prebuilt UIkit CSS alongside the LESS theme.");
-assert(lessEntry.includes('@import "uikit/src/less/uikit.less";'), "UIkit LESS source must be the styling foundation.");
-assert(lessEntry.includes('@import "./theme/_import.less";'), "Harika UIkit theme layer must be imported.");
+assert(!appSource.includes('uikit/dist/css/uikit.min.css'), "Do not load prebuilt UIkit CSS alongside the Less theme.");
+assert(appSource.includes('import "@harika-theme";'), "app.js must load the selected Vite theme alias.");
+assert(lessEntry.includes('@import "./themes/interface.less";'), "Compatibility main.less must point to the Harika interface theme.");
+
+assert(standardThemeSource.includes('@import "uikit/src/less/uikit.theme.less";'), "Standard theme must import UIkit's official default theme.");
+assert(!standardThemeSource.includes('@import "uikit/src/less/uikit.less";'), "Standard theme must use uikit.theme.less, not core-only uikit.less.");
+assert(interfaceThemeSource.includes('@import "standard.less";'), "Harika interface theme must inherit the standard theme.");
+assert(interfaceThemeSource.includes('@import "interface/_import.less";'), "Harika interface theme must load component customizations.");
+assert(interfaceImportSource.includes('@import "variables.less";'), "Interface theme must preserve component-structured imports.");
+
+assert(customerThemeSource.includes('@import "../interface.less";'), "Customer theme must inherit the Harika interface theme.");
+assert(customerThemeSource.includes('@import "ambra/variables.less";'), "AMBRA customer theme must keep its overrides isolated.");
+assert(!customerVariablesSource.includes(".hook-"), "Customer theme must not add UIkit hooks without an explicit architecture review.");
+assert(!/\.uk-[a-z0-9_-]+\s*\{/i.test(customerVariablesSource), "Customer theme must not add direct .uk-* selector overrides.");
+
+assert(stylesDirectories.includes("themes"), "Theme hierarchy directory is missing.");
+assert(!stylesDirectories.includes("theme"), "Legacy flat src/styles/theme directory must stay removed.");
+
+assert(packageJson.scripts?.["dev:standard"] === "vite --mode standard", "Standard theme dev mode must remain explicit.");
+assert(packageJson.scripts?.["dev:customer:ambra"] === "vite --mode customer-ambra", "AMBRA customer theme dev mode must remain explicit.");
+assert(packageJson.scripts?.["build:standard"] === "vite build --mode standard", "Standard theme build mode must remain explicit.");
+assert(packageJson.scripts?.["build:customer:ambra"] === "vite build --mode customer-ambra", "AMBRA customer theme build mode must remain explicit.");
 
 const nonThemeLess = [shellLess, productLess, visualizationLess, prototypeLess].join("\n");
 for (const selector of [".uk-button", ".uk-input", ".uk-select", ".uk-textarea", ".uk-card", ".uk-label", ".uk-badge", ".uk-alert"]) {
@@ -135,9 +161,17 @@ assert(viteConfigSource.includes('name: "harika-html-partials"'), "Vite must kee
 assert(viteConfigSource.includes("expandHtmlPartials"), "Vite must expand shared HTML partials.");
 assert(viteConfigSource.includes("server.watcher.add(partialsDirectory)"), "Vite dev server must watch shared partials.");
 assert(viteConfigSource.includes('mode === "pages" ? "/harika-clickdummy/" : "/"'), "Vite Pages base path must remain explicit.");
+assert(viteConfigSource.includes('"standard": "src/styles/themes/standard.less"'), "Vite must expose the standard theme mode.");
+assert(viteConfigSource.includes('"interface": "src/styles/themes/interface.less"'), "Vite must expose the interface theme mode.");
+assert(viteConfigSource.includes('"customer-ambra": "src/styles/themes/customers/ambra.less"'), "Vite must expose the AMBRA customer theme mode.");
+assert(viteConfigSource.includes('"@harika-theme": resolveThemeEntry(mode)'), "Vite must resolve the active theme through one alias.");
 
 assert(baselineGuide.includes("Shared only where it is truly global"), "UI baseline must preserve the shared-partial rule.");
 assert(editingGuide.includes("Global or page-specific?"), "Editing guide must explain the global/page-specific split.");
+assert(editingGuide.includes("Theme level"), "Editing guide must explain theme ownership.");
+assert(themesGuide.includes("UIkit standard theme"), "Theme guide must document the UIkit standard layer.");
+assert(themesGuide.includes("Harika interface child theme"), "Theme guide must document the interface child theme.");
+assert(themesGuide.includes("Customer child theme"), "Theme guide must document customer child themes.");
 assert(transferStatusSource.includes('"partials/"'), "Shared partials must be classified for UI transfer.");
 assert(transferStatusSource.includes('"styleguide.html"'), "Styleguide HTML must remain prototype-only in transfer status.");
 assert(transferStatusSource.includes('"src/app.js"'), "Behavior-only app.js must be classified explicitly.");
@@ -149,4 +183,4 @@ assert(pagesWorkflowSource.includes('"partials/**"'), "Pages preview must deploy
 assert(pagesWorkflowSource.includes('"src/**"'), "Pages preview must deploy source changes.");
 assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide must preserve permanent CI-before-PR rule.");
 
-console.log("Harika clickdummy shared-partial HTML-first checks passed.");
+console.log("Harika clickdummy HTML-first + UIkit theme hierarchy checks passed.");
