@@ -16,6 +16,7 @@ const transferableExact = new Set([
 ]);
 
 const transferablePrefixes = [
+  "partials/",
   "src/styles/"
 ];
 
@@ -75,4 +76,4 @@ if (nonUiFiles.length > 0) {
 }
 
 console.log("");
-console.log("HTML mock content, transfer metadata, prototype-only styleguide and documentation are never promoted blindly.");
+console.log("Mock content, transfer metadata, prototype-only styleguide and documentation are never promoted blindly.");
