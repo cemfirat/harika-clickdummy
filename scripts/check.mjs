@@ -209,6 +209,8 @@ assert(viteConfigSource.includes("raw.length > 512 * 1024"), "Theme Studio reque
 assert(viteConfigSource.includes("await less.render"), "Theme Studio saves must validate LESS directly.");
 assert(viteConfigSource.includes("writeFileSync(absolutePath, previousContent"), "Theme Studio must roll back invalid LESS writes.");
 assert(viteConfigSource.includes("rolledBack: true"), "Theme Studio must report compile rollback.");
+assert(viteConfigSource.includes("function gitRawOptional"), "Theme Studio must preserve raw Git file content.");
+assert(viteConfigSource.includes('return gitRawOptional(["show", "HEAD:" + relativePath]);'), "Theme Studio HEAD comparison must preserve exact file bytes.");
 assert(viteConfigSource.includes("expandHtmlPartials"), "Vite must expand shared HTML partials.");
 assert(viteConfigSource.includes("includeCodePattern"), "Vite must support styleguide code includes.");
 assert(viteConfigSource.includes("expandCodePartials"), "Vite must render styleguide markup from the same example source.");
