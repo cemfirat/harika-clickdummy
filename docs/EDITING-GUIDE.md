@@ -111,5 +111,5 @@ Before editing styling, decide which inheritance level owns the change:
 | Harika shell/layout | `src/styles/shell.less` |
 | Harika product-specific composition | `src/styles/product.less` |
 
-Do not solve a customer branding requirement in the Harika theme. Do not solve a Harika interface requirement in a customer theme.
+Do not solve a customer branding requirement in the Harika theme. Do not solve a Harika requirement in a customer theme.
 
