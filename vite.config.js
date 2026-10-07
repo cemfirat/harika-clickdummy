@@ -162,12 +162,16 @@ async function compileThemeEntry(relativePath) {
   });
 }
 
-function git(args) {
+function gitRaw(args) {
   return execFileSync("git", args, {
     cwd: rootDirectory,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"]
-  }).trim();
+  });
+}
+
+function git(args) {
+  return gitRaw(args).trim();
 }
 
 function gitOptional(args) {
@@ -178,8 +182,16 @@ function gitOptional(args) {
   }
 }
 
+function gitRawOptional(args) {
+  try {
+    return gitRaw(args);
+  } catch {
+    return "";
+  }
+}
+
 function readHeadFile(relativePath) {
-  return gitOptional(["show", "HEAD:" + relativePath]);
+  return gitRawOptional(["show", "HEAD:" + relativePath]);
 }
 
 function studioFilePayload(relativePath) {
