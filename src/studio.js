@@ -165,6 +165,22 @@ editor?.addEventListener("input", () => {
   setState(editor.value === loadedContent ? (currentFile.modified ? "Geändert" : "HEAD") : "Ungespeichert");
 });
 
+editor?.addEventListener("keydown", (event) => {
+  if (event.key === "Tab") {
+    event.preventDefault();
+    const start = editor.selectionStart;
+    const end = editor.selectionEnd;
+    editor.setRangeText("  ", start, end, "end");
+    editor.dispatchEvent(new Event("input"));
+    return;
+  }
+
+  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s") {
+    event.preventDefault();
+    saveCurrentFile();
+  }
+});
+
 document.querySelectorAll("[data-studio-open]").forEach((button) => {
   button.addEventListener("click", async () => {
     if (!studioAvailable) return;
