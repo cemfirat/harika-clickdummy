@@ -30,6 +30,24 @@
   --sidebar: @ccf-indigo;
   --on-dark: @ccf-creme;
   --muted-on-dark: @ccf-gray;
+  --dark-line: @ccf-violet;
+  --control-bg: #ffffff;
+}
+
+html[data-ccf-resolved-theme="dark"] {
+  color-scheme: dark;
+  --ink: #fff9ee;
+  --muted: #c4c5cc;
+  --paper: #140a24;
+  --panel: #20123a;
+  --line: #4a3658;
+  --line-dark: #7b7b80;
+  --accent-soft: #3d2450;
+  --sidebar: #0f0818;
+  --on-dark: #fff9ee;
+  --muted-on-dark: #c4c5cc;
+  --dark-line: #622064;
+  --control-bg: #2a1a45;
 }
 
 * { box-sizing: border-box; }
@@ -170,6 +188,50 @@
   font-size: .66rem;
 }
 
+.sidebar-theme {
+  margin: 1rem 0 .35rem;
+}
+
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+}
+
+.theme-switcher-label {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 750;
+}
+
+.theme-switcher-group > button {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+}
+
+.theme-switcher-compact .theme-switcher-text {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.sidebar .theme-switcher-group > button {
+  background: transparent;
+  color: var(--muted-on-dark);
+  border-color: var(--dark-line);
+}
+
+.sidebar .theme-switcher-group > button.uk-active {
+  background: @ccf-darker-violet;
+  color: var(--on-dark);
+}
+
 .safety-note {
   display: flex;
   align-items: center;
@@ -205,7 +267,18 @@
   padding: 0 clamp(1.4rem, 4vw, 4.5rem);
   background:
     radial-gradient(circle at 85% 0%, rgba(98,32,100,.08), transparent 28rem),
-    @ccf-light-gray;
+    var(--paper);
+  color: var(--ink);
+}
+
+html[data-ccf-resolved-theme="dark"] .workspace {
+  background:
+    radial-gradient(circle at 85% 0%, rgba(224,194,209,.08), transparent 28rem),
+    var(--paper);
+}
+
+html[data-ccf-resolved-theme="dark"] .sidebar {
+  background: var(--sidebar);
 }
 
 .workspace-header {

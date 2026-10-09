@@ -33,6 +33,8 @@ Global shell elements are centralized so they can be edited once:
 - Sidebar → `partials/sidebar.html`
 - Navigation → `partials/navigation.html`
 - Mobile Navigation → `partials/mobile-nav.html`
+- Appearance switcher → `partials/theme-switcher.html`
+- Appearance bootstrap → `partials/theme-preference-bootstrap.html`
 
 Page content remains directly in each root HTML page.
 

@@ -1,0 +1,20 @@
+<script>
+(() => {
+  try {
+    const key = "ccf-theme-preference";
+    let value = localStorage.getItem(key);
+    if (value !== "light" && value !== "dark" && value !== "system") value = "system";
+    const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+    const resolved = value === "system" ? (dark ? "dark" : "light") : value;
+    const root = document.documentElement;
+    root.dataset.ccfTheme = value;
+    root.dataset.ccfResolvedTheme = resolved;
+    root.style.colorScheme = resolved;
+  } catch {
+    const root = document.documentElement;
+    root.dataset.ccfTheme = "system";
+    root.dataset.ccfResolvedTheme = "light";
+    root.style.colorScheme = "light";
+  }
+})();
+</script>
