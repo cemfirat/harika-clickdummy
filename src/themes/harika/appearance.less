@@ -1,0 +1,43 @@
+// Runtime light/dark appearance (data-ccf-resolved-theme), kept in the theme
+// layer so shell/product LESS does not reskin UIkit components.
+
+html[data-ccf-resolved-theme="dark"] {
+  color-scheme: dark;
+  background: #140a24;
+  color: #fff9ee;
+}
+
+html[data-ccf-resolved-theme="dark"] .uk-card-default,
+html[data-ccf-resolved-theme="dark"] .uk-modal-dialog {
+  background: #20123a;
+  color: #fff9ee;
+}
+
+html[data-ccf-resolved-theme="dark"] .uk-card-default .uk-card-title,
+html[data-ccf-resolved-theme="dark"] .uk-modal-title {
+  color: #fff9ee;
+}
+
+html[data-ccf-resolved-theme="dark"] .uk-input,
+html[data-ccf-resolved-theme="dark"] .uk-select,
+html[data-ccf-resolved-theme="dark"] .uk-textarea {
+  background: #2a1a45;
+  color: #fff9ee;
+  border-color: #4a3658;
+}
+
+html[data-ccf-resolved-theme="dark"] .uk-button-default {
+  background: #2a1a45;
+  color: #fff9ee;
+  border-color: #4a3658;
+}
+
+html[data-ccf-resolved-theme="dark"] .uk-button-default:hover,
+html[data-ccf-resolved-theme="dark"] .uk-button-default.uk-active {
+  background: #3d2450;
+  color: #fff9ee;
+}
+
+html[data-ccf-resolved-theme="dark"] .uk-text-meta {
+  color: #c4c5cc;
+}

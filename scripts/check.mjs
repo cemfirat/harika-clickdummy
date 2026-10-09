@@ -28,7 +28,9 @@ const partialFiles = [
   "workspace-header.html",
   "footer.html",
   "mobile-nav.html",
-  "profile-modal.html"
+  "profile-modal.html",
+  "theme-switcher.html",
+  "theme-preference-bootstrap.html"
 ];
 
 function assert(condition, message) {
@@ -94,6 +96,15 @@ assert(partials["sidebar.html"].includes("@include partials/navigation.html"), "
 assert(partials["mobile-nav.html"].includes("@include partials/navigation.html"), "Mobile navigation must reuse the shared navigation partial.");
 assert(partials["sidebar.html"].includes("@include partials/brand.html"), "Sidebar must reuse the shared brand partial.");
 assert(partials["mobile-nav.html"].includes("@include partials/brand.html"), "Mobile navigation must reuse the shared brand partial.");
+assert(partials["sidebar.html"].includes("@include partials/theme-switcher.html"), "Sidebar must expose the shared theme switcher.");
+assert(partials["mobile-nav.html"].includes("@include partials/theme-switcher.html"), "Mobile navigation must expose the shared theme switcher.");
+assert(partials["theme-switcher.html"].includes("uk-button-group"), "Theme switcher must use the UIkit button group.");
+assert(partials["theme-switcher.html"].includes('data-theme-preference="light"'), "Theme switcher must offer light mode.");
+assert(partials["theme-switcher.html"].includes('data-theme-preference="system"'), "Theme switcher must offer auto/system mode.");
+assert(partials["theme-switcher.html"].includes('data-theme-preference="dark"'), "Theme switcher must offer dark mode.");
+assert(partials["theme-switcher.html"].includes('aria-label="Darstellung"'), "Theme switcher must name the control group.");
+assert(partials["theme-preference-bootstrap.html"].includes("ccf-theme-preference"), "Theme bootstrap must use the shared storage key.");
+assert(partials["theme-preference-bootstrap.html"].includes("prefers-color-scheme: dark"), "Theme bootstrap must resolve the browser preference.");
 assert(partials["workspace-header.html"].includes("{{title}}"), "Workspace header must expose the title variable.");
 assert(partials["workspace-header.html"].includes("{{description}}"), "Workspace header must expose the description variable.");
 assert(partials["mobile-nav.html"].includes('data-uk-offcanvas="overlay: true; flip: false"'), "Mobile navigation must use UIkit Offcanvas.");
@@ -104,6 +115,9 @@ for (const [page, pageId] of allPages) {
   html[page] = await readFile(new URL("../" + page, import.meta.url), "utf8");
 
   assert(html[page].includes('<body data-page="' + pageId + '">'), page + " must expose its page id.");
+  assert(html[page].includes('data-ccf-theme="system"'), page + " must expose the default theme preference.");
+  assert(html[page].includes('data-ccf-resolved-theme="light"'), page + " must expose the default resolved theme.");
+  assert(html[page].includes("<!-- @include partials/theme-preference-bootstrap.html -->"), page + " must bootstrap the theme preference before paint.");
   assert(html[page].includes("<!-- @include partials/sidebar.html -->"), page + " must use the shared sidebar.");
   assert(html[page].includes("<!-- @include partials/workspace-header.html "), page + " must use the shared workspace header.");
   assert(html[page].includes("<!-- @include partials/footer.html -->"), page + " must use the shared footer.");
@@ -143,6 +157,10 @@ assert(!/<(?:main|section|article|table|nav|aside)\b/i.test(appSource), "app.js 
 assert(appSource.includes('document.body.dataset.page'), "app.js must activate shared navigation from the page id.");
 assert(appSource.includes('[data-nav-page]'), "app.js must target shared navigation metadata.");
 assert(appSource.includes("document.documentElement.dataset.theme = __HARIKA_THEME__"), "app.js must expose the selected theme for inspection.");
+assert(appSource.includes("ccf-theme-preference"), "app.js must persist the appearance preference.");
+assert(appSource.includes("[data-theme-preference]"), "app.js must wire the shared theme switcher controls.");
+assert(appSource.includes("prefers-color-scheme: dark"), "app.js must follow the browser color scheme in auto mode.");
+assert(appSource.includes("dataset.ccfResolvedTheme"), "app.js must expose the resolved light/dark appearance.");
 assert(!appSource.includes('uikit/dist/css/uikit.min.css'), "Do not load prebuilt UIkit CSS alongside the Less theme.");
 assert(appSource.includes('import "@harika-theme";'), "app.js must load the selected Vite theme alias.");
 
@@ -164,9 +182,13 @@ assert(harikaThemeSource.includes('@import "standard.less";'), "Harika theme mus
 assert(harikaThemeSource.includes('@import "harika/_import.less";'), "Harika theme must load component customizations.");
 assert(harikaImportSource.includes('@import "variables.less";'), "Harika theme must preserve component-structured imports.");
 assert(harikaImportSource.includes('@import "offcanvas.less";'), "Harika theme must keep Offcanvas customization in the UIkit theme layer.");
+assert(harikaImportSource.includes('@import "appearance.less";'), "Harika theme must keep runtime light/dark appearance overrides in the theme layer.");
 assert(harikaOffcanvasSource.includes("@offcanvas-bar-background"), "Offcanvas theme must use the official UIkit variable.");
 assert(harikaOffcanvasSource.includes(".hook-offcanvas-bar()"), "Offcanvas theme must use the official UIkit hook.");
 assert(!shellLess.includes(".uk-offcanvas-bar"), "Shell LESS must not directly reskin UIkit Offcanvas.");
+assert(shellLess.includes(".theme-switcher"), "Shell LESS must style the shared appearance switcher.");
+assert(shellLess.includes('html[data-ccf-resolved-theme="dark"]'), "Shell LESS must provide dark semantic token overrides.");
+assert(shellLess.includes("var(--paper)"), "Shell workspace surfaces must follow runtime theme tokens.");
 
 assert(customerThemeSource.includes('@import "../harika.less";'), "Customer theme must inherit Harika.");
 assert(customerThemeSource.includes('@import "ambra/variables.less";'), "AMBRA customer theme must keep its overrides isolated.");
