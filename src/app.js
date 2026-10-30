@@ -1,6 +1,9 @@
 import UIkit from "uikit";
 import Icons from "uikit/dist/js/uikit-icons";
+import { initAiConnections } from "./ai-connections.js";
 import { initWebsiteAssistant } from "./website-assistant.js";
+import { initInsightWorkspace } from "./insight-workspace.js";
+import { initAdsWorkspace } from "./ads-workspace.js";
 
 UIkit.use(Icons);
 
@@ -135,7 +138,10 @@ customerStatus?.addEventListener("change", applyCustomerFilter);
 
 // The website workspace is HTML-first: selection reveals existing detail
 // panels; native UIkit Tabs, Switcher and Modal own their interactions.
-const websiteAssistant = initWebsiteAssistant(UIkit);
+const aiConnections = initAiConnections(UIkit);
+const websiteAssistant = initWebsiteAssistant(UIkit, aiConnections);
+initInsightWorkspace(UIkit, aiConnections);
+initAdsWorkspace(UIkit, aiConnections);
 const websiteRows = [...document.querySelectorAll("[data-website-row]")];
 const websiteSearch = document.querySelector("[data-website-search]");
 

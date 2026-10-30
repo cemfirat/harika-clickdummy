@@ -78,6 +78,23 @@ Alle Antworten, Verbindungen und Entwürfe sind ausdrücklich simuliert und
 bleiben in der geöffneten Vorschau. Ablauf, Grenzen und Abnahme:
 [Website-Arbeitsfläche mit Assistent](docs/WEBSITE-ASSISTANT-UX.md).
 
+### Keywords und verbindungsübergreifende Untersuchung
+
+Unter `ads.html#keywords` lassen sich vorhandene Beispiel-Keywords direkt oder
+gemeinsam mit dem Assistenten überarbeiten. Text-/Match-Type-Änderungen werden
+als pausierter Ersatz mit eigener Ressource und getrennter Althistorie gezeigt.
+Eine konkrete Vorschau geht der simulierten Übernahme voraus.
+
+Unter `index.html#auffaelligkeiten` werden Google-Ads-, GA4- und Search-Console-
+Beispieldaten für dieselbe Landingpage eingeordnet. Ein manuell oder gemeinsam
+erstellter Prüfplan führt zu getrennten Demo-Prüfergebnissen und optionalen
+Landingpage-Entwürfen. Fehlende Daten bleiben nicht beurteilbar.
+
+Beide Abläufe nutzen dieselbe persönliche KI-Verbindungsvorschau wie die
+Website-Arbeit. Die Zustände bleiben dokumentlokal und werden beim Neuladen
+zurückgesetzt. Fachliche Entscheidungen, Quellen und Abnahme:
+[Ads und Untersuchungen](docs/ADS-INSIGHTS-UX.md).
+
 - https://cemfirat.github.io/harika-clickdummy/
 
 Relevant HTML, partial, UI and LESS changes merged to `main` deploy automatically to GitHub Pages.

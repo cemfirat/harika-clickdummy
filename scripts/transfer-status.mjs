@@ -26,7 +26,10 @@ const prototypeOnlyExact = new Set([
   "src/styles/prototype.less",
   "partials/theme-studio.html",
   "src/studio.js",
-  "src/website-assistant.js"
+  "src/website-assistant.js",
+  "src/ai-connections.js",
+  "src/ads-workspace.js",
+  "src/insight-workspace.js"
 ]);
 
 const prototypeOnlyPrefixes = [

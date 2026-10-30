@@ -15,6 +15,13 @@ additional path. Other pages inherit the same shared shell and native component
 theme. The first interactive workflow and its simulation boundary are documented
 in [WEBSITE-ASSISTANT-UX.md](WEBSITE-ASSISTANT-UX.md).
 
+The next accepted #541 step extends the same object-and-assistant composition
+to Ads keyword editing and source-based investigations on the overview page.
+The shared personal connection dialog is used by all three areas. Evidence,
+hypotheses, editable plans and actual demo results remain distinct; the
+overview no longer combines GA4 and Ads conversions into one unlabeled total.
+See [ADS-INSIGHTS-UX.md](ADS-INSIGHTS-UX.md) for the scoped prototype behavior.
+
 The study's custom controls and Lucide icons are replaced by UIkit components and
 UIkit icons. Page structure stays in HTML, global chrome in small partials,
 styling in Less and JavaScript in behavior-only modules.

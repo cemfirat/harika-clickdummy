@@ -4,66 +4,334 @@
   <meta charset="UTF-8">
   <!-- @include partials/theme-preference-bootstrap.html -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Harika Clickdummy – Ads">
+  <meta name="description" content="Harika Clickdummy – Keywords gemeinsam bearbeiten und Änderungen nachvollziehen">
   <title>Ads · Harika Clickdummy</title>
 </head>
-<body data-page="ads">
+<body data-page="ads" data-demo-organization="Beispielagentur" data-demo-customer="Beispielkunde">
   <a class="skip-link" href="#main-content">Zum Hauptinhalt</a>
-
   <div class="app-shell">
     <!-- @include partials/sidebar.html -->
-
     <main class="workspace" id="main-content" tabindex="-1">
-      <!-- @include partials/workspace-header.html {"title":"Ads","description":"Laufen meine bezahlten Kampagnen effizient und passen Anzeige, Landingpage und Conversion zusammen?"} -->
-
+      <!-- @include partials/workspace-header.html {"title":"Ads","description":"Kampagnen verstehen und Keywords gemeinsam verbessern."} -->
       <div class="view-content">
-        <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-3@m uk-margin-medium-bottom" data-uk-grid><div><article class="uk-card uk-card-default uk-card-body metric-card">
-              <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-                <span class="metric-source">Google Ads</span>
-                <span class="uk-label uk-label-warning">+4,1 %</span>
-              </div>
-              <strong class="metric-value">€ 1.617</strong>
-              <span class="metric-label">Kosten</span>
-            </article></div><div><article class="uk-card uk-card-default uk-card-body metric-card">
-              <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-                <span class="metric-source">Google Ads</span>
-                <span class="uk-label uk-label-success">+11,1 %</span>
-              </div>
-              <strong class="metric-value">40</strong>
-              <span class="metric-label">Conversions</span>
-            </article></div><div><article class="uk-card uk-card-default uk-card-body metric-card">
-              <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-                <span class="metric-source">Google Ads</span>
-                <span class="uk-label uk-label-success">−6,3 %</span>
-              </div>
-              <strong class="metric-value">€ 40,43</strong>
-              <span class="metric-label">Ø CPA</span>
-            </article></div></div>
-<section class="uk-card uk-card-default">
-          <div class="uk-card-header">
-            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-              <div>
-                <p class="eyebrow uk-margin-remove-bottom">Google Ads</p>
-                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Kampagnen</h2>
-              </div>
-              
+        <div class="uk-alert uk-alert-primary demo-workspace-note" role="note">
+          <strong>Interaktive Demo</strong>
+          <p class="uk-margin-small-top uk-margin-remove-bottom">Fiktiver Beispielkunde · www.beispiel.example. Kennzahlen, Antworten und Änderungen sind vorbereitet und simuliert. Es werden keine echten Anzeigen oder Budgets verändert.</p>
+        </div>
+        <p class="uk-text-meta">Beispielkonto · 1.–28. Oktober 2026 · Quelle: vorbereiteter Google-Ads-Datensatz. Die Veränderungen beziehen sich auf einen ebenfalls fiktiven Vergleichszeitraum.</p>
+        <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-3@m uk-margin-medium-bottom" data-uk-grid>
+          <div><article class="uk-card uk-card-default uk-card-body metric-card">
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span class="metric-source">Google Ads · Demo</span><span class="uk-label uk-label-warning">+4,1 %</span></div>
+            <strong class="metric-value">€ 1.617</strong><span class="metric-label">Kosten</span>
+          </article></div>
+          <div><article class="uk-card uk-card-default uk-card-body metric-card">
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span class="metric-source">Google Ads · Demo</span><span class="uk-label uk-label-success">+11,1 %</span></div>
+            <strong class="metric-value">40</strong><span class="metric-label">Conversions</span>
+          </article></div>
+          <div><article class="uk-card uk-card-default uk-card-body metric-card">
+            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span class="metric-source">Google Ads · Demo</span><span class="uk-label uk-label-success">−6,3 %</span></div>
+            <strong class="metric-value">€ 40,43</strong><span class="metric-label">Ø CPA</span>
+          </article></div>
+        </div>
+        <section class="uk-card uk-card-default uk-margin-medium-bottom" aria-labelledby="ads-campaigns-heading">
+          <div class="uk-card-header"><p class="eyebrow uk-margin-remove-bottom">Google Ads · Beispielkonto</p><h2 id="ads-campaigns-heading" class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Kampagnen</h2></div>
+          <div class="uk-card-body">
+            <div class="uk-overflow-auto" tabindex="0" role="region" aria-label="Beispielkampagnen horizontal scrollen">
+              <table class="uk-table uk-table-divider uk-table-small uk-table-middle">
+                <thead><tr><th scope="col">Kampagne</th><th scope="col">Kosten</th><th scope="col">Conversions</th><th scope="col">CPA</th><th scope="col">Status</th><th scope="col">Aktion</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Search | Raffstores</strong></td><td>€ 684</td><td>18</td><td>€ 38,00</td><td><span class="uk-label uk-label-success">Aktiv · Demo</span></td><td><a class="uk-button uk-button-text uk-button-small" href="#keywords" data-ads-select-campaign="raffstores">Keywords bearbeiten</a></td></tr>
+                  <tr><td><strong>Search | Markisen</strong></td><td>€ 512</td><td>13</td><td>€ 39,38</td><td><span class="uk-label uk-label-success">Aktiv · Demo</span></td><td><a class="uk-button uk-button-text uk-button-small" href="#campaign-markisen" data-uk-toggle>Öffnen</a></td></tr>
+                  <tr><td><strong>Search | Pergolen</strong></td><td>€ 421</td><td>9</td><td>€ 46,78</td><td><span class="uk-label uk-label-success">Aktiv · Demo</span></td><td><a class="uk-button uk-button-text uk-button-small" href="#campaign-pergolen" data-uk-toggle>Öffnen</a></td></tr>
+                </tbody>
+              </table>
             </div>
           </div>
-          <div class="uk-card-body">
-            <div class="uk-overflow-auto" tabindex="0" role="region" aria-label="Ads-Kampagnen horizontal scrollen"><table class="uk-table uk-table-divider uk-table-small uk-table-middle"><thead><tr><th>Kampagne</th><th>Kosten</th><th>Conversions</th><th>CPA</th><th>Status</th><th>Aktion</th></tr></thead><tbody><tr><td><strong>Search | Raffstores</strong></td><td>€ 684</td><td>18</td><td>€ 38,00</td><td><span class="uk-label uk-label-success">Aktiv</span></td><td><a class="uk-button uk-button-text uk-button-small" href="#campaign-raffstores" data-uk-toggle>Öffnen</a></td></tr><tr><td><strong>Search | Markisen</strong></td><td>€ 512</td><td>13</td><td>€ 39,38</td><td><span class="uk-label uk-label-success">Aktiv</span></td><td><a class="uk-button uk-button-text uk-button-small" href="#campaign-markisen" data-uk-toggle>Öffnen</a></td></tr><tr><td><strong>Search | Pergolen</strong></td><td>€ 421</td><td>9</td><td>€ 46,78</td><td><span class="uk-label uk-label-success">Aktiv</span></td><td><a class="uk-button uk-button-text uk-button-small" href="#campaign-pergolen" data-uk-toggle>Öffnen</a></td></tr></tbody></table></div>
+        </section>
+
+        <section aria-labelledby="keywords" class="ads-keyword-workspace">
+          <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster uk-margin-bottom">
+            <div><p class="eyebrow uk-margin-remove-bottom">Managen · Verstehen · Verbessern</p><h2 id="keywords" class="uk-margin-small-top uk-margin-remove-bottom" tabindex="-1">Keywords überarbeiten</h2></div>
+            <button class="uk-button uk-button-primary" type="button" data-ads-open aria-controls="ads-assistant" aria-expanded="false"><span data-uk-icon="icon: commenting; ratio: 0.85" aria-hidden="true"></span> Mit KI arbeiten</button>
           </div>
+          <div class="ads-toolbar uk-margin-bottom">
+            <div>
+              <label class="uk-form-label" for="ads-campaign">Geöffnete Kampagne</label>
+              <select id="ads-campaign" class="uk-select">
+                <option value="raffstores">Search | Raffstores</option>
+                <option value="markisen">Search | Markisen</option>
+                <option value="pergolen">Search | Pergolen</option>
+              </select>
+            </div>
+            <p class="uk-text-meta uk-margin-remove">Beispielkunde · Beispielkonto<br>www.beispiel.example/raffstores/</p>
+          </div>
+          <div id="ads-context-mismatch" class="uk-alert uk-alert-warning" role="status" hidden>
+            <p>Du hast eine andere Kampagne geöffnet. Dieser Arbeitsstand gehört zu <strong>Search | Raffstores</strong>. Deine Vorschläge und bereits erfolgten Demo-Schritte bleiben erhalten.</p>
+            <button class="uk-button uk-button-default uk-button-small" type="button" data-ads-return>Zur Raffstores-Kampagne zurück</button>
+          </div>
+
+          <div id="ads-workbench" class="collaborative-workbench" data-work-assistant-open="false">
+            <div class="collaborative-main">
+              <section class="uk-card uk-card-default" aria-labelledby="keyword-data-heading">
+                <header class="uk-card-header">
+                  <p class="eyebrow uk-margin-remove-bottom">Search | Raffstores · Anzeigengruppe Sonnenschutz</p>
+                  <h3 id="keyword-data-heading" class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Keywords und bisherige Leistung</h3>
+                  <p class="uk-text-meta uk-margin-small-top uk-margin-remove-bottom">1.–28. Oktober 2026 · vorbereitete Beispieldaten. Die Leistungswerte bleiben beim ursprünglichen Keyword.</p>
+                </header>
+                <div class="uk-card-body">
+                  <div class="uk-overflow-auto" tabindex="0" role="region" aria-label="Keywords mit historischer Beispiel-Leistung">
+                    <table class="uk-table uk-table-divider uk-table-small uk-table-middle keyword-table">
+                      <thead><tr><th scope="col">Keyword</th><th scope="col">Übereinstimmung</th><th scope="col">Kosten</th><th scope="col">Conv.</th><th scope="col">Status</th></tr></thead>
+                      <tbody>
+                        <tr data-keyword-source="0" data-keyword-text="raffstores wien" data-keyword-match="PHRASE" data-keyword-status="ENABLED" data-suggested-text="raffstores kaufen wien" data-suggested-match="PHRASE" data-suggested-status="ENABLED">
+                          <td><button class="uk-button uk-button-text keyword-select" type="button" data-keyword-select="0" aria-pressed="true" aria-controls="keyword-form">raffstores wien</button><span class="table-secondary">Original · bisherige Leistung</span></td>
+                          <td>Passende Wortgruppe</td><td class="uk-text-nowrap">€ 320</td><td>9</td>
+                          <td><span class="uk-label uk-label-success" data-keyword-original-status="0">Aktiv</span></td>
+                        </tr>
+                        <tr class="keyword-replacement-row" data-keyword-replacement="0" hidden>
+                          <td><strong data-keyword-replacement-text="0"></strong><span class="table-secondary">Neuer Ersatz · Demo</span></td>
+                          <td data-keyword-replacement-match="0"></td>
+                          <td colspan="2"><span class="uk-text-meta">Noch keine Leistungsdaten</span></td>
+                          <td><span class="uk-label">Pausiert</span></td>
+                        </tr>
+                        <tr data-keyword-source="1" data-keyword-text="raffstores" data-keyword-match="BROAD" data-keyword-status="ENABLED" data-suggested-text="raffstores wien" data-suggested-match="EXACT" data-suggested-status="ENABLED">
+                          <td><button class="uk-button uk-button-text keyword-select" type="button" data-keyword-select="1" aria-pressed="false" aria-controls="keyword-form">raffstores</button><span class="table-secondary">Original · bisherige Leistung</span></td>
+                          <td>Weitgehend passend</td><td class="uk-text-nowrap">€ 244</td><td>3</td>
+                          <td><span class="uk-label uk-label-success" data-keyword-original-status="1">Aktiv</span></td>
+                        </tr>
+                        <tr class="keyword-replacement-row" data-keyword-replacement="1" hidden>
+                          <td><strong data-keyword-replacement-text="1"></strong><span class="table-secondary">Neuer Ersatz · Demo</span></td>
+                          <td data-keyword-replacement-match="1"></td>
+                          <td colspan="2"><span class="uk-text-meta">Noch keine Leistungsdaten</span></td>
+                          <td><span class="uk-label">Pausiert</span></td>
+                        </tr>
+                        <tr data-keyword-source="2" data-keyword-text="raffstore außen" data-keyword-match="EXACT" data-keyword-status="ENABLED" data-suggested-text="raffstore außen" data-suggested-match="EXACT" data-suggested-status="PAUSED">
+                          <td><button class="uk-button uk-button-text keyword-select" type="button" data-keyword-select="2" aria-pressed="false" aria-controls="keyword-form">raffstore außen</button><span class="table-secondary">Original · bisherige Leistung</span></td>
+                          <td>Genau passend</td><td class="uk-text-nowrap">€ 120</td><td>6</td>
+                          <td><span class="uk-label uk-label-success" data-keyword-original-status="2">Aktiv</span></td>
+                        </tr>
+                        <tr class="keyword-replacement-row" data-keyword-replacement="2" hidden>
+                          <td><strong data-keyword-replacement-text="2"></strong><span class="table-secondary">Neuer Ersatz · Demo</span></td>
+                          <td data-keyword-replacement-match="2"></td>
+                          <td colspan="2"><span class="uk-text-meta">Noch keine Leistungsdaten</span></td>
+                          <td><span class="uk-label">Pausiert</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </section>
+
+              <section class="uk-card uk-card-default uk-margin-top" aria-labelledby="keyword-editor-heading">
+                <header class="uk-card-header">
+                  <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
+                    <h3 id="keyword-editor-heading" class="uk-card-title uk-margin-remove" tabindex="-1">Gemeinsamer Arbeitsstand</h3>
+                    <span class="uk-label" id="keyword-work-status">Unverändert</span>
+                  </div>
+                  <p class="uk-text-meta uk-margin-small-top uk-margin-remove-bottom">Direkt bearbeiten oder einen KI-Vorschlag weiterentwickeln. Bis zur Übernahme bleiben die Keywords unverändert.</p>
+                </header>
+                <div class="uk-card-body">
+                  <div class="uk-margin-bottom">
+                    <label class="uk-form-label" for="keyword-picker">Keyword auswählen</label>
+                    <select id="keyword-picker" class="uk-select">
+                      <option value="0">raffstores wien</option><option value="1">raffstores</option><option value="2">raffstore außen</option>
+                    </select>
+                  </div>
+                  <form id="keyword-form" class="uk-form-stacked">
+                    <fieldset id="keyword-fields" class="uk-fieldset">
+                      <div class="uk-margin">
+                        <label class="uk-form-label" for="keyword-text">Keyword-Text</label>
+                        <input id="keyword-text" class="uk-input" name="keyword" value="raffstores wien" maxlength="120" required>
+                      </div>
+                      <div class="keyword-editor-grid">
+                        <div class="uk-margin-small-bottom">
+                          <label class="uk-form-label" for="keyword-match">Übereinstimmung</label>
+                          <select id="keyword-match" class="uk-select" name="match">
+                            <option value="EXACT">Genau passend</option><option value="PHRASE" selected>Passende Wortgruppe</option><option value="BROAD">Weitgehend passend</option>
+                          </select>
+                        </div>
+                        <div class="uk-margin-small-bottom">
+                          <label class="uk-form-label" for="keyword-status">Geplanter Status</label>
+                          <select id="keyword-status" class="uk-select" name="status"><option value="ENABLED">Aktiv beibehalten</option><option value="PAUSED">Pausiert</option></select>
+                        </div>
+                      </div>
+                      <div id="keyword-replacement-note" class="uk-alert uk-alert-primary" hidden>
+                        <strong>Text oder Übereinstimmung geändert: Ersatz anlegen</strong>
+                        <p class="uk-margin-small-top">Dafür entsteht ein neues Keyword. Es beginnt pausiert und ohne Leistungsdaten. Das bisherige Keyword behält seine Historie.</p>
+                        <label class="uk-form-label" for="keyword-old-action">Bisheriges Keyword nach dem Ersatz</label>
+                        <select id="keyword-old-action" class="uk-select" name="oldAction">
+                          <option value="keep">Unverändert lassen</option><option value="pause">Ausdrücklich pausieren</option>
+                        </select>
+                      </div>
+                    </fieldset>
+                    <p class="uk-text-meta">Zuletzt bearbeitet: <span id="keyword-author">Noch nicht bearbeitet</span></p>
+                    <p id="keyword-locked-note" class="uk-text-meta" hidden>Diese Demo-Änderung ist abgeschlossen. Die Ergebnisse bleiben sichtbar; weitere unveränderte Keywords kannst du noch bearbeiten.</p>
+                    <div class="uk-flex uk-flex-wrap harika-control-cluster">
+                      <button id="ads-preview-button" class="uk-button uk-button-primary" type="submit">Änderungen ansehen</button>
+                      <button class="uk-button uk-button-default" type="button" data-ads-open aria-controls="ads-assistant" aria-expanded="false">Mit KI weiterarbeiten</button>
+                    </div>
+                  </form>
+                  <output id="ads-edit-status" class="uk-text-meta uk-display-block uk-margin-top" aria-live="polite"></output>
+                </div>
+              </section>
+
+              <section id="ads-preview" class="uk-card uk-card-default uk-margin-top" aria-labelledby="ads-preview-heading" hidden>
+                <header class="uk-card-header"><h3 id="ads-preview-heading" class="uk-card-title uk-margin-remove" tabindex="-1">Diese Änderungen sind vorgesehen</h3><p class="uk-text-meta uk-margin-small-top uk-margin-remove-bottom">Beispielkonto · Search | Raffstores · konkrete Änderungen deines aktuellen Arbeitsstands.</p></header>
+                <div class="uk-card-body">
+                  <div class="uk-overflow-auto" tabindex="0" role="region" aria-label="Vorschau der Keywordänderungen">
+                    <table class="uk-table uk-table-small uk-table-divider keyword-diff-table">
+                      <thead><tr><th scope="col">Bisher</th><th scope="col">Geplant</th><th scope="col">Auswirkung</th></tr></thead>
+                      <tbody>
+                          <tr data-keyword-preview="0" hidden>
+                            <td data-preview-old="0"></td>
+                            <td data-preview-new="0"></td>
+                            <td data-preview-impact="0"></td>
+                          </tr>
+                          <tr data-keyword-preview="1" hidden>
+                            <td data-preview-old="1"></td>
+                            <td data-preview-new="1"></td>
+                            <td data-preview-impact="1"></td>
+                          </tr>
+                          <tr data-keyword-preview="2" hidden>
+                            <td data-preview-old="2"></td>
+                            <td data-preview-new="2"></td>
+                            <td data-preview-impact="2"></td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <p class="uk-text-meta">Neue Keywords bleiben pausiert. Budgets und Kampagnenaktivierung gehören nicht zu diesem Auftrag. Deine Entscheidung zum bisherigen Keyword steht in jeder Zeile.</p>
+                  <div class="uk-flex uk-flex-wrap harika-control-cluster">
+                    <button id="ads-apply" class="uk-button uk-button-primary" type="button">In Demo übernehmen</button>
+                    <button id="ads-cancel" class="uk-button uk-button-default" type="button" data-ads-cancel hidden>Vorgang anhalten</button>
+                  </div>
+                </div>
+              </section>
+
+              <section id="ads-result" class="uk-card uk-card-default uk-margin-top" aria-labelledby="ads-result-heading" hidden>
+                <header class="uk-card-header"><h3 id="ads-result-heading" class="uk-card-title uk-margin-remove" tabindex="-1">Ergebnis der Demo</h3></header>
+                <div class="uk-card-body">
+                  <output id="ads-result-summary" class="uk-display-block" aria-live="polite"></output>
+                  <ul class="uk-list uk-list-divider ads-result-list">
+                      <li data-keyword-result="0" hidden>
+                        <div class="uk-flex uk-flex-between uk-flex-wrap harika-control-cluster"><strong>raffstores wien</strong><span class="uk-label" data-result-status="0">Offen</span></div>
+                        <p data-result-description="0" class="uk-margin-small-top uk-margin-remove-bottom"></p>
+                        <p data-result-original="0" class="uk-text-meta uk-margin-small-top uk-margin-remove-bottom"></p>
+                      </li>
+                      <li data-keyword-result="1" hidden>
+                        <div class="uk-flex uk-flex-between uk-flex-wrap harika-control-cluster"><strong>raffstores</strong><span class="uk-label" data-result-status="1">Offen</span></div>
+                        <p data-result-description="1" class="uk-margin-small-top uk-margin-remove-bottom"></p>
+                        <p data-result-original="1" class="uk-text-meta uk-margin-small-top uk-margin-remove-bottom"></p>
+                      </li>
+                      <li data-keyword-result="2" hidden>
+                        <div class="uk-flex uk-flex-between uk-flex-wrap harika-control-cluster"><strong>raffstore außen</strong><span class="uk-label" data-result-status="2">Offen</span></div>
+                        <p data-result-description="2" class="uk-margin-small-top uk-margin-remove-bottom"></p>
+                        <p data-result-original="2" class="uk-text-meta uk-margin-small-top uk-margin-remove-bottom"></p>
+                      </li>
+                  </ul>
+                  <button id="ads-retry" class="uk-button uk-button-primary uk-button-small" type="button" hidden>Offene Schritte fortsetzen</button>
+                  <p class="uk-text-meta uk-margin-top uk-margin-remove-bottom">Die Demo prüft nur ihren lokalen Beispielzustand. Es gibt keine echten Google-Ads-Änderungen und keinen Nachweis einer Leistungsverbesserung.</p>
+                </div>
+              </section>
+            </div>
+
+            <aside id="ads-assistant" class="uk-card uk-card-default collaborative-assistant" aria-labelledby="ads-assistant-heading" hidden>
+              <header class="uk-card-header assistant-header">
+                <div><p class="assistant-eyebrow">Gemeinsam mit KI</p><h2 id="ads-assistant-heading" class="uk-card-title uk-margin-remove" tabindex="-1">Keywords gezielt überarbeiten</h2></div>
+                <button class="uk-icon-link assistant-close" type="button" data-ads-close aria-label="Assistent schließen und zu Keywords zurückkehren" data-uk-icon="icon: close"></button>
+              </header>
+              <div class="uk-card-body assistant-body">
+                <div class="assistant-bound-context"><span data-uk-icon="icon: bolt; ratio: 0.85" aria-hidden="true"></span><div><strong>Search | Raffstores</strong><span>Beispielkonto · Beispielkunde</span></div></div>
+                <div class="assistant-model-controls">
+                  <div><span class="uk-form-label">KI-Zugang</span><p id="ads-ai-label" class="uk-text-meta uk-margin-small-top">Noch nicht verbunden</p></div>
+                  <div><label class="uk-form-label" for="ads-model">Modell</label><select id="ads-model" class="uk-select uk-form-small" disabled><option value="demo-text">Beispielmodell für Text</option></select></div>
+                </div>
+                <div id="ads-ai-required" class="assistant-connection-required">
+                  <span data-uk-icon="icon: link; ratio: 0.85" aria-hidden="true"></span><div><strong>Verbinde deinen KI-Zugang</strong><p>Dein Auftrag und deine Bearbeitungen bleiben erhalten.</p><button class="uk-button uk-button-text uk-button-small" type="button" data-ai-settings data-ai-focus-target="#ads-task">KI-Verbindung einrichten</button></div>
+                </div>
+                <section id="ads-assistant-idle" class="assistant-conversation">
+                  <h3>Vom Befund zum bearbeitbaren Vorschlag</h3>
+                  <p>Der Beispielauftrag bereitet zwei pausierte Ersatzkeywords und eine Statusänderung vor. Deine bereits bearbeiteten Werte bleiben erhalten.</p>
+                  <p class="uk-text-meta">Es handelt sich um einen vorbereiteten Ablauf, nicht um eine frei antwortende KI.</p>
+                </section>
+                <section id="ads-assistant-running" class="assistant-conversation" hidden>
+                  <h3><span data-uk-spinner="ratio: 0.55" aria-hidden="true"></span> Arbeitsschritt läuft</h3>
+                  <p>Du kannst den laufenden Demo-Schritt anhalten. Bereits erfolgte Schritte bleiben sichtbar.</p>
+                  <button id="ads-stop" class="uk-button uk-button-default uk-button-small" type="button" data-ads-cancel>Anhalten</button>
+                </section>
+                <section id="ads-assistant-prepared" class="assistant-conversation" hidden>
+                  <span class="uk-label assistant-state-label">Arbeitsvorschlag</span>
+                  <h3>Gemeinsam weiterbearbeiten</h3>
+                  <ul class="uk-list uk-list-divider assistant-topic-list">
+                    <li data-ads-suggestion="0">raffstores wien</li><li data-ads-suggestion="1">raffstores</li><li data-ads-suggestion="2">raffstore außen</li>
+                  </ul>
+                  <p>Die Vorschläge ändern noch keine Keywords. Prüfe und bearbeite sie; danach zeigt Harika die konkreten Unterschiede.</p>
+                  <button class="uk-button uk-button-primary uk-button-small" type="button" data-ads-review>Arbeitsstand bearbeiten</button>
+                </section>
+                <section id="ads-assistant-result" class="assistant-conversation" hidden>
+                  <h3>Die Ergebnisse bleiben nachvollziehbar</h3>
+                  <p id="ads-assistant-result-text"></p>
+                  <button class="uk-button uk-button-default uk-button-small" type="button" data-ads-show-result>Ergebnis öffnen</button>
+                </section>
+                <section id="ads-assistant-paused" class="assistant-conversation" hidden>
+                  <h3>Arbeitsstand erhalten</h3><p id="ads-paused-reason"></p>
+                  <button class="uk-button uk-button-default uk-button-small" type="button" data-ads-review>Zum Arbeitsstand</button>
+                </section>
+                <output id="ads-progress" class="assistant-progress-label uk-text-meta" aria-live="polite"></output>
+                <details class="assistant-evidence">
+                  <summary>Kontext und Quellen</summary>
+                  <dl>
+                    <dt>Kampagne</dt><dd>Search | Raffstores · Beispielkonto</dd>
+                    <dt>Zeitraum</dt><dd>1.–28. Oktober 2026</dd>
+                    <dt>Daten</dt><dd>Vorbereiteter Google-Ads-Beispieldatensatz</dd>
+                    <dt>Zielseite</dt><dd>www.beispiel.example/raffstores/</dd>
+                    <dt>Auftrag</dt><dd id="ads-sent-task">Noch nicht gestartet</dd>
+                  </dl>
+                </details>
+              </div>
+              <footer class="uk-card-footer assistant-composer">
+                <form id="ads-task-form" class="uk-form-stacked">
+                  <label class="uk-form-label" for="ads-task">Dein Auftrag</label>
+                  <textarea id="ads-task" class="uk-textarea uk-margin-small-top" rows="3" maxlength="2000" required>Bereite konkrete Keyword-Änderungen für die Raffstores-Kampagne vor. Erhalte meine Bearbeitungen. Neue Ersatzkeywords sollen pausiert beginnen; bestehende bleiben ohne ausdrücklichen Auftrag unverändert.</textarea>
+                  <div class="assistant-composer-actions"><button class="uk-button uk-button-text uk-button-small" type="button" data-ai-settings data-ai-focus-target="#ads-task">KI-Verbindungen</button><button id="ads-analyse" class="uk-button uk-button-primary" type="submit">Vorschlag vorbereiten</button></div>
+                </form>
+                <p class="uk-text-meta">Demo mit vorbereiteten Antworten. Eigene Aufträge werden angezeigt, aber nicht an einen KI-Anbieter gesendet.</p>
+              </footer>
+            </aside>
+          </div>
+
+          <p class="uk-text-meta uk-margin-top">Synergien prüfen: <a href="index.html#auffaelligkeiten">Ads, Analytics und Zielseite gemeinsam untersuchen</a>.</p>
+          <details class="demo-scenario uk-margin-top">
+            <summary>Demo-Szenario testen</summary>
+            <div class="uk-margin-small-top">
+              <label class="uk-form-label" for="ads-outcome">Nächste Übernahme</label>
+              <select id="ads-outcome" class="uk-select uk-form-small"><option value="success">Alle Schritte erfolgreich</option><option value="partial">Teilerfolg: Rücklesen scheitert einmal</option></select>
+              <p class="uk-text-meta uk-margin-small-top uk-margin-remove-bottom">Beim Teilerfolg bleibt ein bereits angelegter Ersatz pausiert bestehen. Fortsetzen prüft dieselbe Ressource erneut. Neuladen setzt diese Vorschau zurück.</p>
+            </div>
+          </details>
         </section>
       </div>
-
       <!-- @include partials/footer.html -->
     </main>
   </div>
-
   <!-- @include partials/mobile-nav.html -->
-
   <!-- @include partials/profile-modal.html -->
-  <div id="campaign-raffstores" class="uk-modal" data-uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" data-uk-close></button><div class="uk-modal-header"><p class="eyebrow uk-margin-remove-bottom">Google Ads</p><h2 class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Search | Raffstores</h2></div><div class="uk-modal-body"><dl class="demo-detail-list"><div><dt>Kosten</dt><dd>€ 684</dd></div><div><dt>Conversions</dt><dd>18</dd></div><div><dt>CPA</dt><dd>€ 38,00</dd></div><div><dt>CTR</dt><dd>7,8 %</dd></div><div><dt>Landingpage</dt><dd>/raffstores/</dd></div></dl></div><div class="uk-modal-footer uk-flex uk-flex-right"><button class="uk-button uk-button-default uk-modal-close">Schließen</button></div></div></div><div id="campaign-markisen" class="uk-modal" data-uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" data-uk-close></button><div class="uk-modal-header"><p class="eyebrow uk-margin-remove-bottom">Google Ads</p><h2 class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Search | Markisen</h2></div><div class="uk-modal-body"><dl class="demo-detail-list"><div><dt>Kosten</dt><dd>€ 512</dd></div><div><dt>Conversions</dt><dd>13</dd></div><div><dt>CPA</dt><dd>€ 39,38</dd></div><div><dt>CTR</dt><dd>6,9 %</dd></div><div><dt>Landingpage</dt><dd>/markisen/</dd></div></dl></div><div class="uk-modal-footer uk-flex uk-flex-right"><button class="uk-button uk-button-default uk-modal-close">Schließen</button></div></div></div><div id="campaign-pergolen" class="uk-modal" data-uk-modal><div class="uk-modal-dialog"><button class="uk-modal-close-default" type="button" data-uk-close></button><div class="uk-modal-header"><p class="eyebrow uk-margin-remove-bottom">Google Ads</p><h2 class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Search | Pergolen</h2></div><div class="uk-modal-body"><dl class="demo-detail-list"><div><dt>Kosten</dt><dd>€ 421</dd></div><div><dt>Conversions</dt><dd>9</dd></div><div><dt>CPA</dt><dd>€ 46,78</dd></div><div><dt>CTR</dt><dd>5,8 %</dd></div><div><dt>Landingpage</dt><dd>/pergolen/</dd></div></dl></div><div class="uk-modal-footer uk-flex uk-flex-right"><button class="uk-button uk-button-default uk-modal-close">Schließen</button></div></div></div>
-
+  <div id="campaign-markisen" class="uk-modal" data-uk-modal>
+    <div class="uk-modal-dialog" aria-labelledby="campaign-markisen-title">
+      <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Kampagne schließen"></button>
+      <div class="uk-modal-header"><p class="eyebrow uk-margin-remove-bottom">Google Ads · Demo</p><h2 id="campaign-markisen-title" class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Search | Markisen</h2></div>
+      <div class="uk-modal-body"><dl class="demo-detail-list"><div><dt>Kosten</dt><dd>€ 512</dd></div><div><dt>Conversions</dt><dd>13</dd></div><div><dt>CPA</dt><dd>€ 39,38</dd></div><div><dt>CTR</dt><dd>6,9 %</dd></div><div><dt>Landingpage</dt><dd>www.beispiel.example/markisen/</dd></div></dl><p class="uk-text-meta">Fiktive Beispieldaten, 1.–28. Oktober 2026. Der erste bearbeitbare Keyword-Ablauf liegt bei Search | Raffstores.</p></div>
+      <div class="uk-modal-footer uk-flex uk-flex-right"><button class="uk-button uk-button-default uk-modal-close" type="button">Schließen</button></div>
+    </div>
+  </div>
+  <div id="campaign-pergolen" class="uk-modal" data-uk-modal>
+    <div class="uk-modal-dialog" aria-labelledby="campaign-pergolen-title">
+      <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Kampagne schließen"></button>
+      <div class="uk-modal-header"><p class="eyebrow uk-margin-remove-bottom">Google Ads · Demo</p><h2 id="campaign-pergolen-title" class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Search | Pergolen</h2></div>
+      <div class="uk-modal-body"><dl class="demo-detail-list"><div><dt>Kosten</dt><dd>€ 421</dd></div><div><dt>Conversions</dt><dd>9</dd></div><div><dt>CPA</dt><dd>€ 46,78</dd></div><div><dt>CTR</dt><dd>5,8 %</dd></div><div><dt>Landingpage</dt><dd>www.beispiel.example/pergolen/</dd></div></dl><p class="uk-text-meta">Fiktive Beispieldaten, 1.–28. Oktober 2026. Der erste bearbeitbare Keyword-Ablauf liegt bei Search | Raffstores.</p></div>
+      <div class="uk-modal-footer uk-flex uk-flex-right"><button class="uk-button uk-button-default uk-modal-close" type="button">Schließen</button></div>
+    </div>
+  </div>
   <script type="module" src="/src/app.js"></script>
 </body>
 </html>
