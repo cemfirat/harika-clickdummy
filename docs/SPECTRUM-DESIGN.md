@@ -58,8 +58,12 @@ accessibility certification. See the W3C explanations for
 [text contrast](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html)
 and [non-text contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html).
 
-Color never carries selection or status alone. Active navigation and selected
-rows have a visible marker; statuses use explicit text. A missing optional
+Navigation icons use circular surfaces, following the requested Kalkurama
+pattern. Harika surfaces and controls are flat: no cast shadows or inset
+selection bars. Keyboard focus remains visible through native outlines.
+
+Active navigation has a filled icon surface and `aria-current`; selected rows
+retain their check mark. Statuses use explicit text. A missing optional
 source, an intentionally unused source, an expired authorization and a measured
 failure are different states.
 
