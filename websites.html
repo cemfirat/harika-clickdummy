@@ -4,73 +4,216 @@
   <meta charset="UTF-8">
   <!-- @include partials/theme-preference-bootstrap.html -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Harika Clickdummy – Websites">
+  <meta name="description" content="Harika Clickdummy – Website-Arbeitsfläche mit UIkit und Light-/Dark-Themes">
   <title>Websites · Harika Clickdummy</title>
 </head>
-<body data-page="websites">
+<body data-page="websites" data-demo-organization="Beispielagentur" data-demo-customer="Beispielkunde">
   <a class="skip-link" href="#main-content">Zum Hauptinhalt</a>
 
   <div class="app-shell">
     <!-- @include partials/sidebar.html -->
 
     <main class="workspace" id="main-content" tabindex="-1">
-      <!-- @include partials/workspace-header.html {"title":"Websites","description":"Ist diese Website technisch, inhaltlich und marketingseitig sauber aufgestellt?"} -->
+      <!-- @include partials/workspace-header.html {"title":"Websites","description":"Verbindungen, Befunde und nächste Schritte."} -->
 
       <div class="view-content">
-        <section class="uk-card uk-card-default uk-card-body">
-  <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap uk-margin-medium-bottom">
-    <div><p class="eyebrow uk-margin-remove-bottom">Website-Verzeichnis</p><h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">4 Websites</h2></div>
-    <a class="uk-button uk-button-primary" href="#website-new-modal" data-uk-toggle>Website hinzufügen</a>
-  </div>
-  <ul class="uk-list uk-list-divider website-list uk-margin-remove"><li>
-  <article class="website-row">
-    <div class="website-icon" aria-hidden="true">A</div>
-    <div class="website-summary">
-      <div class="uk-flex uk-flex-middle uk-flex-wrap harika-control-cluster"><span class="uk-label uk-label-success">Aktiv</span><span class="uk-text-meta">Umgebung · Produktion</span></div>
-      <h3 class="uk-margin-small-top uk-margin-remove-bottom">AMBRA</h3>
-      <p><a class="uk-link-text" href="https://ambra.at" target="_blank" rel="noreferrer">https://ambra.at <span class="uk-hidden-visually">(öffnet in neuem Tab)</span></a></p>
-      <p>AMBRA Sonnenschutzsysteme · 4/4 Verbindungen · Health 86</p>
-    </div>
-    <div class="website-actions"><a class="uk-button uk-button-default uk-button-small" href="./index.html">Öffnen</a><a class="uk-button uk-button-text uk-button-small" href="#website-edit-modal" data-uk-toggle>Bearbeiten</a></div>
-  </article>
-</li>
-<li>
-  <article class="website-row">
-    <div class="website-icon" aria-hidden="true">P</div>
-    <div class="website-summary">
-      <div class="uk-flex uk-flex-middle uk-flex-wrap harika-control-cluster"><span class="uk-label uk-label-success">Aktiv</span><span class="uk-text-meta">Umgebung · Produktion</span></div>
-      <h3 class="uk-margin-small-top uk-margin-remove-bottom">People Matter</h3>
-      <p><a class="uk-link-text" href="https://peoplematter.example" target="_blank" rel="noreferrer">https://peoplematter.example <span class="uk-hidden-visually">(öffnet in neuem Tab)</span></a></p>
-      <p>People Matter · 3/4 Verbindungen · Health 78</p>
-    </div>
-    <div class="website-actions"><a class="uk-button uk-button-default uk-button-small" href="./index.html">Öffnen</a><a class="uk-button uk-button-text uk-button-small" href="#website-edit-modal" data-uk-toggle>Bearbeiten</a></div>
-  </article>
-</li>
-<li>
-  <article class="website-row">
-    <div class="website-icon" aria-hidden="true">P</div>
-    <div class="website-summary">
-      <div class="uk-flex uk-flex-middle uk-flex-wrap harika-control-cluster"><span class="uk-label uk-label-warning">Geplant</span><span class="uk-text-meta">Umgebung · Staging</span></div>
-      <h3 class="uk-margin-small-top uk-margin-remove-bottom">People Matter Staging</h3>
-      <p><a class="uk-link-text" href="https://staging.peoplematter.example" target="_blank" rel="noreferrer">https://staging.peoplematter.example <span class="uk-hidden-visually">(öffnet in neuem Tab)</span></a></p>
-      <p>People Matter · 2/4 Verbindungen · Health 71</p>
-    </div>
-    <div class="website-actions"><a class="uk-button uk-button-default uk-button-small" href="./index.html">Öffnen</a><a class="uk-button uk-button-text uk-button-small" href="#website-edit-modal" data-uk-toggle>Bearbeiten</a></div>
-  </article>
-</li>
-<li>
-  <article class="website-row">
-    <div class="website-icon" aria-hidden="true">E</div>
-    <div class="website-summary">
-      <div class="uk-flex uk-flex-middle uk-flex-wrap harika-control-cluster"><span class="uk-label uk-label-success">Aktiv</span><span class="uk-text-meta">Umgebung · Produktion</span></div>
-      <h3 class="uk-margin-small-top uk-margin-remove-bottom">Eurocasher</h3>
-      <p><a class="uk-link-text" href="https://eurocasher.example" target="_blank" rel="noreferrer">https://eurocasher.example <span class="uk-hidden-visually">(öffnet in neuem Tab)</span></a></p>
-      <p>Eurocasher · 3/4 Verbindungen · Health 81</p>
-    </div>
-    <div class="website-actions"><a class="uk-button uk-button-default uk-button-small" href="./index.html">Öffnen</a><a class="uk-button uk-button-text uk-button-small" href="#website-edit-modal" data-uk-toggle>Bearbeiten</a></div>
-  </article>
-</li></ul>
-</section>
+        <div class="website-workbench">
+          <section class="uk-card uk-card-default website-directory" aria-label="Website-Liste">
+            <div class="uk-card-body website-directory-tools">
+              <label class="uk-form-label" for="website-search">Website suchen</label>
+              <div class="uk-search uk-search-default website-search" role="search">
+                <span data-uk-search-icon aria-hidden="true"></span>
+                <input id="website-search" class="uk-search-input" type="search" placeholder="Name oder Domain" autocomplete="off" data-website-search>
+              </div>
+            </div>
+            <div class="uk-overflow-auto" tabindex="0" role="region" aria-label="Websites auswählen">
+              <table class="uk-table uk-table-divider website-table uk-margin-remove">
+                <thead><tr><th scope="col">Website / Domain</th><th scope="col" class="uk-text-right">Umgebung</th></tr></thead>
+                <tbody>
+                  <tr class="uk-active" data-website-row="main" data-website-search-index="hauptwebsite www.beispiel.example beispielkunde" data-website-name="Hauptwebsite" data-website-domain="www.beispiel.example" data-website-origin="https://www.beispiel.example" data-website-environment="production">
+                    <td>
+                      <button class="uk-button uk-button-text website-select" type="button" data-website-select="main" aria-pressed="true" aria-controls="website-detail-main">
+                        <strong class="website-name">Hauptwebsite</strong>
+                        <span class="website-row-domain">www.beispiel.example</span>
+                        <span class="uk-hidden-visually">auswählen</span>
+                      </button>
+                    </td>
+                    <td class="uk-text-right">
+                      <span class="website-row-environment uk-text-meta">Produktiv</span>
+                      <span class="website-selection-marker" data-uk-icon="icon: check; ratio: 0.75" aria-hidden="true"></span>
+                    </td>
+                  </tr>
+                  <tr data-website-row="magazine" data-website-search-index="magazin magazin.beispiel.example beispielkunde" data-website-name="Magazin" data-website-domain="magazin.beispiel.example" data-website-origin="https://magazin.beispiel.example" data-website-environment="production">
+                    <td>
+                      <button class="uk-button uk-button-text website-select" type="button" data-website-select="magazine" aria-pressed="false" aria-controls="website-detail-magazine">
+                        <strong class="website-name">Magazin</strong>
+                        <span class="website-row-domain">magazin.beispiel.example</span>
+                        <span class="uk-hidden-visually">auswählen</span>
+                      </button>
+                    </td>
+                    <td class="uk-text-right">
+                      <span class="website-row-environment uk-text-meta">Produktiv</span>
+                      <span class="website-selection-marker" data-uk-icon="icon: check; ratio: 0.75" aria-hidden="true"></span>
+                    </td>
+                  </tr>
+                  <tr data-website-row="staging" data-website-search-index="staging staging.beispiel.example beispielkunde" data-website-name="Staging" data-website-domain="staging.beispiel.example" data-website-origin="https://staging.beispiel.example" data-website-environment="staging">
+                    <td>
+                      <button class="uk-button uk-button-text website-select" type="button" data-website-select="staging" aria-pressed="false" aria-controls="website-detail-staging">
+                        <strong class="website-name">Staging</strong>
+                        <span class="website-row-domain">staging.beispiel.example</span>
+                        <span class="uk-hidden-visually">auswählen</span>
+                      </button>
+                    </td>
+                    <td class="uk-text-right">
+                      <span class="website-row-environment uk-text-meta">Staging</span>
+                      <span class="website-selection-marker" data-uk-icon="icon: check; ratio: 0.75" aria-hidden="true"></span>
+                    </td>
+                  </tr>
+                  <tr class="website-empty-state" data-website-empty hidden><td colspan="2" class="uk-text-meta">Keine passende Website gefunden.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <footer class="uk-card-footer website-list-footer uk-flex uk-flex-between uk-flex-middle">
+              <output class="uk-text-meta" data-website-result aria-live="polite">3 Websites · Beispielkunde</output>
+              <a class="uk-icon-link" href="#website-new-modal" data-uk-toggle data-uk-icon="icon: plus; ratio: 0.85" data-uk-tooltip="Website hinzufügen" aria-label="Website hinzufügen"></a>
+            </footer>
+          </section>
+
+          <section id="website-detail-main" class="uk-card uk-card-default website-inspector" data-website-detail="main" aria-labelledby="website-title-main">
+            <header class="uk-card-header website-detail-header">
+              <div class="uk-flex uk-flex-between uk-flex-top harika-control-cluster">
+                <div>
+                  <p class="uk-text-meta website-detail-kicker"><span data-uk-icon="icon: world; ratio: 0.85" aria-hidden="true"></span> Produktive Website</p>
+                  <h2 id="website-title-main" class="uk-card-title uk-margin-remove" aria-live="polite">Hauptwebsite</h2>
+                  <p class="uk-text-meta website-detail-domain">www.beispiel.example</p>
+                </div>
+                <div class="uk-inline website-detail-actions">
+                  <button class="uk-icon-link" type="button" data-uk-icon="icon: more" aria-label="Aktionen für Hauptwebsite" aria-haspopup="true"></button>
+                  <div class="uk-dropdown" data-uk-dropdown="mode: click; pos: bottom-right">
+                    <ul class="uk-nav uk-dropdown-nav">
+                      <li><a href="#website-edit-modal" data-uk-toggle data-website-edit="main"><span data-uk-icon="icon: pencil; ratio: 0.85" aria-hidden="true"></span> Website bearbeiten</a></li>
+                      <li><a href="#website-new-modal" data-uk-toggle><span data-uk-icon="icon: plus; ratio: 0.85" aria-hidden="true"></span> Website hinzufügen</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </header>
+            <ul class="uk-tab website-detail-tabs" data-uk-tab="connect: #website-content-main; follow-focus: true" aria-label="Details für Hauptwebsite">
+              <li class="uk-active"><a href="#website-findings-main">Befunde</a></li>
+              <li><a href="#website-connections-main">Verbindungen</a></li>
+            </ul>
+            <ul id="website-content-main" class="uk-switcher website-detail-body">
+              <li id="website-findings-main" class="uk-active uk-card-body">
+                <span class="uk-label website-status-neutral">Nicht eingerichtet</span>
+                <h3 class="finding-title">Search-Daten fehlen noch</h3>
+                <p class="finding-description">Für diese Website ist keine Search-Console-Property verbunden. Organische Klicks und Suchanfragen sind deshalb noch nicht auswertbar.</p>
+                <dl class="finding-evidence">
+                  <dt>Quelle</dt><dd>Verbindungsstatus</dd>
+                  <dt>Umfang</dt><dd>Diese Website</dd>
+                </dl>
+                <a class="uk-button uk-button-primary" href="#website-prompt-main-modal" data-uk-toggle><span data-uk-icon="icon: commenting; ratio: 0.85" aria-hidden="true"></span> Prompt zu diesem Befund</a>
+              </li>
+              <li id="website-connections-main" class="uk-card-body">
+                <ul class="uk-list uk-list-divider website-connection-list">
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>WordPress</span><span class="uk-label uk-label-success">Verbunden</span></li>
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Search Console</span><span class="uk-label website-status-neutral">Nicht eingerichtet</span></li>
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Google Analytics 4</span><span class="uk-label uk-label-success">Verbunden</span></li>
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Google Ads</span><span class="uk-label website-status-neutral">Nicht genutzt</span></li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+
+          <section id="website-detail-magazine" class="uk-card uk-card-default website-inspector" data-website-detail="magazine" aria-labelledby="website-title-magazine" hidden>
+            <header class="uk-card-header website-detail-header">
+              <div class="uk-flex uk-flex-between uk-flex-top harika-control-cluster">
+                <div>
+                  <p class="uk-text-meta website-detail-kicker"><span data-uk-icon="icon: world; ratio: 0.85" aria-hidden="true"></span> Produktive Website</p>
+                  <h2 id="website-title-magazine" class="uk-card-title uk-margin-remove" aria-live="polite">Magazin</h2>
+                  <p class="uk-text-meta website-detail-domain">magazin.beispiel.example</p>
+                </div>
+                <div class="uk-inline website-detail-actions">
+                  <button class="uk-icon-link" type="button" data-uk-icon="icon: more" aria-label="Aktionen für Magazin" aria-haspopup="true"></button>
+                  <div class="uk-dropdown" data-uk-dropdown="mode: click; pos: bottom-right">
+                    <ul class="uk-nav uk-dropdown-nav">
+                      <li><a href="#website-edit-modal" data-uk-toggle data-website-edit="magazine"><span data-uk-icon="icon: pencil; ratio: 0.85" aria-hidden="true"></span> Website bearbeiten</a></li>
+                      <li><a href="#website-new-modal" data-uk-toggle><span data-uk-icon="icon: plus; ratio: 0.85" aria-hidden="true"></span> Website hinzufügen</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </header>
+            <ul class="uk-tab website-detail-tabs" data-uk-tab="connect: #website-content-magazine; follow-focus: true" aria-label="Details für Magazin">
+              <li class="uk-active"><a href="#website-findings-magazine">Befunde</a></li>
+              <li><a href="#website-connections-magazine">Verbindungen</a></li>
+            </ul>
+            <ul id="website-content-magazine" class="uk-switcher website-detail-body">
+              <li id="website-findings-magazine" class="uk-active uk-card-body">
+                <span class="uk-label uk-label-warning">Zugriff prüfen</span>
+                <h3 class="finding-title">Analytics-Zugriff ist abgelaufen</h3>
+                <p class="finding-description">Die bestehende GA4-Verbindung benötigt eine erneute Anmeldung. Aktuelle Besucher- und Ereignisdaten sind bis dahin nicht prüfbar.</p>
+                <dl class="finding-evidence">
+                  <dt>Quelle</dt><dd>Verbindungsstatus</dd>
+                  <dt>Umfang</dt><dd>Diese Website</dd>
+                </dl>
+                <a class="uk-button uk-button-primary" href="#website-prompt-magazine-modal" data-uk-toggle><span data-uk-icon="icon: commenting; ratio: 0.85" aria-hidden="true"></span> Prompt zu diesem Befund</a>
+              </li>
+              <li id="website-connections-magazine" class="uk-card-body">
+                <ul class="uk-list uk-list-divider website-connection-list">
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>WordPress</span><span class="uk-label uk-label-success">Verbunden</span></li>
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Search Console</span><span class="uk-label uk-label-success">Verbunden</span></li>
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Google Analytics 4</span><span class="uk-label uk-label-warning">Zugriff abgelaufen</span></li>
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Google Ads</span><span class="uk-label website-status-neutral">Nicht genutzt</span></li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+
+          <section id="website-detail-staging" class="uk-card uk-card-default website-inspector" data-website-detail="staging" aria-labelledby="website-title-staging" hidden>
+            <header class="uk-card-header website-detail-header">
+              <div class="uk-flex uk-flex-between uk-flex-top harika-control-cluster">
+                <div>
+                  <p class="uk-text-meta website-detail-kicker"><span data-uk-icon="icon: world; ratio: 0.85" aria-hidden="true"></span> Staging-Website</p>
+                  <h2 id="website-title-staging" class="uk-card-title uk-margin-remove" aria-live="polite">Staging</h2>
+                  <p class="uk-text-meta website-detail-domain">staging.beispiel.example</p>
+                </div>
+                <div class="uk-inline website-detail-actions">
+                  <button class="uk-icon-link" type="button" data-uk-icon="icon: more" aria-label="Aktionen für Staging" aria-haspopup="true"></button>
+                  <div class="uk-dropdown" data-uk-dropdown="mode: click; pos: bottom-right">
+                    <ul class="uk-nav uk-dropdown-nav">
+                      <li><a href="#website-edit-modal" data-uk-toggle data-website-edit="staging"><span data-uk-icon="icon: pencil; ratio: 0.85" aria-hidden="true"></span> Website bearbeiten</a></li>
+                      <li><a href="#website-new-modal" data-uk-toggle><span data-uk-icon="icon: plus; ratio: 0.85" aria-hidden="true"></span> Website hinzufügen</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </header>
+            <ul class="uk-tab website-detail-tabs" data-uk-tab="connect: #website-content-staging; follow-focus: true" aria-label="Details für Staging">
+              <li class="uk-active"><a href="#website-findings-staging">Befunde</a></li>
+              <li><a href="#website-connections-staging">Verbindungen</a></li>
+            </ul>
+            <ul id="website-content-staging" class="uk-switcher website-detail-body">
+              <li id="website-findings-staging" class="uk-active uk-card-body">
+                <span class="uk-label website-status-neutral">Bewusst nicht genutzt</span>
+                <h3 class="finding-title">Analysequellen sind hier optional</h3>
+                <p class="finding-description">Diese Staging-Website nutzt keine Search- oder Ads-Daten. Das ist eine bewusste Konfiguration und kein Fehler.</p>
+                <dl class="finding-evidence">
+                  <dt>Quelle</dt><dd>Website-Konfiguration</dd>
+                  <dt>Umfang</dt><dd>Diese Website</dd>
+                </dl>
+                <a class="uk-button uk-button-primary" href="#website-prompt-staging-modal" data-uk-toggle><span data-uk-icon="icon: commenting; ratio: 0.85" aria-hidden="true"></span> Prompt zu diesem Befund</a>
+              </li>
+              <li id="website-connections-staging" class="uk-card-body">
+                <ul class="uk-list uk-list-divider website-connection-list">
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>WordPress</span><span class="uk-label uk-label-success">Verbunden</span></li>
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Search Console</span><span class="uk-label website-status-neutral">Nicht genutzt</span></li>
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Google Analytics 4</span><span class="uk-label website-status-neutral">Nicht genutzt</span></li>
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Google Ads</span><span class="uk-label website-status-neutral">Nicht genutzt</span></li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+        </div>
       </div>
 
       <!-- @include partials/footer.html -->
@@ -78,37 +221,114 @@
   </div>
 
   <!-- @include partials/mobile-nav.html -->
-
   <!-- @include partials/profile-modal.html -->
+
+  <div id="website-prompt-main-modal" class="uk-modal" data-uk-modal>
+    <div class="uk-modal-dialog uk-modal-body" aria-labelledby="website-prompt-title-main">
+      <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Prompt schließen"></button>
+      <h2 id="website-prompt-title-main" class="uk-modal-title">Search-Daten fehlen noch</h2>
+      <p class="uk-text-meta">Hauptwebsite · www.beispiel.example</p>
+      <pre class="prompt-preview uk-background-muted uk-padding-small uk-text-small"><code id="website-prompt-main">Hilf mir, die Search Console für www.beispiel.example in Harika einzurichten. Prüfe zuerst den aktuellen Verbindungsstatus und welche Property zu dieser Website gehört. Erkläre mir den nächsten passenden Schritt. Solange keine Search-Daten vorliegen, leite daraus keine Aussage über die Sichtbarkeit ab.</code></pre>
+      <div class="uk-flex uk-flex-middle uk-flex-wrap harika-control-cluster uk-margin-top">
+        <button class="uk-button uk-button-primary" type="button" data-copy-target="#website-prompt-main"><span data-uk-icon="icon: copy; ratio: 0.85" aria-hidden="true"></span> <span data-copy-label>In Zwischenablage kopieren</span></button>
+        <button class="uk-button uk-button-default uk-modal-close" type="button">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="website-prompt-magazine-modal" class="uk-modal" data-uk-modal>
+    <div class="uk-modal-dialog uk-modal-body" aria-labelledby="website-prompt-title-magazine">
+      <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Prompt schließen"></button>
+      <h2 id="website-prompt-title-magazine" class="uk-modal-title">Analytics-Zugriff ist abgelaufen</h2>
+      <p class="uk-text-meta">Magazin · magazin.beispiel.example</p>
+      <pre class="prompt-preview uk-background-muted uk-padding-small uk-text-small"><code id="website-prompt-magazine">Hilf mir, den abgelaufenen GA4-Zugriff für magazin.beispiel.example zu prüfen. Erkläre mir die Ursache, soweit sie aus dem Verbindungsstatus belegbar ist, und führe mich durch die erneute Verbindung mit der passenden Property. Behandle fehlende aktuelle Daten nicht als Besucherrückgang.</code></pre>
+      <div class="uk-flex uk-flex-middle uk-flex-wrap harika-control-cluster uk-margin-top">
+        <button class="uk-button uk-button-primary" type="button" data-copy-target="#website-prompt-magazine"><span data-uk-icon="icon: copy; ratio: 0.85" aria-hidden="true"></span> <span data-copy-label>In Zwischenablage kopieren</span></button>
+        <button class="uk-button uk-button-default uk-modal-close" type="button">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="website-prompt-staging-modal" class="uk-modal" data-uk-modal>
+    <div class="uk-modal-dialog uk-modal-body" aria-labelledby="website-prompt-title-staging">
+      <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Prompt schließen"></button>
+      <h2 id="website-prompt-title-staging" class="uk-modal-title">Analysequellen sind hier optional</h2>
+      <p class="uk-text-meta">Staging · staging.beispiel.example</p>
+      <pre class="prompt-preview uk-background-muted uk-padding-small uk-text-small"><code id="website-prompt-staging">Prüfe die technische Einrichtung von staging.beispiel.example als Staging-Website. Berücksichtige nur tatsächlich verbundene Quellen. Google Search, Analytics und Ads sind für diese Website bewusst nicht eingerichtet. Leite daraus keinen Fehler und keinen fiktiven Score ab.</code></pre>
+      <div class="uk-flex uk-flex-middle uk-flex-wrap harika-control-cluster uk-margin-top">
+        <button class="uk-button uk-button-primary" type="button" data-copy-target="#website-prompt-staging"><span data-uk-icon="icon: copy; ratio: 0.85" aria-hidden="true"></span> <span data-copy-label>In Zwischenablage kopieren</span></button>
+        <button class="uk-button uk-button-default uk-modal-close" type="button">Schließen</button>
+      </div>
+    </div>
+  </div>
+
   <div id="website-new-modal" class="uk-modal" data-uk-modal>
- <div class="uk-modal-dialog">
-  <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Schließen"></button>
-  <div class="uk-modal-header"><p class="eyebrow uk-margin-remove-bottom">Website</p><h2 class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Website hinzufügen</h2></div>
-  <div class="uk-modal-body">
-   <form class="uk-form-stacked" data-demo-form data-demo-message="Demo-Website lokal simuliert.">
-    <div class="uk-margin"><label class="uk-form-label" for="website-new-modal-name">Name</label><div class="uk-form-controls"><input id="website-new-modal-name" class="uk-input" value=""></div></div>
-    <div class="uk-margin"><label class="uk-form-label" for="website-new-modal-origin">HTTPS-Origin</label><div class="uk-form-controls"><input id="website-new-modal-origin" class="uk-input" type="url" value="https://"></div></div>
-    <div class="uk-margin"><label class="uk-form-label" for="website-new-modal-customer">Kunde</label><div class="uk-form-controls"><select id="website-new-modal-customer" class="uk-select"><option>AMBRA Sonnenschutzsysteme</option><option>People Matter</option><option>Eurocasher</option></select></div></div>
-    <div class="uk-margin"><label class="uk-form-label" for="website-new-modal-environment">Umgebung</label><div class="uk-form-controls"><select id="website-new-modal-environment" class="uk-select"><option>Produktion</option><option>Staging</option><option>Entwicklung</option></select></div></div>
-    <div class="uk-flex uk-flex-right harika-control-cluster"><button class="uk-button uk-button-default uk-modal-close" type="button">Abbrechen</button><button class="uk-button uk-button-primary" type="submit">Änderung simulieren</button></div>
-   </form>
+    <div class="uk-modal-dialog" aria-labelledby="website-new-modal-title">
+      <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Website-Formular schließen"></button>
+      <div class="uk-modal-header">
+        <h2 id="website-new-modal-title" class="uk-modal-title uk-margin-remove">Website hinzufügen</h2>
+      </div>
+      <div class="uk-modal-body">
+        <form class="uk-form-stacked" data-demo-form data-demo-message="Website-Änderung simuliert. Die Beispieldaten bleiben unverändert.">
+          <div class="uk-margin">
+            <label class="uk-form-label" for="website-new-modal-name">Name</label>
+            <div class="uk-form-controls"><input id="website-new-modal-name" class="uk-input" name="name" value="" required></div>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label" for="website-new-modal-origin">Website-Adresse</label>
+            <div class="uk-form-controls"><input id="website-new-modal-origin" class="uk-input" name="origin" type="url" value="" placeholder="https://" required></div>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label" for="website-new-modal-customer">Kunde</label>
+            <div class="uk-form-controls"><select id="website-new-modal-customer" class="uk-select" name="customer"><option value="example">Beispielkunde</option></select></div>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label" for="website-new-modal-environment">Umgebung</label>
+            <div class="uk-form-controls"><select id="website-new-modal-environment" class="uk-select" name="environment"><option value="production">Produktion</option><option value="staging">Staging</option><option value="development">Entwicklung</option></select></div>
+          </div>
+          <p class="uk-text-meta">Clickdummy mit fiktiven Beispieldaten.</p>
+          <div class="uk-flex uk-flex-right uk-flex-wrap harika-control-cluster">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Abbrechen</button>
+            <button class="uk-button uk-button-primary" type="submit">Änderung simulieren</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
- </div>
- </div><div id="website-edit-modal" class="uk-modal" data-uk-modal>
- <div class="uk-modal-dialog">
-  <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Schließen"></button>
-  <div class="uk-modal-header"><p class="eyebrow uk-margin-remove-bottom">Website</p><h2 class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Website bearbeiten</h2></div>
-  <div class="uk-modal-body">
-   <form class="uk-form-stacked" data-demo-form data-demo-message="Demo-Website lokal simuliert.">
-    <div class="uk-margin"><label class="uk-form-label" for="website-edit-modal-name">Name</label><div class="uk-form-controls"><input id="website-edit-modal-name" class="uk-input" value="AMBRA"></div></div>
-    <div class="uk-margin"><label class="uk-form-label" for="website-edit-modal-origin">HTTPS-Origin</label><div class="uk-form-controls"><input id="website-edit-modal-origin" class="uk-input" type="url" value="https://ambra.at"></div></div>
-    <div class="uk-margin"><label class="uk-form-label" for="website-edit-modal-customer">Kunde</label><div class="uk-form-controls"><select id="website-edit-modal-customer" class="uk-select"><option>AMBRA Sonnenschutzsysteme</option><option>People Matter</option><option>Eurocasher</option></select></div></div>
-    <div class="uk-margin"><label class="uk-form-label" for="website-edit-modal-environment">Umgebung</label><div class="uk-form-controls"><select id="website-edit-modal-environment" class="uk-select"><option>Produktion</option><option>Staging</option><option>Entwicklung</option></select></div></div>
-    <div class="uk-flex uk-flex-right harika-control-cluster"><button class="uk-button uk-button-default uk-modal-close" type="button">Abbrechen</button><button class="uk-button uk-button-primary" type="submit">Änderung simulieren</button></div>
-   </form>
+
+  <div id="website-edit-modal" class="uk-modal" data-uk-modal>
+    <div class="uk-modal-dialog" aria-labelledby="website-edit-modal-title">
+      <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Website-Formular schließen"></button>
+      <div class="uk-modal-header">
+        <h2 id="website-edit-modal-title" class="uk-modal-title uk-margin-remove">Website bearbeiten</h2>
+      </div>
+      <div class="uk-modal-body">
+        <form class="uk-form-stacked" data-demo-form data-demo-message="Website-Änderung simuliert. Die Beispieldaten bleiben unverändert.">
+          <div class="uk-margin">
+            <label class="uk-form-label" for="website-edit-modal-name">Name</label>
+            <div class="uk-form-controls"><input id="website-edit-modal-name" class="uk-input" name="name" value="Hauptwebsite" required></div>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label" for="website-edit-modal-origin">Website-Adresse</label>
+            <div class="uk-form-controls"><input id="website-edit-modal-origin" class="uk-input" name="origin" type="url" value="https://www.beispiel.example" placeholder="https://" required></div>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label" for="website-edit-modal-customer">Kunde</label>
+            <div class="uk-form-controls"><select id="website-edit-modal-customer" class="uk-select" name="customer"><option value="example">Beispielkunde</option></select></div>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label" for="website-edit-modal-environment">Umgebung</label>
+            <div class="uk-form-controls"><select id="website-edit-modal-environment" class="uk-select" name="environment"><option value="production">Produktion</option><option value="staging">Staging</option><option value="development">Entwicklung</option></select></div>
+          </div>
+          <p class="uk-text-meta">Clickdummy mit fiktiven Beispieldaten.</p>
+          <div class="uk-flex uk-flex-right uk-flex-wrap harika-control-cluster">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">Abbrechen</button>
+            <button class="uk-button uk-button-primary" type="submit">Änderung simulieren</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
- </div>
- </div>
 
   <script type="module" src="/src/app.js"></script>
 </body>

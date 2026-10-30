@@ -1,20 +1,24 @@
+<!-- harika:appearance-stylesheets -->
 <script>
 (() => {
+  const key = "ccf-theme-preference";
+  let value = "system";
   try {
-    const key = "ccf-theme-preference";
-    let value = localStorage.getItem(key);
+    value = localStorage.getItem(key);
     if (value !== "light" && value !== "dark" && value !== "system") value = "system";
-    const dark = matchMedia("(prefers-color-scheme: dark)").matches;
-    const resolved = value === "system" ? (dark ? "dark" : "light") : value;
-    const root = document.documentElement;
-    root.dataset.ccfTheme = value;
-    root.dataset.ccfResolvedTheme = resolved;
-    root.style.colorScheme = resolved;
   } catch {
-    const root = document.documentElement;
-    root.dataset.ccfTheme = "system";
-    root.dataset.ccfResolvedTheme = "light";
-    root.style.colorScheme = "light";
+    // Storage can be unavailable; the system appearance still works.
   }
+  const dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const resolved = value === "system" ? (dark ? "dark" : "light") : value;
+  const root = document.documentElement;
+  root.dataset.ccfTheme = value;
+  root.dataset.ccfResolvedTheme = resolved;
+  root.style.colorScheme = resolved;
+  document.querySelectorAll("[data-harika-appearance]").forEach((link) => {
+    link.media = value === "system"
+      ? "(prefers-color-scheme: " + link.dataset.harikaAppearance + ")"
+      : link.dataset.harikaAppearance === resolved ? "all" : "not all";
+  });
 })();
 </script>

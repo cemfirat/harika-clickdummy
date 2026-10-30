@@ -1,15 +1,24 @@
 <div id="ccf-mobile-nav" data-uk-offcanvas="overlay: true; flip: false">
-  <div class="uk-offcanvas-bar">
+  <div class="uk-offcanvas-bar" aria-label="Navigation">
     <button class="uk-offcanvas-close" type="button" data-uk-close aria-label="Navigation schließen"></button>
     <div class="uk-margin-medium-bottom">
       <!-- @include partials/brand.html -->
     </div>
-    <!-- @include partials/user.html -->
     <nav aria-label="Mobile Hauptnavigation">
       <!-- @include partials/navigation.html -->
     </nav>
-    <div class="sidebar-theme">
+    <hr>
+    <nav aria-label="Konto, Organisation und Harika">
+      <ul class="uk-nav uk-nav-default">
+        <li><a href="#profile-modal" data-uk-toggle><span data-uk-icon="icon: user" aria-hidden="true"></span> Mein Konto</a></li>
+        <li><a href="./einstellungen.html"><span data-uk-icon="icon: home" aria-hidden="true"></span> Meine Organisation</a></li>
+        <li><a href="./styleguide.html"><span data-uk-icon="icon: grid" aria-hidden="true"></span> UI-Labor</a></li>
+        <li><a href="https://github.com/cemfirat/harika-clickdummy#readme" target="_blank" rel="noreferrer">Hilfe zum Clickdummy <span class="uk-hidden-visually">(öffnet in neuem Tab)</span></a></li>
+      </ul>
+    </nav>
+    <div class="sidebar-theme uk-margin-top">
       <!-- @include partials/theme-switcher.html -->
     </div>
+    <p class="uk-text-meta uk-margin-top">Clickdummy · Beispieldaten</p>
   </div>
 </div>

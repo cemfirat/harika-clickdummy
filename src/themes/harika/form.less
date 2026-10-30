@@ -1,27 +1,30 @@
-@form-background: #fff;
-@form-color: @ccf-indigo;
-@form-focus-background: #fff;
-@form-focus-color: @ccf-indigo;
-@form-placeholder-color: @ccf-muted;
+@form-background: @harika-surface;
+@form-color: @harika-text;
+@form-focus-background: @harika-surface;
+@form-focus-color: @harika-text;
+@form-placeholder-color: @harika-muted;
 @form-border-width: 1px;
-@form-border: @ccf-darker-gray;
-@form-focus-border: @ccf-violet;
-@form-disabled-border: @ccf-gray;
-@form-danger-border: @ccf-darker-red;
-@form-success-border: @ccf-ready;
-@form-label-color: @ccf-indigo;
-
-.hook-form() {
-  border: @form-border-width solid @form-border;
+@form-border: @harika-control-border;
+@form-focus-border: @harika-primary;
+@form-disabled-background: @harika-canvas;
+@form-disabled-color: @harika-muted;
+@form-disabled-border: @harika-line;
+@form-danger-border: @harika-danger;
+@form-success-border: @harika-success;
+@form-label-color: @harika-text;
+@form-label-font-size: 12px;
+@form-radio-border: @harika-control-border;
+@form-radio-checked-background: @harika-primary;
+@form-radio-checked-focus-background: @harika-primary-hover;
+@form-radio-checked-icon-color: @harika-on-primary;
+@form-select-option-color: @harika-text;
+.hook-form() { border-radius: 5px; }
+.hook-form-focus() { outline: 2px solid @harika-primary; outline-offset: 2px; }
+.hook-form-label() { font-weight: 500; }
+.hook-form-misc() {
+  .website-directory-tools .uk-form-label { display: block; margin-bottom: 6px; }
+  @media (pointer: coarse) {
+    .uk-input, .uk-select:not([multiple]):not([size]), .uk-textarea { font-size: 16px; }
+    .uk-input, .uk-select:not([multiple]):not([size]) { height: 44px; }
+  }
 }
-
-.hook-form-focus() {
-  border-color: @form-focus-border;
-  outline: .12rem solid fade(@ccf-violet, 28%);
-  outline-offset: .08rem;
-}
-
-.hook-form-disabled() { border-color: @form-disabled-border; }
-.hook-form-danger() { border-color: @form-danger-border; }
-.hook-form-success() { border-color: @form-success-border; }
-.hook-form-label() { color: @form-label-color; }

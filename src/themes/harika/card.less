@@ -1,16 +1,32 @@
-@card-default-background: fade(@ccf-creme, 88%);
-@card-default-color: @ccf-indigo;
-@card-default-title-color: @ccf-indigo;
-@card-default-hover-background: @ccf-creme;
-@card-default-box-shadow: 0 1.2rem 4rem rgba(55, 47, 37, 0.04);
-@card-default-header-border: @ccf-gray;
-@card-default-footer-border: @ccf-gray;
-
-.hook-card-default() {
-  border: 1px solid @ccf-gray;
-  border-radius: .9rem;
-  box-shadow: @card-default-box-shadow;
+@card-body-padding-horizontal: 16px;
+@card-body-padding-vertical: 16px;
+@card-body-padding-horizontal-l: 24px;
+@card-body-padding-vertical-l: 24px;
+@card-small-body-padding-horizontal: 14px;
+@card-small-body-padding-vertical: 14px;
+@card-header-padding-horizontal: 16px;
+@card-header-padding-vertical: 16px;
+@card-footer-padding-horizontal: 16px;
+@card-footer-padding-vertical: 12px;
+@card-title-font-size: 16px;
+@card-title-line-height: 1.4;
+@card-default-background: @harika-surface;
+@card-default-color: @harika-text;
+@card-default-title-color: @harika-text;
+@card-default-hover-background: @harika-surface;
+@card-default-box-shadow: none;
+@card-default-hover-box-shadow: none;
+@card-default-header-border: @harika-line;
+@card-default-footer-border: @harika-line;
+@card-default-color-mode: none;
+@card-primary-color: @harika-on-primary;
+@card-primary-title-color: @harika-on-primary;
+@card-primary-color-mode: light;
+@card-secondary-color: @harika-text;
+@card-secondary-title-color: @harika-text;
+@card-secondary-color-mode: none;
+.hook-card-default() { border: 1px solid @harika-line; border-radius: 7px; }
+.hook-card-title() { font-weight: 600; }
+.hook-card-misc() {
+  .website-inspector > .uk-card-header { border-bottom: 0; }
 }
-
-.hook-card-default-header() { border-bottom: 1px solid @card-default-header-border; }
-.hook-card-default-footer() { border-top: 1px solid @card-default-footer-border; }

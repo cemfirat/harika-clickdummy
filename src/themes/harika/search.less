@@ -1,0 +1,15 @@
+@search-default-width: 100%;
+@search-default-height: 38px;
+@search-default-background: @harika-surface;
+@search-default-focus-background: @harika-surface;
+@search-default-border: @harika-control-border;
+@search-default-focus-border: @harika-primary;
+@search-color: @harika-text;
+@search-placeholder-color: @harika-muted;
+@search-icon-color: @harika-muted;
+.hook-search-input() { font-size: 14px; }
+.hook-search-default-input() { border-radius: 5px; }
+.hook-search-default-input-focus() { outline: 2px solid @harika-primary; outline-offset: 2px; }
+.hook-search-misc() {
+  @media (pointer: coarse) { .uk-search-default .uk-search-input { height: 44px; font-size: 16px; } }
+}

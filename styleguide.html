@@ -65,23 +65,23 @@
             <section id="theme" class="styleguide-section">
               <p class="eyebrow uk-margin-remove-bottom">Theme Architecture</p>
               <h2 class="uk-heading-small uk-margin-small-top">Standard → Harika → Customer</h2>
-              <p class="uk-text-lead">Die Vererbung folgt UIkits LESS-Theme-Logik: das UIkit Standard Theme ist die Basis, Harika überschreibt Variablen/Hooks und Kunden-Themes erben Harika.</p>
+              <p class="uk-text-lead">UIkit ist die Basis. Harika gestaltet native Komponenten über LESS-Variablen und Hooks; Kunden-Themes erben Harika. Jede Ebene besitzt ein vollständig kompiliertes helles und dunkles Theme.</p>
 
               <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-3@m styleguide-theme-levels" data-uk-grid>
                 <div>
                   <article class="uk-card uk-card-default uk-card-body">
                     <span class="uk-label">Level 1</span>
                     <h3 class="uk-card-title">UIkit Standard</h3>
-                    <code>src/themes/standard.less</code>
-                    <p class="uk-text-meta">Importiert <code>uikit.theme.less</code>.</p>
+                    <code>standard.less / standard-dark.less</code>
+                    <p class="uk-text-meta">Neutrale Referenz auf Basis von <code>uikit.theme.less</code>.</p>
                   </article>
                 </div>
                 <div>
                   <article class="uk-card uk-card-primary uk-card-body">
                     <span class="uk-label">Level 2</span>
                     <h3 class="uk-card-title">Harika</h3>
-                    <code>src/themes/harika.less</code>
-                    <p>Variablen und Hooks für die Harika Benutzeroberfläche.</p>
+                    <code>harika-light.less / harika-dark.less</code>
+                    <p>Vollständige UIkit-Themes für die Harika Benutzeroberfläche.</p>
                     <button
                       class="uk-button uk-button-default uk-button-small"
                       type="button"
@@ -94,8 +94,8 @@
                   <article class="uk-card uk-card-default uk-card-body">
                     <span class="uk-label">Level 3</span>
                     <h3 class="uk-card-title">Customer</h3>
-                    <code>src/themes/customers/&lt;slug&gt;.less</code>
-                    <p class="uk-text-meta">Schmale Branding-Ebene; keine Kopie des Harika Themes.</p>
+                    <code>customers/&lt;slug&gt;.less / &lt;slug&gt;-dark.less</code>
+                    <p class="uk-text-meta">Schmale Branding-Ebene auf dem passenden Harika-Theme.</p>
                   </article>
                 </div>
               </div>
@@ -109,27 +109,25 @@
               <p class="eyebrow uk-margin-remove-bottom">Theme Tokens</p>
               <h2 class="uk-heading-small uk-margin-small-top">Farben & Semantik</h2>
               <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-                <p>Diese Tokens gehören zur Harika-Ebene. Der Styleguide zeigt bewusst Name, LESS-Variable und aktuellen Wert.</p>
-                <button
-                  class="uk-button uk-button-text"
-                  type="button"
-                  data-studio-open="src/themes/harika/variables.less"
-                  disabled
-                >variables.less bearbeiten</button>
+                <p>Die Farbflächen folgen dem ausgewählten Theme. Die Werte dokumentieren die genehmigten Harika-Rollen für Hell und Dunkel.</p>
+                <div class="uk-button-group">
+                  <button class="uk-button uk-button-text" type="button" data-studio-open="src/themes/harika/variables.less" disabled>Helle Rollen bearbeiten</button>
+                  <button class="uk-button uk-button-text uk-margin-small-left" type="button" data-studio-open="src/themes/harika/dark.less" disabled>Dunkle Rollen bearbeiten</button>
+                </div>
               </div>
 
               <div class="styleguide-swatches">
-                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#20123a"></span><div><strong>Ink</strong><code>@ccf-indigo</code><small>#20123a</small></div></article>
-                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#622064"></span><div><strong>Violet</strong><code>@ccf-violet</code><small>#622064</small></div></article>
-                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#330033"></span><div><strong>Dark violet</strong><code>@ccf-darker-violet</code><small>#330033</small></div></article>
-                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#fff9ee"></span><div><strong>Creme</strong><code>@ccf-creme</code><small>#fff9ee</small></div></article>
-                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#f6f6f6"></span><div><strong>Light gray</strong><code>@ccf-light-gray</code><small>#f6f6f6</small></div></article>
-                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#32d296"></span><div><strong>Mint</strong><code>@ccf-mint</code><small>#32d296</small></div></article>
-                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#176044"></span><div><strong>Ready</strong><code>@ccf-ready</code><small>#176044</small></div></article>
-                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#684900"></span><div><strong>Warning</strong><code>@ccf-warning</code><small>#684900</small></div></article>
-                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#820033"></span><div><strong>Danger</strong><code>@ccf-darker-red</code><small>#820033</small></div></article>
-                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#ff0066"></span><div><strong>Chart magenta</strong><code>@ccf-magenta</code><small>#ff0066</small></div></article>
-                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:#00ffff"></span><div><strong>Chart ice</strong><code>@ccf-ice</code><small>#00ffff</small></div></article>
+                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:var(--paper)"></span><div><strong>Arbeitsbereich</strong><code>@harika-canvas</code><small>Hell #F7F7FA · Dunkel #101014</small></div></article>
+                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:var(--panel)"></span><div><strong>Oberfläche</strong><code>@harika-surface</code><small>Hell #FFFFFF · Dunkel #19191F</small></div></article>
+                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:var(--raised)"></span><div><strong>Erhöhte Oberfläche</strong><code>@harika-raised</code><small>Hell #FFFFFF · Dunkel #23232B</small></div></article>
+                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:var(--ink)"></span><div><strong>Haupttext</strong><code>@harika-text</code><small>Hell #211C2C · Dunkel #F4F1F8</small></div></article>
+                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:var(--muted)"></span><div><strong>Sekundärtext</strong><code>@harika-muted</code><small>Hell #665F70 · Dunkel #B5AEC0</small></div></article>
+                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:var(--accent)"></span><div><strong>Primäraktion</strong><code>@harika-primary</code><small>Hell #5600FF · Dunkel #BFA9FF</small></div></article>
+                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:var(--accent-soft)"></span><div><strong>Auswahl</strong><code>@harika-selected</code><small>Hell #F0E9FF · Dunkel #2A2040</small></div></article>
+                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:var(--line-dark)"></span><div><strong>Control-Grenze</strong><code>@harika-control-border</code><small>Hell #857B91 · Dunkel #81768E</small></div></article>
+                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:var(--ready)"></span><div><strong>Erfolg</strong><code>@harika-success</code><small>Hell #166534 · Dunkel #86EFAC</small></div></article>
+                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:var(--warning)"></span><div><strong>Handlungsbedarf</strong><code>@harika-warning</code><small>Hell #854D0E · Dunkel #FDE68A</small></div></article>
+                <article class="styleguide-swatch"><span class="styleguide-swatch__color" style="--sample-color:var(--danger)"></span><div><strong>Fehler</strong><code>@harika-danger</code><small>Hell #B42318 · Dunkel #FDA29B</small></div></article>
               </div>
             </section>
 

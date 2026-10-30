@@ -1,12 +1,20 @@
-<button class="uk-icon-button mobile-nav-toggle" type="button" data-uk-icon="icon: menu" data-uk-toggle="target: #ccf-mobile-nav" aria-label="Navigation öffnen"></button>
-
+<div class="mobile-toolbar uk-hidden@m uk-flex uk-flex-between uk-flex-middle">
+  <!-- @include partials/brand.html -->
+  <button class="uk-icon-button mobile-nav-toggle" type="button" data-uk-icon="icon: menu" data-uk-toggle="target: #ccf-mobile-nav" aria-label="Navigation öffnen" aria-controls="ccf-mobile-nav" aria-expanded="false"></button>
+</div>
+<nav class="workspace-context" aria-label="Arbeitskontext">
+  <ul class="uk-breadcrumb">
+    <li><span data-workspace-organization>Harika</span></li>
+    <li><span data-workspace-customer>UI-Labor</span></li>
+    <li><span>{{title}}</span></li>
+  </ul>
+</nav>
 <header class="workspace-header">
   <div class="view-introduction">
-    <p class="eyebrow">Harika Intelligence Center</p>
     <h1>{{title}}</h1>
     <p>{{description}}</p>
   </div>
   <div class="workspace-header-meta">
-    <span class="runtime-version">Clickdummy · AMBRA Sonnenschutzsysteme</span>
+    <!-- @include partials/theme-switcher.html -->
   </div>
 </header>

@@ -143,8 +143,8 @@ async function saveCurrentFile() {
       timeout: 2200
     });
   } catch (error) {
-    const rolledBack = error.payload?.rolledBack;
-    setState(rolledBack ? "Compile-Fehler · Datei zurückgesetzt" : "Fehler");
+    const unchanged = error.payload?.unchanged;
+    setState(unchanged ? "Compile-Fehler · Datei unverändert" : "Fehler");
     setError(error.message);
   } finally {
     saveButton.disabled = false;

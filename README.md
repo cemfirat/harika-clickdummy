@@ -56,6 +56,11 @@ Changing the classes or structure in `partials/workspace-header.html` updates th
 
 UIkit `3.25.25` is compiled from `uikit/src/less/uikit.theme.less`. Harika theme values live in `src/themes/harika/`.
 
+Harika's approved Spectrum design uses complete **Light and Dark UIkit themes**,
+with a shared **System / Hell / Dunkel** preference. The website workspace is the
+reference screen: native UIkit table, tabs, cards, controls and prompt modal with
+the compact Harika shell. See [the design decision](docs/SPECTRUM-DESIGN.md).
+
 Custom LESS is limited to shell, true product-specific composition, visualizations and the prototype-only styleguide.
 
 ## Browser preview
@@ -112,7 +117,10 @@ npm run transfer:status
     │   └── prototype.less
     └── themes/
         ├── standard.less
+        ├── standard-dark.less
         ├── harika.less
+        ├── harika-light.less
+        ├── harika-dark.less
         ├── harika/
         └── customers/
 ```
@@ -142,7 +150,9 @@ Kunden-Childtheme
 ```
 
 - Standard: `src/themes/standard.less`
-- Harika: `src/themes/harika.less`
+- Standard Dark: `src/themes/standard-dark.less`
+- Harika Light/Dark: `src/themes/harika-light.less` and `src/themes/harika-dark.less`
+- Compatible Harika Light base: `src/themes/harika.less`
 - Customer themes: `src/themes/customers/`
 
 The Standard level imports UIkit's official `uikit.theme.less`. Harika customizes UIkit through variables/hooks, following the UIkit documentation instead of maintaining a parallel component skin.
@@ -156,4 +166,10 @@ npm run dev:customer:ambra  # customer child theme
 ```
 
 See [docs/THEMES.md](docs/THEMES.md).
+
+Each build emits both appearance stylesheets. The early head bootstrap resolves
+the saved/system preference before content is painted, and shared behavior
+switches the active stylesheet. UIkit's inverse classes keep their normal
+sub-surface meaning. Theme Studio validates both appearances before accepting a
+theme edit; Standard remains read-only.
 
