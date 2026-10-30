@@ -14,9 +14,28 @@
     <!-- @include partials/sidebar.html -->
 
     <main class="workspace" id="main-content" tabindex="-1">
-      <!-- @include partials/workspace-header.html {"title":"Websites","description":"Verbindungen, Befunde und nächste Schritte."} -->
+      <!-- @include partials/workspace-header.html {"title":"Websites","description":"Verwalten, verstehen und gemeinsam verbessern."} -->
 
       <div class="view-content">
+        <div class="website-work-toolbar">
+          <div class="website-work-context">
+            <span class="uk-label">Interaktive Demo</span>
+            <span class="uk-text-meta">Gemeinsam arbeiten · mit Beispieldaten</span>
+          </div>
+          <div class="uk-flex uk-flex-middle uk-flex-wrap harika-control-cluster">
+            <div class="website-compact-picker">
+              <label class="uk-hidden-visually" for="website-context-picker">Geöffnete Website</label>
+              <select id="website-context-picker" class="uk-select uk-form-small" data-website-picker>
+                <option value="main">Hauptwebsite</option>
+                <option value="magazine">Magazin</option>
+                <option value="staging">Staging</option>
+              </select>
+            </div>
+            <button class="uk-button uk-button-primary" type="button" data-assistant-open aria-controls="website-assistant" aria-expanded="false">
+              <span data-uk-icon="icon: commenting; ratio: 0.85" aria-hidden="true"></span> Mit KI arbeiten
+            </button>
+          </div>
+        </div>
         <div class="website-workbench">
           <section class="uk-card uk-card-default website-directory" aria-label="Website-Liste">
             <div class="uk-card-body website-directory-tools">
@@ -98,25 +117,146 @@
                 </div>
               </div>
             </header>
-            <ul class="uk-tab website-detail-tabs" data-uk-tab="connect: #website-content-main; follow-focus: true" aria-label="Details für Hauptwebsite">
+            <ul id="website-tabs-main" class="uk-tab website-detail-tabs" data-uk-tab="connect: #website-content-main; follow-focus: true" aria-label="Details für Hauptwebsite">
               <li class="uk-active"><a href="#website-findings-main">Befunde</a></li>
+              <li><a id="website-posts-tab" href="#website-posts-main">Beiträge</a></li>
               <li><a href="#website-connections-main">Verbindungen</a></li>
             </ul>
             <ul id="website-content-main" class="uk-switcher website-detail-body">
               <li id="website-findings-main" class="uk-active uk-card-body">
-                <span class="uk-label website-status-neutral">Nicht eingerichtet</span>
-                <h3 class="finding-title">Search-Daten fehlen noch</h3>
-                <p class="finding-description">Für diese Website ist keine Search-Console-Property verbunden. Organische Klicks und Suchanfragen sind deshalb noch nicht auswertbar.</p>
+                <span class="uk-label website-status-neutral" data-search-status>Nicht eingerichtet</span>
+                <h3 id="search-finding-title" class="finding-title">Search-Daten fehlen noch</h3>
+                <p id="search-finding-description" class="finding-description">Für diese Website ist keine Search-Console-Property verbunden. Organische Klicks und Suchanfragen sind deshalb noch nicht auswertbar.</p>
                 <dl class="finding-evidence">
                   <dt>Quelle</dt><dd>Verbindungsstatus</dd>
                   <dt>Umfang</dt><dd>Diese Website</dd>
                 </dl>
-                <a class="uk-button uk-button-primary" href="#website-prompt-main-modal" data-uk-toggle><span data-uk-icon="icon: commenting; ratio: 0.85" aria-hidden="true"></span> Prompt zu diesem Befund</a>
+                <div class="uk-flex uk-flex-wrap harika-control-cluster">
+                  <a class="uk-button uk-button-primary" href="#search-setup-modal" data-uk-toggle>Search Console verbinden</a>
+                  <a class="uk-button uk-button-default" href="#website-prompt-main-modal" data-uk-toggle>Prompt anzeigen</a>
+                </div>
+                <p id="search-setup-result" class="uk-text-meta uk-margin-top" role="status" hidden>Verbindung simuliert. Search-Messdaten stehen in dieser Demo nicht zur Verfügung.</p>
+              </li>
+              <li id="website-posts-main" class="uk-card-body">
+                <div class="posts-overview">
+                  <div>
+                    <h3 class="uk-margin-remove">Beiträge</h3>
+                    <p class="uk-text-meta">Hauptwebsite · WordPress</p>
+                  </div>
+                  <output id="posts-created-count" class="uk-text-meta" aria-live="polite">Noch keine Demo-Entwürfe</output>
+                </div>
+                <div id="posts-empty" class="posts-empty">
+                  <span class="posts-empty-icon" data-uk-icon="icon: file-edit; ratio: 1.5" aria-hidden="true"></span>
+                  <h3>Von der Idee zum Beitrag</h3>
+                  <p>Schreibe selbst oder lass drei Vorschläge vorbereiten. Anschließend kannst du jeden Text weiterbearbeiten.</p>
+                  <div class="uk-flex uk-flex-center uk-flex-wrap harika-control-cluster uk-margin-top">
+                    <button class="uk-button uk-button-primary" type="button" data-assistant-open data-assistant-sample aria-controls="website-assistant" aria-expanded="false">Mit KI vorbereiten</button>
+                    <button id="manual-post" class="uk-button uk-button-default" type="button">Beitrag selbst schreiben</button>
+                  </div>
+                </div>
+                <div id="posts-workspace" hidden>
+                  <div class="uk-margin">
+                    <label class="uk-form-label" for="draft-picker">Beitrag auswählen</label>
+                    <select id="draft-picker" class="uk-select">
+                      <option value="0" data-draft-title="0">Welcher Sonnenschutz passt zu deinem Zuhause?</option>
+                      <option value="1" data-draft-title="1">Raffstores oder Rollläden: worauf es ankommt</option>
+                      <option value="2" data-draft-title="2">Sonnenschutz richtig pflegen: eine einfache Checkliste</option>
+                    </select>
+                  </div>
+                  <p class="uk-text-meta draft-ownership">Zuletzt bearbeitet: <span id="posts-updated-by">KI-Vorschlag (Demo)</span></p>
+                  <form class="uk-form-stacked draft-editor" data-draft-editor="0" hidden>
+                    <div class="draft-editor-heading">
+                      <h3 tabindex="-1">Beitrag 1 bearbeiten</h3>
+                      <span class="uk-label" data-draft-status="0">Vorschlag</span>
+                    </div>
+                    <div class="uk-margin">
+                      <label class="uk-form-label" for="draft-title-0">Titel</label>
+                      <input id="draft-title-0" class="uk-input" name="title" value="Welcher Sonnenschutz passt zu deinem Zuhause?" maxlength="180" required>
+                    </div>
+                    <div class="uk-margin">
+                      <label class="uk-form-label" for="draft-excerpt-0">Kurzbeschreibung</label>
+                      <textarea id="draft-excerpt-0" class="uk-textarea" name="excerpt" rows="2">Die wichtigsten Fragen für die Auswahl: Licht, Privatsphäre und die Nutzung deiner Räume.</textarea>
+                    </div>
+                    <div class="uk-margin">
+                      <label class="uk-form-label" for="draft-content-0">Inhalt</label>
+                      <textarea id="draft-content-0" class="uk-textarea draft-content" name="content" rows="9" required>Bevor du einen Sonnenschutz auswählst, lohnt sich ein Blick auf deinen Alltag. In welchen Räumen möchtest du Licht lenken, wo ist dir Privatsphäre besonders wichtig?
+
+Notiere deine Wünsche für jeden Raum. Vergleiche anschließend die passenden Möglichkeiten und kläre offene Fragen in einer Beratung.
+
+Dieser Beispielbeitrag dient der Vorschau. Ergänze vor einer Veröffentlichung die belegten Angebote und Informationen deines Unternehmens.</textarea>
+                    </div>
+                    <div class="draft-editor-actions">
+                      <button class="uk-button uk-button-primary" type="submit" data-save-draft="0">Entwurf speichern</button>
+                      <button class="uk-button uk-button-default" type="button" data-assistant-feedback>KI um Rückmeldung bitten</button>
+                    </div>
+                  </form>
+                  <form class="uk-form-stacked draft-editor" data-draft-editor="1" hidden>
+                    <div class="draft-editor-heading">
+                      <h3 tabindex="-1">Beitrag 2 bearbeiten</h3>
+                      <span class="uk-label" data-draft-status="1">Vorschlag</span>
+                    </div>
+                    <div class="uk-margin">
+                      <label class="uk-form-label" for="draft-title-1">Titel</label>
+                      <input id="draft-title-1" class="uk-input" name="title" value="Raffstores oder Rollläden: worauf es ankommt" maxlength="180" required>
+                    </div>
+                    <div class="uk-margin">
+                      <label class="uk-form-label" for="draft-excerpt-1">Kurzbeschreibung</label>
+                      <textarea id="draft-excerpt-1" class="uk-textarea" name="excerpt" rows="2">So bereitest du einen Vergleich vor, der zu deinem Gebäude und deinen Wünschen passt.</textarea>
+                    </div>
+                    <div class="uk-margin">
+                      <label class="uk-form-label" for="draft-content-1">Inhalt</label>
+                      <textarea id="draft-content-1" class="uk-textarea draft-content" name="content" rows="9" required>Die passende Lösung hängt von deinen Anforderungen und den Gegebenheiten am Gebäude ab. Überlege zuerst, wie du deine Räume nutzt und welche Bedienung du dir wünschst.
+
+Halte Fragen zu Licht, Privatsphäre, Einbau und Pflege fest. Lass die Eignung der konkreten Produkte für dein Gebäude prüfen.
+
+Dies ist ein Beispieltext. Produktmerkmale und Leistungsangaben müssen vor einer Veröffentlichung mit den tatsächlichen Angeboten abgeglichen werden.</textarea>
+                    </div>
+                    <div class="draft-editor-actions">
+                      <button class="uk-button uk-button-primary" type="submit" data-save-draft="1">Entwurf speichern</button>
+                      <button class="uk-button uk-button-default" type="button" data-assistant-feedback>KI um Rückmeldung bitten</button>
+                    </div>
+                  </form>
+                  <form class="uk-form-stacked draft-editor" data-draft-editor="2" hidden>
+                    <div class="draft-editor-heading">
+                      <h3 tabindex="-1">Beitrag 3 bearbeiten</h3>
+                      <span class="uk-label" data-draft-status="2">Vorschlag</span>
+                    </div>
+                    <div class="uk-margin">
+                      <label class="uk-form-label" for="draft-title-2">Titel</label>
+                      <input id="draft-title-2" class="uk-input" name="title" value="Sonnenschutz richtig pflegen: eine einfache Checkliste" maxlength="180" required>
+                    </div>
+                    <div class="uk-margin">
+                      <label class="uk-form-label" for="draft-excerpt-2">Kurzbeschreibung</label>
+                      <textarea id="draft-excerpt-2" class="uk-textarea" name="excerpt" rows="2">Mit einem Überblick über Zustand, Verschmutzungen und Herstellerhinweise die Pflege vorbereiten.</textarea>
+                    </div>
+                    <div class="uk-margin">
+                      <label class="uk-form-label" for="draft-content-2">Inhalt</label>
+                      <textarea id="draft-content-2" class="uk-textarea draft-content" name="content" rows="9" required>Verschaffe dir zuerst einen Überblick über den Zustand deines Sonnenschutzes. Halte auffällige Stellen fest und lies die Pflegehinweise des jeweiligen Herstellers.
+
+Verwende nur geeignete Reinigungsmittel und beachte die Vorgaben zur Bedienung. Unklare Schäden sollten vor weiteren Arbeiten fachlich geprüft werden.
+
+Dieser Beispieltext enthält keine produktspezifische Anleitung. Ergänze die passenden Herstellerhinweise und die tatsächlichen Serviceangebote.</textarea>
+                    </div>
+                    <div class="draft-editor-actions">
+                      <button class="uk-button uk-button-primary" type="submit" data-save-draft="2">Entwurf speichern</button>
+                      <button class="uk-button uk-button-default" type="button" data-assistant-feedback>KI um Rückmeldung bitten</button>
+                    </div>
+                  </form>
+                  <div class="uk-alert uk-alert-warning uk-margin-top" id="draft-error" role="alert" hidden>
+                    <p>Ein Demo-Entwurf konnte nicht gespeichert werden. Erfolgreiche Entwürfe bleiben erhalten.</p>
+                    <button id="retry-failed" class="uk-button uk-button-default uk-button-small" type="button">Fehlgeschlagenen Entwurf erneut speichern</button>
+                  </div>
+                  <div class="posts-batch-actions">
+                    <button class="uk-button uk-button-default" type="button" data-save-all>Alle als Entwürfe speichern</button>
+                    <output id="posts-result-summary" class="uk-text-meta" aria-live="polite"></output>
+                  </div>
+                </div>
+                <p class="uk-text-meta posts-demo-note">Demo: Eingaben und Entwürfe bleiben in dieser geöffneten Vorschau. Neuladen setzt sie zurück. Es wird nichts in WordPress veröffentlicht.</p>
               </li>
               <li id="website-connections-main" class="uk-card-body">
                 <ul class="uk-list uk-list-divider website-connection-list">
                   <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>WordPress</span><span class="uk-label uk-label-success">Verbunden</span></li>
-                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Search Console</span><span class="uk-label website-status-neutral">Nicht eingerichtet</span></li>
+                  <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Search Console</span><span class="uk-label website-status-neutral" data-search-status>Nicht eingerichtet</span></li>
                   <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Google Analytics 4</span><span class="uk-label uk-label-success">Verbunden</span></li>
                   <li class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster"><span>Google Ads</span><span class="uk-label website-status-neutral">Nicht genutzt</span></li>
                 </ul>
@@ -213,7 +353,137 @@
               </li>
             </ul>
           </section>
+          <aside id="website-assistant" class="uk-card uk-card-default website-assistant" aria-labelledby="assistant-heading" hidden>
+            <header class="uk-card-header assistant-header">
+              <div>
+                <p class="assistant-eyebrow">Gemeinsam mit KI</p>
+                <h2 id="assistant-heading" class="uk-card-title uk-margin-remove" tabindex="-1">Dein nächster Schritt</h2>
+              </div>
+              <button class="uk-icon-link assistant-close" type="button" data-assistant-close aria-label="Assistent schließen und zur Website zurückkehren" data-uk-icon="icon: close"></button>
+            </header>
+            <div class="uk-card-body assistant-body">
+              <div class="assistant-bound-context">
+                <span data-uk-icon="icon: world; ratio: 0.85" aria-hidden="true"></span>
+                <div><strong id="assistant-context-name">Hauptwebsite</strong><span id="assistant-context-domain">www.beispiel.example</span></div>
+              </div>
+              <div id="assistant-context-mismatch" class="uk-alert uk-alert-warning" role="status" hidden>
+                <p>Du hast eine andere Website geöffnet. Dieser Auftrag gehört weiterhin zur Hauptwebsite. Deine Bearbeitungen bleiben erhalten.</p>
+                <button class="uk-button uk-button-default uk-button-small" type="button" data-assistant-return>Zur Hauptwebsite zurück</button>
+              </div>
+              <div class="assistant-model-controls">
+                <div>
+                  <label class="uk-form-label" for="assistant-access">KI-Zugang</label>
+                  <select id="assistant-access" class="uk-select uk-form-small">
+                    <option value="">Zugang auswählen</option>
+                    <option value="personal" disabled>Mein persönlicher Demo-Zugang</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="uk-form-label" for="assistant-model">Modell</label>
+                  <select id="assistant-model" class="uk-select uk-form-small" disabled>
+                    <option value="demo-text">Beispielmodell für Text</option>
+                  </select>
+                </div>
+              </div>
+              <div id="assistant-connection-required" class="assistant-connection-required">
+                <span data-uk-icon="icon: link; ratio: 0.85" aria-hidden="true"></span>
+                <div>
+                  <strong>Verbinde deinen KI-Zugang</strong>
+                  <p>Dein Auftrag bleibt dabei erhalten.</p>
+                  <button class="uk-button uk-button-text uk-button-small" type="button" data-ai-settings>KI-Verbindung einrichten</button>
+                </div>
+              </div>
+              <section id="assistant-idle" class="assistant-conversation">
+                <h3>Was möchtest du angehen?</h3>
+                <p>Wir können hier Beiträge vorbereiten, gemeinsam bearbeiten und als Entwürfe ablegen.</p>
+                <button class="uk-button uk-button-default uk-button-small" type="button" data-assistant-sample>Drei Beiträge vorbereiten</button>
+              </section>
+              <section id="assistant-running" class="assistant-conversation" hidden>
+                <h3><span data-uk-spinner="ratio: 0.55" aria-hidden="true"></span> Auftrag läuft</h3>
+                <p>Die Vorschau führt den ausgewählten Arbeitsschritt aus.</p>
+                <button id="assistant-stop" class="uk-button uk-button-default uk-button-small uk-margin-small-top" type="button">Anhalten</button>
+              </section>
+              <section id="assistant-prepared" class="assistant-conversation" hidden>
+                <span class="uk-label assistant-state-label">Vorschläge vorbereitet</span>
+                <h3>Drei Themen als Ausgangspunkt</h3>
+                <p>Öffne die Beiträge und passe Titel, Beschreibung und Text direkt an.</p>
+                <ol class="uk-list uk-list-decimal assistant-topic-list">
+                  <li data-draft-title="0">Welcher Sonnenschutz passt zu deinem Zuhause?</li>
+                  <li data-draft-title="1">Raffstores oder Rollläden: worauf es ankommt</li>
+                  <li data-draft-title="2">Sonnenschutz richtig pflegen: eine einfache Checkliste</li>
+                </ol>
+                <div class="uk-flex uk-flex-wrap harika-control-cluster">
+                  <button class="uk-button uk-button-primary uk-button-small" type="button" data-open-posts data-draft-review>Beiträge bearbeiten</button>
+                  <button class="uk-button uk-button-default uk-button-small" type="button" data-save-all>Als Entwürfe speichern</button>
+                </div>
+              </section>
+              <section id="assistant-result" class="assistant-conversation" hidden>
+                <span class="uk-label assistant-state-label">Ergebnis der Demo</span>
+                <h3>Deine Entwürfe</h3>
+                <p id="assistant-result-summary" aria-live="polite"></p>
+                <ul class="uk-list uk-list-divider assistant-result-list">
+                  <li data-draft-result="0" hidden>
+                    <button class="uk-button uk-button-text" type="button" data-open-draft="0" data-draft-title="0">Welcher Sonnenschutz passt zu deinem Zuhause?</button>
+                    <span class="uk-label" data-draft-status="0">Vorschlag</span>
+                  </li>
+                  <li data-draft-result="1" hidden>
+                    <button class="uk-button uk-button-text" type="button" data-open-draft="1" data-draft-title="1">Raffstores oder Rollläden: worauf es ankommt</button>
+                    <span class="uk-label" data-draft-status="1">Vorschlag</span>
+                  </li>
+                  <li data-draft-result="2" hidden>
+                    <button class="uk-button uk-button-text" type="button" data-open-draft="2" data-draft-title="2">Sonnenschutz richtig pflegen: eine einfache Checkliste</button>
+                    <span class="uk-label" data-draft-status="2">Vorschlag</span>
+                  </li>
+                </ul>
+                <p class="uk-text-meta">Der Status steht bei jedem Beitrag. SEO-, Builder- und Wirkungsprüfung sind hier nicht ausgeführt.</p>
+                <button class="uk-button uk-button-default uk-button-small uk-margin-top" type="button" data-open-posts>Beiträge weiterbearbeiten</button>
+              </section>
+              <section id="assistant-cancelled" class="assistant-conversation" hidden>
+                <span class="uk-label assistant-state-label">Angehalten</span>
+                <h3>Dein Arbeitsstand bleibt erhalten</h3>
+                <p id="assistant-cancel-reason">Bereits gespeicherte Demo-Entwürfe bleiben bestehen. Du kannst den passenden Schritt erneut starten.</p>
+                <button class="uk-button uk-button-default uk-button-small uk-margin-top" type="button" data-open-posts>Arbeitsstand öffnen</button>
+              </section>
+              <section id="assistant-feedback" class="assistant-feedback" hidden aria-labelledby="assistant-feedback-heading">
+                <h3 id="assistant-feedback-heading" tabindex="-1">Rückmeldung zu deinem Arbeitsstand</h3>
+                <p><strong id="assistant-feedback-title"></strong></p>
+                <p>Demo-Rückmeldung: Prüfe, ob die Einleitung die Frage des Titels beantwortet. Ergänze nur belegte Angebote und passende interne Links. Dein Text bleibt unverändert.</p>
+              </section>
+              <output id="assistant-progress-label" class="assistant-progress-label uk-text-meta" aria-live="polite"></output>
+              <details class="assistant-evidence">
+                <summary>Kontext und Quellen</summary>
+                <dl>
+                  <dt>Website</dt><dd>Hauptwebsite · Beispielkunde</dd>
+                  <dt>Inhalte</dt><dd>Beispieltexte und deine aktuellen Bearbeitungen in dieser Vorschau</dd>
+                  <dt>Search Console</dt><dd>Keine echten Messdaten in dieser Demo</dd>
+                  <dt>Auftrag</dt><dd id="assistant-sent-task">Noch nicht gestartet</dd>
+                </dl>
+              </details>
+            </div>
+            <footer class="uk-card-footer assistant-composer">
+              <form id="assistant-task-form" class="uk-form-stacked">
+                <label class="uk-form-label" for="assistant-task">Dein Auftrag</label>
+                <textarea id="assistant-task" class="uk-textarea uk-margin-small-top" rows="3" required maxlength="2000">Bereite drei Beitragsvorschläge zum Thema Sonnenschutz für diese Website vor. Ich möchte die Texte anschließend bearbeiten und als Entwürfe speichern.</textarea>
+                <div class="assistant-composer-actions">
+                  <button class="uk-button uk-button-text uk-button-small" type="button" data-ai-settings>KI-Verbindungen</button>
+                  <button id="assistant-start" class="uk-button uk-button-primary" type="submit">Auftrag starten</button>
+                </div>
+              </form>
+              <p class="uk-text-meta">Demo mit vorbereiteten Antworten. Eigene Eingaben werden angezeigt; es antwortet keine echte KI.</p>
+            </footer>
+          </aside>
         </div>
+        <details class="website-demo-scenarios">
+          <summary>Demo-Ablauf testen</summary>
+          <div class="uk-flex uk-flex-middle uk-flex-wrap harika-control-cluster uk-margin-small-top">
+            <label class="uk-form-label" for="demo-outcome">Nächster Speichervorgang</label>
+            <select id="demo-outcome" class="uk-select uk-form-small">
+              <option value="success">Alle Entwürfe erfolgreich</option>
+              <option value="partial">Letzter Entwurf schlägt einmal fehl</option>
+            </select>
+          </div>
+          <p class="uk-text-meta uk-margin-small-top">Zusätzlich kannst du einen laufenden Schritt anhalten oder die Website wechseln. Neuladen startet die Demo neu.</p>
+        </details>
       </div>
 
       <!-- @include partials/footer.html -->
@@ -258,6 +528,31 @@
       <div class="uk-flex uk-flex-middle uk-flex-wrap harika-control-cluster uk-margin-top">
         <button class="uk-button uk-button-primary" type="button" data-copy-target="#website-prompt-staging"><span data-uk-icon="icon: copy; ratio: 0.85" aria-hidden="true"></span> <span data-copy-label>In Zwischenablage kopieren</span></button>
         <button class="uk-button uk-button-default uk-modal-close" type="button">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="search-setup-modal" class="uk-modal" data-uk-modal>
+    <div class="uk-modal-dialog" aria-labelledby="search-setup-title">
+      <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Search-Console-Einrichtung schließen"></button>
+      <div class="uk-modal-header">
+        <p class="eyebrow uk-margin-remove-bottom">Hauptwebsite · www.beispiel.example</p>
+        <h2 id="search-setup-title" class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Search Console verbinden</h2>
+      </div>
+      <div class="uk-modal-body">
+        <p>Ordne dieser Website die passende Property zu.</p>
+        <form id="search-setup-form" class="uk-form-stacked">
+          <div class="uk-margin">
+            <label class="uk-form-label" for="search-property">Property im Demo-Konto</label>
+            <select id="search-property" class="uk-select" required>
+              <option value="">Property auswählen</option>
+              <option value="domain">beispiel.example · Domain-Property</option>
+              <option value="prefix">https://www.beispiel.example/ · URL-Präfix</option>
+            </select>
+          </div>
+          <p class="uk-text-meta">Die Auswahl ist simuliert. Es erfolgt keine Google-Anmeldung; echte Zugriffsrechte und Messdaten werden nicht geprüft.</p>
+          <button class="uk-button uk-button-primary" type="submit">Verbindung simulieren</button>
+        </form>
       </div>
     </div>
   </div>

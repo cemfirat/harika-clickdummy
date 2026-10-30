@@ -65,6 +65,19 @@ Custom LESS is limited to shell, true product-specific composition, visualizatio
 
 ## Browser preview
 
+### Gemeinsame Website-Arbeit mit KI
+
+Die erste interaktive Vorschau aus [Harika #541](https://github.com/cemfirat/harika/issues/541)
+ist unter `websites.html#beitraege` erreichbar: persönlicher Demo-KI-Zugang,
+drei Beitragsvorschläge, direkte menschliche Bearbeitung und überprüfbare
+Demo-Speicherzustände einschließlich Teilfehler/Wiederholung. Ein manueller
+Beitrag funktioniert auch ohne KI-Zugang. Im Search-Befund führt die primäre
+Aktion direkt zur simulierten Property-Zuordnung.
+
+Alle Antworten, Verbindungen und Entwürfe sind ausdrücklich simuliert und
+bleiben in der geöffneten Vorschau. Ablauf, Grenzen und Abnahme:
+[Website-Arbeitsfläche mit Assistent](docs/WEBSITE-ASSISTANT-UX.md).
+
 - https://cemfirat.github.io/harika-clickdummy/
 
 Relevant HTML, partial, UI and LESS changes merged to `main` deploy automatically to GitHub Pages.

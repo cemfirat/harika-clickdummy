@@ -1,0 +1,39 @@
+<div id="ai-connections-modal" class="uk-modal" data-uk-modal>
+  <div class="uk-modal-dialog" aria-labelledby="ai-connections-title">
+    <button class="uk-modal-close-default" type="button" data-uk-close aria-label="KI-Verbindungen schließen"></button>
+    <div class="uk-modal-header">
+      <p class="eyebrow uk-margin-remove-bottom">Mein Konto</p>
+      <h2 id="ai-connections-title" class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Meine KI-Verbindungen</h2>
+    </div>
+    <div class="uk-modal-body">
+      <p>Wähle deinen persönlichen Zugang für die Arbeit mit Harika.</p>
+      <div class="uk-alert uk-alert-primary" role="note">
+        <strong>Interaktive Demo</strong>
+        <p class="uk-margin-small-top uk-margin-remove-bottom">Die Verbindung wird nur in dieser Vorschau simuliert. Es werden keine Zugangsdaten abgefragt und keine KI-Anfragen gesendet.</p>
+      </div>
+      <form id="ai-connection-form" class="uk-form-stacked">
+        <div class="uk-margin">
+          <label class="uk-form-label" for="ai-provider">Verbindungsweg</label>
+          <div class="uk-form-controls">
+            <select id="ai-provider" class="uk-select">
+              <option value="openrouter">OpenRouter · Verbindungsvorschau</option>
+              <option value="direct-api">Direkte Anbieter-API · Verbindungsvorschau</option>
+            </select>
+          </div>
+        </div>
+        <dl class="demo-detail-list">
+          <div><dt>Nutzung</dt><dd>Persönlich · nur dein Konto</dd></div>
+          <div><dt>Modell</dt><dd>Beispielmodell für Text</dd></div>
+          <div><dt>Status</dt><dd><output id="ai-connection-status" aria-live="polite">Noch nicht verbunden</output></dd></div>
+        </dl>
+        <div class="uk-margin-top">
+          <button id="ai-connect-demo" class="uk-button uk-button-primary" type="submit">Demo-Zugang verbinden</button>
+        </div>
+      </form>
+      <p class="uk-text-meta uk-margin-top">Gemeinsame Zugänge werden unter „Meine Organisation“ verwaltet. Diese erste Vorschau zeigt den persönlichen Verbindungsweg.</p>
+    </div>
+    <div class="uk-modal-footer uk-flex uk-flex-right">
+      <button class="uk-button uk-button-default uk-modal-close" type="button">Zurück zur Arbeit</button>
+    </div>
+  </div>
+</div>
