@@ -4,109 +4,142 @@
   <meta charset="UTF-8">
   <!-- @include partials/theme-preference-bootstrap.html -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Harika Clickdummy – Übersicht">
+  <meta name="description" content="Harika Clickdummy – Quellen gemeinsam verstehen und Maßnahmen bearbeiten">
   <title>Übersicht · Harika Clickdummy</title>
 </head>
-<body data-page="overview">
+<body data-page="overview" data-demo-organization="Beispielagentur" data-demo-customer="Beispielkunde">
   <a class="skip-link" href="#main-content">Zum Hauptinhalt</a>
-
   <div class="app-shell">
     <!-- @include partials/sidebar.html -->
-
     <main class="workspace" id="main-content" tabindex="-1">
-      <!-- @include partials/workspace-header.html {"title":"Übersicht","description":"Wie steht der aktive Kunde gerade da und wo ist das größte Potenzial?"} -->
-
+      <!-- @include partials/workspace-header.html {"title":"Übersicht","description":"Messen, verstehen und gemeinsam verbessern."} -->
       <div class="view-content">
-        
-<div class="uk-grid-small uk-child-width-1-2@s uk-child-width-1-4@l uk-margin-medium-bottom" data-uk-grid>
-  <div><article class="uk-card uk-card-default uk-card-body metric-card">
-              <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-                <span class="metric-source">Search Console</span>
-                <span class="uk-label uk-label-success">+12,4 %</span>
-              </div>
-              <strong class="metric-value">1.842</strong>
-              <span class="metric-label">Organische Klicks</span>
-            </article></div>
-  <div><article class="uk-card uk-card-default uk-card-body metric-card">
-              <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-                <span class="metric-source">AI Visibility</span>
-                <span class="uk-label uk-label-success">+7 PP</span>
-              </div>
-              <strong class="metric-value">64 %</strong>
-              <span class="metric-label">AI Visibility</span>
-            </article></div>
-  <div><article class="uk-card uk-card-default uk-card-body metric-card">
-              <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-                <span class="metric-source">GA4 + Ads</span>
-                <span class="uk-label uk-label-success">+9,3 %</span>
-              </div>
-              <strong class="metric-value">47</strong>
-              <span class="metric-label">Conversions</span>
-            </article></div>
-  <div><article class="uk-card uk-card-default uk-card-body metric-card">
-              <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-                <span class="metric-source">Website Intelligence</span>
-                <span class="uk-label uk-label-warning">3 Hinweise</span>
-              </div>
-              <strong class="metric-value">86 / 100</strong>
-              <span class="metric-label">Website Health</span>
-            </article></div>
-</div>
-
-<div class="uk-grid-medium uk-child-width-1-1 uk-child-width-2-3@l" data-uk-grid>
-  <div><section class="uk-card uk-card-default">
-          <div class="uk-card-header">
-            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-              <div>
-                <p class="eyebrow uk-margin-remove-bottom">Letzte 30 Tage</p>
-                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Entwicklung</h2>
-              </div>
-              
-            </div>
+        <div class="website-work-toolbar">
+          <div class="website-work-context"><span class="uk-label">Interaktive Demo</span><span class="uk-text-meta">Fiktive Daten · Hauptwebsite</span></div>
+          <div class="uk-flex uk-flex-middle uk-flex-wrap harika-control-cluster">
+            <a class="uk-button uk-button-default" href="./ads.html#keywords">Keywords bearbeiten</a>
+            <button class="uk-button uk-button-primary" type="button" data-insight-open aria-controls="insight-assistant" aria-expanded="false"><span data-uk-icon="icon: commenting; ratio: 0.85" aria-hidden="true"></span> Mit KI untersuchen</button>
           </div>
-          <div class="uk-card-body">
-            <div class="mock-chart">
-              <div class="mock-chart__grid"></div>
-              <svg viewBox="0 0 640 220" role="img" aria-label="Organische Klicks und Conversion-Entwicklung">
-                <polyline points="18,176 96,160 164,170 238,124 318,136 404,92 490,108 620,54" fill="none"></polyline>
-                <circle cx="620" cy="54" r="5"></circle>
-              </svg>
-            </div>
+        </div>
+        <section id="auffaelligkeiten" aria-labelledby="insight-heading">
+          <div class="insight-heading-row">
+            <div><p class="eyebrow uk-margin-remove-bottom">Quellen verbinden</p><h2 id="insight-heading" class="uk-h3 uk-margin-small-top uk-margin-remove-bottom">Auffälligkeiten untersuchen</h2><p class="uk-text-meta uk-margin-small-top">www.beispiel.example/raffstores/ · Beispielkunde</p></div>
+            <div class="insight-case-control"><label class="uk-form-label" for="insight-case">Demo-Fall</label><select id="insight-case" class="uk-select"><option value="signal">Abweichung zwischen Quellen</option><option value="gap">GA4-Daten fehlen</option></select></div>
           </div>
-        </section></div>
-  <div class="uk-width-expand@l">
-    <section class="uk-card uk-card-default">
-          <div class="uk-card-header">
-            <div class="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap harika-control-cluster">
-              <div>
-                <p class="eyebrow uk-margin-remove-bottom">Nächste Schritte</p>
-                <h2 class="uk-card-title uk-margin-small-top uk-margin-remove-bottom">Priorisierte Chancen</h2>
+          <div class="uk-alert uk-alert-primary" role="note"><strong>12.–25. Oktober 2026</strong> im Vergleich zu <strong>28. September–11. Oktober 2026</strong><p class="uk-margin-small-top uk-margin-remove-bottom">Zwei vollständige 14-Tage-Zeiträume. Abgeschlossener Demo-Datenstand: 29. Oktober. Jede Kennzahl bleibt ihrer Quelle zugeordnet.</p></div>
+          <div class="uk-grid-small uk-child-width-1-1 uk-child-width-1-3@s uk-margin-medium-bottom" data-uk-grid>
+            <div><article class="uk-card uk-card-default uk-card-body metric-card"><div class="uk-flex uk-flex-between uk-flex-middle harika-control-cluster"><span class="metric-source">Google Ads</span><span class="uk-label">−2,0 %</span></div><strong class="metric-value">980</strong><span class="metric-label">Anzeigenklicks · vorher 1.000</span><small class="uk-text-meta uk-display-block uk-margin-small-top">Search | Raffstores · Zielseite /raffstores/</small></article></div>
+            <div><article class="uk-card uk-card-default uk-card-body metric-card"><div class="uk-flex uk-flex-between uk-flex-middle harika-control-cluster"><span class="metric-source">Google Analytics 4</span><span id="insight-ga-delta" class="uk-label uk-label-warning">−46,7 %</span></div><strong id="insight-ga-value" class="metric-value">245</strong><span id="insight-ga-caption" class="metric-label">Sitzungen · vorher 460</span><small class="uk-text-meta uk-display-block uk-margin-small-top">Einstieg /raffstores/ · google / cpc</small></article></div>
+            <div><article class="uk-card uk-card-default uk-card-body metric-card"><div class="uk-flex uk-flex-between uk-flex-middle harika-control-cluster"><span class="metric-source">Search Console</span><span class="uk-label">+0,9 %</span></div><strong class="metric-value">327</strong><span class="metric-label">Organische Klicks · vorher 324</span><small class="uk-text-meta uk-display-block uk-margin-small-top">Kanonische URL /raffstores/ · Websuche</small></article></div>
+          </div>
+          <div id="insight-workbench" class="collaborative-workbench" data-work-assistant-open="false">
+            <section class="uk-card uk-card-default collaborative-main" aria-label="Untersuchung und Maßnahmen">
+              <div class="uk-card-header">
+                <p class="eyebrow uk-margin-remove-bottom">Hauptwebsite · /raffstores/</p>
+                <h3 id="insight-finding-title" class="uk-card-title uk-margin-small-top">Weniger gemessene Sitzungen bei fast gleichen Anzeigenklicks</h3>
+                <p id="insight-finding-summary" class="uk-text-meta uk-margin-remove-bottom">Eine Abweichung in den Beispieldaten. Ob Messung, Einwilligung oder Weiterleitung beteiligt ist, wurde noch nicht geprüft.</p>
               </div>
-              <a class="uk-button uk-button-text" href="./prompt-center.html">Prompt Center</a>
-            </div>
+              <ul id="insight-tabs" class="uk-tab work-tabs" data-uk-tab="connect: #insight-tab-content; animation: false">
+                <li><a href="#insight-evidence">Befund &amp; Quellen</a></li><li><a href="#insight-plan">Arbeitsplan</a></li><li><a href="#insight-results">Ergebnisse</a></li>
+              </ul>
+              <ul id="insight-tab-content" class="uk-switcher work-tab-content">
+                <li id="insight-evidence">
+                  <div id="insight-signal-evidence">
+                    <span class="uk-label uk-label-warning">Ursache offen</span>
+                    <h4 class="uk-h4 uk-margin-small-top">Was sich beobachten lässt</h4>
+                    <p>Die erfassten GA4-Sitzungen mit Einstieg auf dieser Landingpage sinken im bezahlten Google-Traffic stärker als die Ads-Klicks. Die organischen Search-Klicks sind annähernd stabil.</p>
+                    <p class="uk-text-meta">Klicks und Sitzungen zählen unterschiedliche Vorgänge. Sie werden hier weder addiert noch eins zu eins gleichgesetzt. Aus zwei Zeiträumen folgt noch keine statistisch gesicherte Anomalie.</p>
+                    <h4 class="uk-h4">Mögliche Erklärungen</h4>
+                    <ul class="uk-list uk-list-bullet"><li>Geänderter Tag oder Einwilligungsablauf.</li><li>Weiterleitung verliert Parameter oder führt auf eine andere URL.</li><li>Abweichende Zuordnung oder Verarbeitung der Daten.</li></ul>
+                    <p class="uk-text-meta">Hypothesen zur Untersuchung, keine festgestellten Fehler.</p>
+                  </div>
+                  <div id="insight-gap-evidence" hidden>
+                    <span class="uk-label uk-label-warning">Nicht beurteilbar</span>
+                    <h4 class="uk-h4 uk-margin-small-top">Für GA4 fehlt der aktuelle Vergleichswert</h4>
+                    <p>Der Demo-Zugriff auf die zugeordnete Property muss erneuert werden. Ohne diesen Zeitraum ist weder ein Rückgang noch die Wirkung einer Maßnahme auswertbar.</p>
+                    <button id="insight-reconnect" class="uk-button uk-button-default" type="button">GA4-Zugriff prüfen (Demo)</button>
+                    <output id="insight-gap-status" class="assistant-progress-label uk-text-meta" aria-live="polite">Zugriff offen · aktuelle Daten fehlen</output>
+                  </div>
+                  <details class="assistant-evidence" open>
+                    <summary>Quellen, Zuordnung und Vergleich</summary>
+                    <dl><dt>Website</dt><dd>Hauptwebsite · https://www.beispiel.example/raffstores/</dd><dt>Google Ads</dt><dd>Beispielkonto DEMO-ADS-01 · Search | Raffstores · Anzeigenklicks zur zugeordneten Zielseite · Kontozone Europe/Berlin</dd><dt>GA4</dt><dd>Beispiel-Property DEMO-GA4-01 · Sitzungen mit Landingpage /raffstores/ · Sitzungsquelle/-medium google / cpc · Propertyzone Europe/Berlin</dd><dt>Search Console</dt><dd>sc-domain:beispiel.example · kanonische URL /raffstores/ · organische Web-Klicks · Datum nach Pacific Time</dd><dt>Zeitraum</dt><dd>12.–25.10.2026 gegenüber 28.09.–11.10.2026, jeweils 14 Tage</dd><dt>Datenstand</dt><dd id="insight-source-status">29.10.2026 · abgeschlossene, vorbereitete Beispieldaten</dd><dt>Grenze</dt><dd>Unterschiedliche Zeitzonen und Messdefinitionen; kein genauer Tagesabgleich oder kausaler Vergleich. Keine echten Kontodaten.</dd></dl>
+                  </details>
+                  <div class="work-actions uk-margin-top">
+                    <button class="uk-button uk-button-primary" type="button" data-insight-open aria-controls="insight-assistant" aria-expanded="false">Mit KI einordnen</button>
+                    <button id="insight-manual-plan" class="uk-button uk-button-default" type="button">Arbeitsplan selbst erstellen</button>
+                  </div>
+                </li>
+                <li id="insight-plan">
+                  <div id="insight-plan-empty" class="posts-empty"><span data-uk-icon="icon: file-edit; ratio: 1.5" aria-hidden="true"></span><h4>Noch kein Arbeitsplan</h4><p>Halte selbst fest, was geprüft werden soll, oder lass einen Beispielplan vorbereiten.</p><div class="work-actions work-actions-center"><button class="uk-button uk-button-primary" type="button" data-insight-open aria-controls="insight-assistant" aria-expanded="false">Mit KI vorbereiten</button><button class="uk-button uk-button-default" type="button" data-insight-manual>Selbst erstellen</button></div></div>
+                  <div id="insight-plan-workspace" hidden>
+                    <div class="posts-overview"><div><span id="insight-plan-status" class="uk-label">Arbeitsstand</span><p class="uk-text-meta uk-margin-small-top">Zuletzt bearbeitet: <span id="insight-plan-author">Du</span></p></div><button class="uk-button uk-button-text" type="button" data-insight-open aria-controls="insight-assistant" aria-expanded="false">Mit Assistent weiterarbeiten</button></div>
+                    <form id="insight-plan-form" class="uk-form-stacked">
+                      <div class="uk-margin"><label class="uk-form-label" for="insight-plan-title">Titel des Arbeitsplans</label><input id="insight-plan-title" name="title" class="uk-input" required maxlength="180"></div>
+                      <div class="uk-margin"><label class="uk-form-label" for="insight-plan-notes">Prüfschritte und Beobachtungen</label><textarea id="insight-plan-notes" name="notes" class="uk-textarea" rows="6" required></textarea></div>
+                      <fieldset class="uk-fieldset">
+                        <legend class="uk-legend">Nächste Schritte</legend>
+                        <p class="uk-text-meta">Wähle konkret aus, welche Demo-Schritte ausgeführt werden sollen. Das Speichern des Plans führt sie noch nicht aus.</p>
+                        <div class="uk-margin"><label><input id="insight-include-check" class="uk-checkbox" type="checkbox" checked> Messprüfung simulieren</label><p class="uk-text-meta uk-margin-small-top">Zeigt einen vorbereiteten Prüfbericht mit belegten und noch offenen Punkten.</p></div>
+                        <div class="uk-margin"><label><input id="insight-include-draft" class="uk-checkbox" type="checkbox"> Landingpage-Entwurf vorbereiten</label><p id="insight-draft-help" class="uk-text-meta uk-margin-small-top">Optionaler Inhaltsentwurf. Er behebt keinen nachgewiesenen Messfehler und wird nicht veröffentlicht.</p></div>
+                      </fieldset>
+                      <div id="insight-content-fields" hidden>
+                        <div class="uk-margin"><label class="uk-form-label" for="insight-content-title">Überschrift für den Entwurf</label><input id="insight-content-title" name="heading" class="uk-input" maxlength="180" value="Raffstores: Licht und Sichtschutz planen"></div>
+                        <div class="uk-margin"><label class="uk-form-label" for="insight-content-intro">Einleitung für den Entwurf</label><textarea id="insight-content-intro" name="intro" class="uk-textarea" rows="4">Wie viel Tageslicht möchten Sie im Raum? Welche Fenster benötigen Sichtschutz? Diese Fragen helfen, den passenden Raffstore für Ihre Wohnsituation zu planen.</textarea></div>
+                        <p class="uk-text-meta">Beispielinhalt für /raffstores/. Vor einer echten Änderung sind Inhaltsquelle und Seitengestaltung zu prüfen.</p>
+                      </div>
+                      <div class="work-actions"><button id="insight-save-plan" class="uk-button uk-button-default" type="submit">Plan speichern (Demo)</button><button id="insight-run" class="uk-button uk-button-primary" type="button">Ausgewählte Schritte simulieren</button></div>
+                    </form>
+                    <output id="insight-plan-message" class="assistant-progress-label uk-text-meta" aria-live="polite"></output>
+                  </div>
+                </li>
+                <li id="insight-results">
+                  <div id="insight-results-empty" class="posts-empty"><h4>Noch keine Schritte ausgeführt</h4><p>Ein vorbereiteter Plan ist noch kein Prüfergebnis. Wähle im Arbeitsplan einen konkreten nächsten Schritt.</p><button class="uk-button uk-button-default" type="button" data-insight-edit>Zum Arbeitsplan</button></div>
+                  <div id="insight-results-workspace" hidden>
+                    <output id="insight-result-summary" class="uk-text-bold" aria-live="polite"></output>
+                    <ul class="uk-list uk-list-divider">
+                      <li id="insight-check-result" hidden data-demo-resource="demo-insight-signal-check"><div class="work-result-heading"><strong>Messprüfung</strong><span id="insight-check-status" class="uk-label">Prüfbericht (Demo)</span></div><p id="insight-check-report"></p><p class="uk-text-meta">Vorbereitete Simulation. Kein Live-Test, kein bestätigter Trackingfehler.</p></li>
+                      <li id="insight-draft-result" hidden data-demo-resource="demo-insight-draft"><div class="work-result-heading"><strong id="insight-result-title"></strong><span id="insight-draft-status" class="uk-label"></span></div><p id="insight-result-intro"></p><p class="uk-text-meta">Ziel: Hauptwebsite · /raffstores/ · nicht veröffentlicht</p><button class="uk-button uk-button-text" type="button" data-insight-edit>Entwurf weiterbearbeiten</button></li>
+                    </ul>
+                    <button id="insight-retry" class="uk-button uk-button-default" type="button" hidden>Fehlgeschlagenen Entwurf erneut speichern</button>
+                    <div class="uk-alert uk-alert-primary" role="note"><strong>Wirkung noch nicht gemessen</strong><p class="uk-margin-small-top uk-margin-remove-bottom">Ein Entwurf verändert die veröffentlichte Seite noch nicht. Für einen späteren Wirkungsvergleich fehlen eine echte Umsetzung und neue, vergleichbare Messdaten.</p></div>
+                    <button class="uk-button uk-button-text" type="button" data-insight-edit>Arbeitsplan öffnen</button>
+                  </div>
+                </li>
+              </ul>
+              <div class="uk-card-footer"><output id="insight-work-status" class="uk-text-meta" aria-live="polite">Beispieldaten zur Untersuchung. Noch keine Maßnahmen ausgeführt.</output><button id="insight-work-stop" class="uk-button uk-button-text uk-margin-small-left" type="button" hidden>Schritt anhalten</button></div>
+            </section>
+            <aside id="insight-assistant" class="uk-card uk-card-default collaborative-assistant" aria-labelledby="insight-assistant-heading" hidden>
+              <div class="uk-card-header assistant-header"><div><p class="assistant-eyebrow">Harika-Assistent · Demo</p><h3 id="insight-assistant-heading" class="uk-card-title uk-margin-remove" tabindex="-1">Gemeinsam untersuchen</h3></div><button class="uk-icon-button assistant-close" type="button" data-insight-close data-uk-icon="icon: close" aria-label="Assistent schließen"></button></div>
+              <div class="uk-card-body assistant-body">
+                <div class="assistant-bound-context"><span data-uk-icon="icon: world" aria-hidden="true"></span><div><strong>Hauptwebsite · /raffstores/</strong><span id="insight-assistant-context">Abweichung zwischen Quellen</span></div></div>
+                <p id="insight-ai-label" class="uk-text-meta" data-ai-connection-label>Kein persönlicher Demo-Zugang verbunden</p>
+                <button class="uk-button uk-button-text" type="button" data-ai-settings data-ai-focus-target="#insight-task">Meine KI-Verbindungen</button>
+                <div id="insight-ai-required" class="assistant-connection-required"><span data-uk-icon="icon: link" aria-hidden="true"></span><div><strong>Persönlichen Demo-Zugang verbinden</strong><p>Du kannst den Arbeitsplan auch direkt selbst bearbeiten.</p></div></div>
+                <p class="uk-text-meta uk-margin-small-top">Modell: Beispielmodell für Text</p>
+                <div class="assistant-conversation"><span id="insight-assistant-stage" class="uk-label assistant-state-label">Bereit zur Einordnung</span><h4 id="insight-assistant-response-title" class="uk-h4 uk-margin-small-top">Erst verstehen, dann handeln</h4><p id="insight-assistant-response">Ich kann einen Beispielplan zur Messabweichung vorbereiten. Die Ursache bleibt bis zu einer fachlichen Prüfung offen.</p><p id="insight-sent-task" class="prompt-preview uk-text-meta" hidden></p><button id="insight-edit-plan" class="uk-button uk-button-default" type="button" data-insight-edit hidden>Arbeitsplan bearbeiten</button></div>
+                <details class="assistant-evidence"><summary>Verwendeter Kontext</summary><p>Der ausgewählte Demo-Fall, die sichtbaren Quellwerte und dein aktueller Arbeitsplan. Keine externen KI-Anfragen oder weiteren Kundendaten.</p></details>
+              </div>
+              <div class="uk-card-footer assistant-composer"><form id="insight-task-form" class="uk-form-stacked"><label class="uk-form-label" for="insight-task">Dein Auftrag</label><textarea id="insight-task" class="uk-textarea" rows="4" required>Ordne die Abweichung zwischen Google Ads, GA4 und Search Console ein. Bereite einen Prüfplan vor und kennzeichne offene Ursachen. Verändere noch keine Website.</textarea><div class="assistant-composer-actions"><button id="insight-analyse" class="uk-button uk-button-primary" type="submit">Prüfplan vorbereiten</button><button id="insight-stop" class="uk-button uk-button-default" type="button" disabled>Anhalten</button></div></form><p class="uk-text-meta">Vorbereitete Beispielantworten. Freie Eingaben werden angezeigt, aber von keinem echten Modell verarbeitet.</p></div>
+            </aside>
           </div>
-          <div class="uk-card-body">
-            
-      <ul class="uk-list uk-list-divider uk-margin-remove">
-        <li><a class="uk-link-reset uk-display-block" href="./search-seo.html"><span class="eyebrow">Search &amp; SEO</span><strong class="uk-display-block">Raffstore-Landingpage hat hohe Impressionen, aber niedrige CTR</strong><small class="uk-text-meta">Position 6,8 bei 3.420 Impressionen. Title und Description zuerst prüfen.</small></a></li>
-        <li><a class="uk-link-reset uk-display-block" href="./websites.html"><span class="eyebrow">Website</span><strong class="uk-display-block">Core Web Vitals auf Mobil verbessern</strong><small class="uk-text-meta">LCP ist bei zwei zentralen Landingpages erhöht.</small></a></li>
-        <li><a class="uk-link-reset uk-display-block" href="./ai-visibility.html"><span class="eyebrow">AI Visibility</span><strong class="uk-display-block">Pergolen werden bei relevanten Fragen zu selten genannt</strong><small class="uk-text-meta">Mitbewerber werden in 8 von 12 beobachteten Antworten häufiger genannt.</small></a></li>
-      </ul>
+          <details class="website-demo-scenarios"><summary>Demo-Ablauf testen</summary><label class="uk-form-label uk-margin-small-top" for="insight-outcome">Nächster Entwurfsschritt</label><select id="insight-outcome" class="uk-select uk-form-small"><option value="success">Erfolgreich</option><option value="partial">Entwurf schlägt einmal fehl</option></select><p>Auswahl, Plan und Ergebnisse bleiben nur in dieser geöffneten Vorschau. Neuladen setzt die Demo zurück.</p></details>
+          <div hidden aria-hidden="true">
+            <p id="insight-signal-sample-title">Messabweichung auf /raffstores/ untersuchen</p><p id="insight-signal-sample-notes">1. Ads-Zielseite, Weiterleitungen und erhaltene Kampagnenparameter abgleichen.
+2. GA4-Property, Datenstream und Landingpage-Zuordnung prüfen.
+3. Tag und Einwilligungsablauf mit einem echten Testereignis überprüfen.
+4. Erst anhand des Prüfergebnisses eine konkrete Korrektur beauftragen.</p>
+            <p id="insight-gap-sample-title">GA4-Datenzugang für /raffstores/ klären</p><p id="insight-gap-sample-notes">1. Berechtigten Zugang zur zugeordneten Beispiel-Property prüfen.
+2. Die beiden vollständigen Vergleichszeiträume nachladen.
+3. Verarbeitung und Datenqualität kontrollieren.
+4. Erst danach den Verlauf neu beurteilen; fehlende Werte nicht als Null behandeln.</p><p id="insight-gap-sample-task">Prüfe, welche GA4-Daten für diese Landingpage fehlen. Bereite die nächsten Schritte zur Wiederherstellung des Datenzugangs vor. Leite aus der Datenlücke keinen Leistungseinbruch ab.</p>
           </div>
         </section>
-  </div>
-</div>
       </div>
-
       <!-- @include partials/footer.html -->
     </main>
   </div>
-
   <!-- @include partials/mobile-nav.html -->
-
   <!-- @include partials/profile-modal.html -->
-  
-
   <script type="module" src="/src/app.js"></script>
 </body>
 </html>

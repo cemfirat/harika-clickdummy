@@ -1,6 +1,6 @@
 // Interactive, in-memory prototype. No model request or WordPress write occurs.
 // Page structure and all example content belong to the HTML, never this module.
-export function initWebsiteAssistant(UIkit) {
+export function initWebsiteAssistant(UIkit, aiConnections) {
   const one = (selector) => document.querySelector(selector);
   const all = (selector) => [...document.querySelectorAll(selector)];
   const text = (selector, value) => all(selector).forEach((node) => { node.textContent = value; });
@@ -22,7 +22,7 @@ export function initWebsiteAssistant(UIkit) {
   }));
   const sampleTask = "Bereite drei Beitragsvorschläge zum Thema Sonnenschutz für diese Website vor. Ich möchte die Texte anschließend bearbeiten und als Entwürfe speichern.";
   const stages = ["idle", "running", "prepared", "result", "cancelled"];
-  let connected = false;
+  let connected = aiConnections.getState().connected;
   let website = "main";
   let stage = "idle";
   let draftCount = 0;
@@ -31,8 +31,6 @@ export function initWebsiteAssistant(UIkit) {
   let timer = null;
   let sequence = 0;
   let opener = null;
-  let connectionOpener = null;
-  let connectionSubmitted = false;
 
   function fields(draft) {
     return Object.fromEntries(["title", "excerpt", "content"].map((name) => [
@@ -273,57 +271,18 @@ export function initWebsiteAssistant(UIkit) {
     }
   });
 
-  all("[data-ai-settings]").forEach((button) => button.addEventListener("click", (event) => {
-    event.preventDefault();
-    const modal = one("#ai-connections-modal");
-    connectionOpener = button;
-    connectionSubmitted = false;
-    if (modal) UIkit.modal(modal).show();
-  }));
-  const connectionModal = one("#ai-connections-modal");
-  connectionModal?.addEventListener("keydown", (event) => {
-    if (event.key !== "Tab") return;
-    const controls = [...connectionModal.querySelectorAll("a[href], button, input, select, textarea, [tabindex]")]
-      .filter((node) => !node.disabled && node.tabIndex >= 0 && node.getClientRects().length);
-    const first = controls[0];
-    const last = controls[controls.length - 1];
-    const active = document.activeElement;
-    if (!first) return;
-    if (event.shiftKey && (active === first || !controls.includes(active))) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && (active === last || !controls.includes(active))) {
-      event.preventDefault();
-      first.focus();
-    }
-  });
-  connectionModal?.addEventListener("hidden", (event) => {
-    if (event.target !== connectionModal || one(".uk-modal.uk-open")) return;
-    const preferred = connectionSubmitted ? [task, connectionOpener] : [connectionOpener, task];
-    const target = [...preferred, ...all('button[data-assistant-open], a[href="#profile-modal"]')]
-      .find((node) => node?.isConnected && node.getClientRects().length && !node.disabled);
-    focus(target);
-  });
-  one("#ai-connection-form")?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    if (!event.currentTarget.reportValidity()) return;
+  aiConnections.subscribe((state) => {
     if (operation?.kind === "prepare") cancel("Die Demo-Analyse wurde beim Wechsel des KI-Zugangs angehalten. Dein Auftrag bleibt erhalten.");
-    connected = true;
-    const provider = one("#ai-provider")?.value === "direct-api" ? "Anbieter-API" : "OpenRouter";
-    text("[data-ai-connection-label]", `${provider} · persönlich (Demo)`);
-    text("#ai-connection-status", "Demo-Zugang verbunden. Es wurden keine Anmeldedaten übertragen. Die Auswahl gilt für diese geöffnete Vorschau.");
+    connected = state.connected;
     const personal = access?.querySelector('option[value="personal"]');
     if (personal) {
-      personal.disabled = false;
-      personal.textContent = `${provider} · mein Zugang (Demo)`;
-      access.value = "personal";
+      personal.disabled = !connected;
+      if (connected) {
+        personal.textContent = `${state.provider} · mein Zugang (Demo)`;
+        access.value = "personal";
+      }
     }
-    const modal = one("#ai-connections-modal");
     render();
-    if (modal?.classList.contains("uk-open")) {
-      connectionSubmitted = true;
-      UIkit.modal(modal).hide();
-    }
   });
   access?.addEventListener("change", () => {
     if (operation?.kind === "prepare") cancel("Die Demo-Analyse wurde angehalten. Wähle einen KI-Zugang und starte den Auftrag erneut.");

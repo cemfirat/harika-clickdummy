@@ -45,6 +45,9 @@ const packageJson = JSON.parse(await readFile(new URL("../package.json", import.
 
 const appSource = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
 const assistantSource = await readFile(new URL("../src/website-assistant.js", import.meta.url), "utf8");
+const demoBehaviorSources = await Promise.all(["ai-connections.js", "ads-workspace.js", "insight-workspace.js"].map(async (name) => [
+  name, await readFile(new URL("../src/" + name, import.meta.url), "utf8")
+]));
 const studioSource = await readFile(new URL("../src/studio.js", import.meta.url), "utf8");
 const themeStudioPartial = await readFile(new URL("../partials/theme-studio.html", import.meta.url), "utf8");
 
@@ -154,11 +157,12 @@ assert(html["prompt-center.html"].includes("data-copy-target"), "Prompt Center m
 
 assert(!/\bfetch\s*\(/.test(appSource), "Clickdummy must not call remote APIs.");
 assert(!/XMLHttpRequest/.test(appSource), "Clickdummy must not use XMLHttpRequest.");
-for (const [name, source] of [["app.js", appSource], ["website-assistant.js", assistantSource]]) {
+for (const [name, source] of [["app.js", appSource], ["website-assistant.js", assistantSource], ...demoBehaviorSources]) {
   assert(!/\.innerHTML\s*=/.test(source), name + " must not render page markup with innerHTML.");
   assert(!/insertAdjacentHTML/.test(source), name + " must not inject page markup.");
   assert(!/document\.createElement/.test(source), name + " must remain behavior-only; page structure belongs in HTML/partials.");
   assert(!/<(?:main|section|article|table|nav|aside)\b/i.test(source), name + " must not contain page markup.");
+  assert(!/\b(?:fetch|XMLHttpRequest|WebSocket)\s*\(/.test(source), name + " must not issue provider or production requests.");
 }
 assert(!/\b(?:fetch|XMLHttpRequest|WebSocket)\s*\(/.test(assistantSource), "The assistant prototype must not issue provider or production requests.");
 assert(appSource.includes('document.body.dataset.page'), "app.js must activate shared navigation from the page id.");

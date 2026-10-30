@@ -50,6 +50,44 @@
 .demo-detail-list dt { color: var(--muted); font-size: 12px; }
 .demo-detail-list dd { margin: 0; }
 
+// Shared object-and-assistant composition for Ads and investigations.
+.collaborative-workbench { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: start; }
+.collaborative-workbench[data-work-assistant-open="true"] { grid-template-columns: minmax(0, 1.2fr) minmax(320px, .8fr); }
+.collaborative-main, .collaborative-assistant { min-width: 0; }
+.collaborative-assistant { display: flex; flex-direction: column; position: sticky; top: 16px; max-height: calc(100vh - 32px); }
+.collaborative-assistant[hidden] { display: none; }
+.collaborative-main button, .collaborative-assistant button { white-space: normal; }
+.collaborative-main p, .collaborative-assistant p { overflow-wrap: anywhere; }
+.work-tabs { margin: 0; padding-inline: 16px; }
+.work-tab-content { margin: 0; }
+.work-tab-content > li { padding: 20px; }
+.work-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.work-actions > * { max-width: 100%; }
+.work-actions-center { justify-content: center; }
+.work-result-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.insight-heading-row { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.insight-case-control { width: 280px; max-width: 100%; }
+.insight-case-control label { display: block; margin-bottom: 5px; }
+.ads-toolbar { display: flex; align-items: end; flex-wrap: wrap; gap: 12px 24px; }
+.ads-toolbar > div { width: 280px; max-width: 100%; }
+.ads-toolbar label { display: block; margin-bottom: 5px; }
+.keyword-editor-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.keyword-editor-grid > div { min-width: 0; }
+.keyword-table { min-width: 520px; }
+.keyword-diff-table { min-width: 580px; }
+.keyword-diff-table td { min-width: 140px; overflow-wrap: anywhere; }
+.keyword-replacement-row { background: var(--paper); }
+.ads-result-list p { overflow-wrap: anywhere; }
+@media (max-width: 799px) {
+  .collaborative-workbench[data-work-assistant-open="true"] { grid-template-columns: minmax(0, 1fr); }
+  .collaborative-workbench[data-work-assistant-open="true"] .collaborative-main { display: none; }
+  .collaborative-assistant { position: static; max-height: none; }
+  .work-tab-content > li { padding: 16px; }
+}
+@media (max-width: 420px) {
+  .keyword-editor-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
 // Website work area: the assistant shares the selected object's workspace.
 .website-work-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
 .website-work-context { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }

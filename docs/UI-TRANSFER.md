@@ -28,6 +28,9 @@ The build-time include mechanism itself is a clickdummy editing aid and is not a
 - demo form behavior
 - `src/website-assistant.js` (in-memory simulated provider/content operations;
   port reviewed interaction decisions into real domain actions instead)
+- `src/ai-connections.js`, `src/ads-workspace.js`, `src/insight-workspace.js`
+  (document-local demo access, keyword resources and investigation results;
+  never treat them as production identity, connector or analysis logic)
 - `styleguide.html`
 - `src/styles/prototype.less`
 - `src/harika-source.js`
