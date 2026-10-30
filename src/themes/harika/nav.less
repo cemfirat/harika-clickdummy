@@ -1,0 +1,14 @@
+@nav-default-font-size: 14px;
+@nav-default-item-color: @harika-muted;
+@nav-default-item-hover-color: @harika-text;
+@nav-default-item-active-color: @harika-primary;
+@nav-default-header-color: @harika-text;
+@nav-default-sublist-item-color: @harika-muted;
+@nav-default-sublist-item-hover-color: @harika-primary;
+@nav-default-sublist-item-active-color: @harika-primary;
+@nav-divider-border: @harika-line;
+.hook-nav-default-item() { border-radius: 6px; }
+.hook-nav-misc() {
+  .main-nav > li > a:hover { background: @harika-canvas; }
+  .main-nav > li.uk-active > a { background: @harika-selected; box-shadow: inset 3px 0 @harika-primary; }
+}

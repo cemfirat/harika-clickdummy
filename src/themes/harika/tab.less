@@ -1,0 +1,17 @@
+@tab-margin-horizontal: 12px;
+@tab-item-padding-horizontal: 4px;
+@tab-item-padding-vertical: 10px;
+@tab-item-font-size: 13px;
+@tab-item-text-transform: none;
+@tab-item-color: @harika-muted;
+@tab-item-hover-color: @harika-text;
+@tab-item-active-color: @harika-primary;
+@tab-item-active-border: @harika-primary;
+@tab-item-border-width: 2px;
+@tab-border: @harika-line;
+.hook-tab-item() { text-transform: none; text-decoration: none; }
+.hook-tab-misc() {
+  .website-detail-tabs::before { left: 0; }
+  .website-detail-tabs > * { padding-left: 0; margin-right: 8px; }
+  @media (pointer: coarse) { .uk-tab > * > a { min-height: 44px; } }
+}

@@ -1,14 +1,15 @@
 # Themes
 
-Harika follows UIkit's Less theme model as closely as practical.
+Harika follows UIkit's Less theme model. UIkit `3.25.25` remains the framework;
+Harika customizes its variables and hooks rather than recreating its components.
 
 Official references:
-- UIkit Installation: https://getuikit.com/docs/installation
-- UIkit Less: https://getuikit.com/docs/less
 
-UIkit supports compiling either the core styles (`uikit.less`) or the default theme
-(`uikit.theme.less`). Harika uses the default theme as its system baseline and
-customizes it through Less variables and hooks.
+- [UIkit installation](https://getuikit.com/docs/installation)
+- [UIkit Less themes](https://getuikit.com/docs/less)
+
+The approved Spectrum design is documented in
+[SPECTRUM-DESIGN.md](SPECTRUM-DESIGN.md).
 
 ## Theme hierarchy
 
@@ -20,252 +21,155 @@ Harika
 Customer
 ```
 
-In Harika terminology, Harika and Customer are child themes. UIkit itself calls
-these custom themes.
-
-## Directory structure
-
-The structure deliberately mirrors UIkit's recommendation of one compiler entry
-file plus a same-named directory containing component customizations.
-
-```text
-src/
-├── themes/
-│   ├── standard.less
-│   ├── _system-tokens.less
-│   │
-│   ├── harika.less
-│   ├── harika/
-│   │   ├── _import.less
-│   │   ├── variables.less
-│   │   ├── base.less
-│   │   ├── table.less
-│   │   ├── form.less
-│   │   ├── button.less
-│   │   ├── card.less
-│   │   ├── alert.less
-│   │   ├── badge.less
-│   │   ├── label.less
-│   │   ├── modal.less
-│   │   └── offcanvas.less
-│   │
-│   └── customers/
-│       ├── README.md
-│       ├── ambra.less
-│       └── ambra/
-│           ├── variables.less
-│           ├── customer.js
-│           ├── logo.svg      # optional, only when a real asset exists
-│           └── avatar.png    # optional, only when a real asset exists
-│
-└── styles/
-    ├── shell.less
-    ├── product.less
-    ├── visualizations.less
-    └── prototype.less
-```
-
-Theme files live in `src/themes/`. Harika-specific structural CSS that is not
-a UIkit component customization stays in `src/styles/`.
-
-## 1. Standard
-
-Entry:
-
-`src/themes/standard.less`
-
-This is the system reference level.
-
-It imports UIkit's official default theme:
-
-```less
-@import "uikit/src/less/uikit.theme.less";
-```
-
-Do not add Harika brand colors or customer branding to this level.
-
-Harika shell/product selectors are appended so the application remains usable as
-a complete reference view, but their neutral aliases map to UIkit globals via
-`_system-tokens.less`.
-
-## 2. Harika
-
-Entry:
-
-`src/themes/harika.less`
-
-```less
-@import "standard.less";
-@import "harika/_import.less";
-```
-
-The `harika/` directory contains one file per customized UIkit component,
-following the same pattern recommended by UIkit for larger custom themes.
-
-### Import order
-
-`harika/_import.less` must preserve UIkit's component import order for all
-components we customize.
-
-### Variables first
-
-Prefer an existing UIkit Less variable whenever possible.
-
-Example:
-
-```less
-@button-primary-background: @ccf-indigo;
-```
-
-A single global variable can influence multiple UIkit components, which is one
-of the main advantages of using the framework's Less system.
-
-### Hooks second
-
-Use a UIkit hook when a variable cannot express the required declaration.
-
-Example:
-
-```less
-.hook-offcanvas-bar() {
-  color: @ccf-creme;
-}
-```
-
-Do not add direct `.uk-*` selector overrides to shell/product files when a
-documented UIkit variable or hook can solve the same problem.
-
-## 3. Customer themes
-
-Each customer follows the same UIkit entry-file + folder pattern.
-
-AMBRA:
-
-```text
-src/themes/customers/
-├── ambra.less
-└── ambra/
-    ├── variables.less
-    └── customer.js
-```
-
-Entry:
-
-`src/themes/customers/ambra.less`
-
-```less
-@import "../harika.less";
-@import "ambra/variables.less";
-```
-
-A customer theme inherits Harika. It must not copy UIkit or Harika component
-files.
-
-### Customer variables
-
-`variables.less` is intended for approved customer branding such as:
-
-- primary/secondary brand colors
-- typography
-- selected semantic design tokens.
-
-Do not put layout changes or product behavior into a customer theme.
-
-### Customer assets
-
-Real customer assets may live in the same customer directory:
-
-```text
-ambra/
-├── logo.svg
-├── avatar.png
-└── favicon.svg
-```
-
-Use semantic filenames. A company logo is `logo.svg`, not `avatar.png`.
-Do not add placeholder or invented brand assets.
-
-### customer.js
-
-`customer.js` is optional metadata/configuration for the clickdummy.
-
-It may describe:
-- customer id/name
-- paths to existing customer assets
-- other declarative presentation metadata.
-
-It must not contain arbitrary DOM manipulation, API calls, authentication logic,
-or a separate customer application.
-
-## Build and preview
-
-Harika is the default:
-
-```bash
-npm run dev
-npm run build
-```
-
-UIkit Standard reference:
-
-```bash
-npm run dev:standard
-npm run build:standard
-```
-
-AMBRA:
-
-```bash
-npm run dev:customer:ambra
-npm run build:customer:ambra
-```
-
-Full verification compiles Standard, Harika, AMBRA and the Pages build:
-
-```bash
-npm run verify
-```
-
-GitHub Pages uses the Harika theme.
-
-## Create a new customer theme
-
-For a customer named `example`:
-
-1. Create `src/themes/customers/example.less`.
-2. Create `src/themes/customers/example/variables.less`.
-3. Optionally add `customer.js` and real assets.
-4. Import Harika from the entry file.
-5. Add Vite/npm preview and build modes.
-6. Add only approved branding variables.
-7. Run all static checks and builds before CI.
-
-Entry:
-
-```less
-@import "../harika.less";
-@import "example/variables.less";
-```
-
-## Ownership rules
+Each level has complete Light and Dark builds. Appearance is independent of the
+selected brand. The UIkit source in `node_modules` remains unchanged.
+
+## Compiler entry files
+
+| Brand | Light | Dark |
+| --- | --- | --- |
+| Standard reference | `src/themes/standard.less` | `src/themes/standard-dark.less` |
+| Harika | `src/themes/harika-light.less` | `src/themes/harika-dark.less` |
+| AMBRA child theme | `src/themes/customers/ambra.less` | `src/themes/customers/ambra-dark.less` |
+
+`src/themes/harika.less` remains the compatible Light base. It inherits
+`standard.less` and loads `harika/_import.less`. The explicit Light entry imports
+this base. The Dark entry adds `harika/dark.less` before Less resolves the complete
+UIkit theme.
+
+`standard.less` imports UIkit's official `uikit/src/less/uikit.theme.less`.
+The Standard reference stays neutral. Customer entries inherit the matching
+Harika appearance and then apply narrow customer variables. AMBRA still has no
+invented branding values or assets.
+
+Common structural styles are included in each complete build. Only the selected
+appearance stylesheet is active, so the two UIkit skins do not compete in the
+cascade.
+
+## Source ownership
 
 | Change | Owner |
 | --- | --- |
-| UIkit default system | `standard.less` / upstream UIkit |
-| Harika component appearance | `harika/` variables/hooks |
-| Harika shell/layout | `src/styles/shell.less` |
-| Harika product composition | `src/styles/product.less` |
+| Upstream UIkit reference | `standard.less` and `standard-dark.less` |
+| Neutral structural aliases | `_system-tokens.less` |
+| Harika Light palette and shared variables | `harika/variables.less` |
+| Harika Dark palette and component color modes | `harika/dark.less` |
+| Harika component appearance | `harika/` component variables and hooks |
+| Shell and responsive navigation layout | `src/styles/shell.less` |
+| Website list/detail and other product composition | `src/styles/product.less` |
+| Charts | `src/styles/visualizations.less` |
+| Prototype documentation layout | `src/styles/prototype.less` |
 | Customer branding | `customers/<slug>/variables.less` |
-| Customer logo/avatar | `customers/<slug>/` assets |
-| Customer metadata | `customers/<slug>/customer.js` |
+| Optional real customer assets | `customers/<slug>/` |
 
-## Non-negotiable rules
+`_system-tokens.less` exposes semantic CSS variables for product composition from
+the selected Less build. The shell does not maintain a second palette under a
+runtime Dark selector. Native components obtain their colors from UIkit variables
+and hooks, including forms, labels, tabs, notifications, dropdowns, modals and
+offcanvas panels.
 
-- Never edit files inside `node_modules/uikit`.
-- Never copy UIkit component source into Harika or customer themes.
-- Prefer UIkit variables before hooks.
-- Prefer hooks before miscellaneous direct selectors.
-- Preserve UIkit component import order.
-- Customer themes inherit Harika.
-- Customer themes do not fork Harika layout or product behavior.
-- No invented customer branding values or assets.
+## Variables first
+
+Prefer existing UIkit variables for a component requirement. For example:
+
+```less
+@button-primary-background: @harika-primary;
+@button-primary-color: @harika-on-primary;
+```
+
+Palette roles include background, surface, raised surface, main and secondary
+text, control boundary, primary action, selected state and semantic feedback.
+UIkit's hover and active states must remain readable in each appearance.
+
+## Hooks second
+
+When a variable does not express a necessary declaration, use the matching UIkit
+hook. Preserve relative UIkit component order in `harika/_import.less`.
+
+Do not put direct `.uk-*` reskins in shell, product or prototype styles. Do not
+copy UIkit component source. Custom styles describe Harika's spatial composition,
+not replacement buttons, forms or modals.
+
+## Full Dark theme
+
+Dark is a separately compiled UIkit theme. It supplies dark global values and
+explicit component color modes. `uk-light` and `uk-dark` keep their UIkit role for
+contrasting sub-surfaces; they are not root application-theme switches.
+
+The Dark build uses light foregrounds on dark normal surfaces. Primary buttons
+have their own foreground/background pairing. Native browser controls follow the
+resolved `color-scheme`.
+
+## Appearance at runtime
+
+The preference is `system`, `light` or `dark`, stored locally under
+`ccf-theme-preference`. This is clickdummy-local behavior, not production account
+or authentication logic.
+
+Vite emits two complete CSS assets, one for each appearance, and inserts their
+head links with `data-harika-appearance="light"` and
+`data-harika-appearance="dark"`. An early head bootstrap resolves the preference
+before content is painted. The bootstrap and shared behavior activate the
+matching stylesheet and set:
+
+- `data-ccf-theme`: the chosen preference;
+- `data-ccf-resolved-theme`: the resolved Light or Dark appearance;
+- `color-scheme`: the appearance for native browser controls.
+
+System follows changes to `prefers-color-scheme`. Visible and offcanvas controls
+stay synchronized. Blocked local storage must not prevent switching within the
+current page or resolving the system appearance.
+
+Theme CSS is loaded through the head rather than imported by `src/app.js`. Vite's
+appearance plugin compiles the two Less entries separately so they cannot be
+merged into one conflicting CSS asset. Development CSS routes recompile the
+sources; production assets use the configured base, including GitHub Pages.
+There is no remote theme service or browser-side Less compiler.
+
+## Build and preview
+
+```bash
+npm ci
+npm run dev                 # Harika, Light/Dark/System
+npm run dev:standard        # neutral UIkit reference, Light/Dark/System
+npm run dev:customer:ambra  # child-theme inheritance, Light/Dark/System
+```
+
+Verification builds each brand and the GitHub Pages variant:
+
+```bash
+npm run verify
+npm run transfer:status
+```
+
+Every build includes both appearance assets. The static check compiles all six
+entries and verifies complete native UIkit rules and the Harika foreground/surface
+pairs. A theme must work on the styleguide as well as the website workspace.
+
+## Theme Studio
+
+Theme Studio edits Harika and customer Less sources locally. Standard stays
+read-only. A Harika edit is accepted only after both Harika appearances and all
+customer entries compile. A customer edit validates both customer appearances.
+Theme Studio validates the draft in memory before writing the local file.
+Failed compilation leaves the file untouched, so the draft and compiler error
+remain visible without a page reload.
+
+Theme Studio remains development-only and loopback-only. It does not commit,
+push, publish or transfer a design into production.
+
+## Customer themes
+
+Customer themes contain approved color/type overrides and optional real assets.
+They do not fork navigation, layout or behavior.
+
+To add a customer:
+
+1. Add matching Light and Dark entries under `src/themes/customers/`.
+2. Import the matching Harika appearance and shared customer variables.
+3. Add only approved brand values under `customers/<slug>/variables.less`.
+4. Add the pair to Vite modes and preview commands.
+5. Compile and inspect both appearances before branch CI.
+
+Customer metadata stays declarative. Missing logos or avatars remain explicitly
+absent rather than replaced with invented brand assets.

@@ -1,7 +1,9 @@
 import { readFile, readdir } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import less from "less";
+import { runInNewContext } from "node:vm";
+import createViteConfig from "../vite.config.js";
+import { checkThemeStudio } from "./check-theme-studio.mjs";
 import { harikaSource } from "../src/harika-source.js";
 import { transferState } from "../src/transfer-state.js";
 
@@ -96,25 +98,26 @@ assert(partials["sidebar.html"].includes("@include partials/navigation.html"), "
 assert(partials["mobile-nav.html"].includes("@include partials/navigation.html"), "Mobile navigation must reuse the shared navigation partial.");
 assert(partials["sidebar.html"].includes("@include partials/brand.html"), "Sidebar must reuse the shared brand partial.");
 assert(partials["mobile-nav.html"].includes("@include partials/brand.html"), "Mobile navigation must reuse the shared brand partial.");
-assert(partials["sidebar.html"].includes("@include partials/theme-switcher.html"), "Sidebar must expose the shared theme switcher.");
+assert(partials["workspace-header.html"].includes("@include partials/theme-switcher.html"), "Desktop workspace header must expose the shared theme switcher.");
 assert(partials["mobile-nav.html"].includes("@include partials/theme-switcher.html"), "Mobile navigation must expose the shared theme switcher.");
 assert(partials["theme-switcher.html"].includes("uk-button-group"), "Theme switcher must use the UIkit button group.");
 assert(partials["theme-switcher.html"].includes('data-theme-preference="light"'), "Theme switcher must offer light mode.");
 assert(partials["theme-switcher.html"].includes('data-theme-preference="system"'), "Theme switcher must offer auto/system mode.");
 assert(partials["theme-switcher.html"].includes('data-theme-preference="dark"'), "Theme switcher must offer dark mode.");
-assert(partials["theme-switcher.html"].includes('aria-label="Darstellung"'), "Theme switcher must name the control group.");
+assert(/<[^>]+\brole="group"[^>]+\baria-label="[^"]+"/.test(partials["theme-switcher.html"]), "Theme switcher must name the control group.");
 assert(partials["theme-preference-bootstrap.html"].includes("ccf-theme-preference"), "Theme bootstrap must use the shared storage key.");
 assert(partials["theme-preference-bootstrap.html"].includes("prefers-color-scheme: dark"), "Theme bootstrap must resolve the browser preference.");
 assert(partials["workspace-header.html"].includes("{{title}}"), "Workspace header must expose the title variable.");
 assert(partials["workspace-header.html"].includes("{{description}}"), "Workspace header must expose the description variable.");
 assert(partials["mobile-nav.html"].includes('data-uk-offcanvas="overlay: true; flip: false"'), "Mobile navigation must use UIkit Offcanvas.");
-assert(partials["brand.html"].includes('src="./icon.svg"'), "Brand partial must use the real Harika icon.");
+assert(partials["brand.html"].includes('src="./harika-icon.svg"'), "Brand partial must use the Harika brand icon supplied with the approved design.");
+assert((await readFile(new URL("../public/harika-icon.svg", import.meta.url), "utf8")).includes("<svg"), "The shared Harika icon must exist as a valid SVG asset.");
 
 const html = {};
 for (const [page, pageId] of allPages) {
   html[page] = await readFile(new URL("../" + page, import.meta.url), "utf8");
 
-  assert(html[page].includes('<body data-page="' + pageId + '">'), page + " must expose its page id.");
+  assert(new RegExp('<body\\b[^>]*\\bdata-page="' + pageId + '"').test(html[page]), page + " must expose its page id.");
   assert(html[page].includes('data-ccf-theme="system"'), page + " must expose the default theme preference.");
   assert(html[page].includes('data-ccf-resolved-theme="light"'), page + " must expose the default resolved theme.");
   assert(html[page].includes("<!-- @include partials/theme-preference-bootstrap.html -->"), page + " must bootstrap the theme preference before paint.");
@@ -162,10 +165,14 @@ assert(appSource.includes("[data-theme-preference]"), "app.js must wire the shar
 assert(appSource.includes("prefers-color-scheme: dark"), "app.js must follow the browser color scheme in auto mode.");
 assert(appSource.includes("dataset.ccfResolvedTheme"), "app.js must expose the resolved light/dark appearance.");
 assert(!appSource.includes('uikit/dist/css/uikit.min.css'), "Do not load prebuilt UIkit CSS alongside the Less theme.");
-assert(appSource.includes('import "@harika-theme";'), "app.js must load the selected Vite theme alias.");
+assert(!appSource.includes('import "@harika-theme";'), "Full appearance stylesheets must remain separate head assets, not competing JS CSS imports.");
+assert(appSource.includes('import UIkit from "uikit";') && appSource.includes('UIkit.use(Icons)'), "The application must use actual UIkit behavior and icons.");
+assert(appSource.includes('[data-harika-appearance]'), "Runtime appearance switching must activate the compiled UIkit stylesheet pair.");
 
 assert(themesEntries.includes("standard.less"), "UIkit standard theme entry is missing.");
+assert(themesEntries.includes("standard-dark.less"), "Neutral Standard Dark theme entry is missing.");
 assert(themesEntries.includes("harika.less"), "Harika theme entry is missing.");
+assert(themesEntries.includes("harika-light.less") && themesEntries.includes("harika-dark.less"), "Harika needs complete Light and Dark compiler entries.");
 assert(themesEntries.includes("harika"), "Harika theme folder is missing.");
 assert(themesEntries.includes("customers"), "Customer theme folder is missing.");
 assert(!themesEntries.includes("interface.less"), "Legacy interface theme entry must stay removed.");
@@ -182,13 +189,13 @@ assert(harikaThemeSource.includes('@import "standard.less";'), "Harika theme mus
 assert(harikaThemeSource.includes('@import "harika/_import.less";'), "Harika theme must load component customizations.");
 assert(harikaImportSource.includes('@import "variables.less";'), "Harika theme must preserve component-structured imports.");
 assert(harikaImportSource.includes('@import "offcanvas.less";'), "Harika theme must keep Offcanvas customization in the UIkit theme layer.");
-assert(harikaImportSource.includes('@import "appearance.less";'), "Harika theme must keep runtime light/dark appearance overrides in the theme layer.");
+assert(harikaImportSource.includes('@import "appearance.less";'), "Harika appearance decisions belong to the theme layer.");
 assert(harikaOffcanvasSource.includes("@offcanvas-bar-background"), "Offcanvas theme must use the official UIkit variable.");
 assert(harikaOffcanvasSource.includes(".hook-offcanvas-bar()"), "Offcanvas theme must use the official UIkit hook.");
 assert(!shellLess.includes(".uk-offcanvas-bar"), "Shell LESS must not directly reskin UIkit Offcanvas.");
 assert(shellLess.includes(".theme-switcher"), "Shell LESS must style the shared appearance switcher.");
-assert(shellLess.includes('html[data-ccf-resolved-theme="dark"]'), "Shell LESS must provide dark semantic token overrides.");
-assert(shellLess.includes("var(--paper)"), "Shell workspace surfaces must follow runtime theme tokens.");
+assert(!shellLess.includes('data-ccf-resolved-theme'), "Shell LESS must use compiled semantic roles instead of a separate runtime Dark skin.");
+assert(shellLess.includes("var(--paper)"), "Shell workspace surfaces must follow the active compiled theme tokens.");
 
 assert(customerThemeSource.includes('@import "../harika.less";'), "Customer theme must inherit Harika.");
 assert(customerThemeSource.includes('@import "ambra/variables.less";'), "AMBRA customer theme must keep its overrides isolated.");
@@ -223,14 +230,13 @@ assert(viteConfigSource.includes('apply: "serve"'), "Theme Studio plugin must be
 assert(viteConfigSource.includes("isLoopbackRequest"), "Theme Studio must enforce loopback requests.");
 assert(viteConfigSource.includes('address === "127.0.0.1" || address === "::1"'), "Theme Studio loopback allowlist must remain explicit.");
 assert(viteConfigSource.includes("assertThemeStudioFile"), "Theme Studio must validate every editable path against an allowlist.");
-assert(viteConfigSource.includes('const files = ["src/themes/harika.less"]'), "Theme Studio allowlist must start at Harika, not UIkit Standard.");
+assert(viteConfigSource.includes('const files = ["src/themes/harika.less", "src/themes/harika-light.less", "src/themes/harika-dark.less"]'), "Theme Studio allowlist must expose both Harika entries, not UIkit Standard.");
 assert(!viteConfigSource.includes('const files = ["src/themes/standard.less"]'), "UIkit Standard must stay read-only in Theme Studio.");
 assert(viteConfigSource.includes('requestUrl.pathname === "/__studio/status"'), "Theme Studio status endpoint is missing.");
 assert(viteConfigSource.includes('requestUrl.pathname === "/__studio/file"'), "Theme Studio file endpoint is missing.");
 assert(viteConfigSource.includes("raw.length > 512 * 1024"), "Theme Studio request-size guard is missing.");
 assert(viteConfigSource.includes("await less.render"), "Theme Studio saves must validate LESS directly.");
-assert(viteConfigSource.includes("writeFileSync(absolutePath, previousContent"), "Theme Studio must roll back invalid LESS writes.");
-assert(viteConfigSource.includes("rolledBack: true"), "Theme Studio must report compile rollback.");
+await checkThemeStudio();
 assert(viteConfigSource.includes("function gitRawOptional"), "Theme Studio must preserve raw Git file content.");
 assert(viteConfigSource.includes('return gitRawOptional(["show", "HEAD:" + relativePath]);'), "Theme Studio HEAD comparison must preserve exact file bytes.");
 assert(viteConfigSource.includes("expandHtmlPartials"), "Vite must expand shared HTML partials.");
@@ -238,12 +244,9 @@ assert(viteConfigSource.includes("includeCodePattern"), "Vite must support style
 assert(viteConfigSource.includes("expandCodePartials"), "Vite must render styleguide markup from the same example source.");
 assert(viteConfigSource.includes("server.watcher.add(partialsDirectory)"), "Vite dev server must watch shared partials.");
 assert(viteConfigSource.includes('mode === "pages" ? "/harika-clickdummy/" : "/"'), "Vite Pages base path must remain explicit.");
-assert(/\bstandard:\s*"src\/themes\/standard\.less"/.test(viteConfigSource), "Vite must expose the standard theme mode.");
-assert(/\bharika:\s*"src\/themes\/harika\.less"/.test(viteConfigSource), "Vite must expose the Harika theme mode.");
-assert(viteConfigSource.includes('"customer-ambra": "src/themes/customers/ambra.less"'), "Vite must expose the AMBRA customer theme mode.");
-assert(/\bpages:\s*"src\/themes\/harika\.less"/.test(viteConfigSource), "Pages must use the Harika theme.");
 assert(viteConfigSource.includes("themeEntries[mode] ?? themeEntries.harika"), "Unknown theme modes must fall back to Harika.");
-assert(viteConfigSource.includes('"@harika-theme": resolveThemeEntry(mode)'), "Vite must resolve the active theme through one alias.");
+assert(viteConfigSource.includes('name: "harika-appearance-stylesheets"'), "Vite must emit and load separate complete UIkit appearance stylesheets.");
+assert(!viteConfigSource.includes('"@harika-theme"'), "Vite must not bundle both complete themes into the application JS CSS dependency.");
 assert(!viteConfigSource.includes("interface"), "Vite theme configuration must not use the legacy interface name.");
 
 assert(baselineGuide.includes("Shared only where it is truly global"), "UI baseline must preserve the shared-partial rule.");
@@ -329,20 +332,124 @@ assert(pagesWorkflowSource.includes('"partials/**"'), "Pages preview must deploy
 assert(pagesWorkflowSource.includes('"src/**"'), "Pages preview must deploy source/theme changes.");
 assert(transferGuide.includes("No PR before green branch CI"), "Transfer guide must preserve permanent CI-before-PR rule.");
 
-for (const relativePath of [
-  "src/themes/harika.less",
-  "src/themes/customers/ambra.less"
-]) {
-  const filename = resolve(rootDirectory, relativePath);
-  const source = await readFile(filename, "utf8");
-  await less.render(source, {
-    filename,
-    javascriptEnabled: false,
-    paths: [
-      rootDirectory,
-      resolve(rootDirectory, "node_modules")
-    ]
-  });
+// Check compiled components, not the old selective Dark override implementation.
+function cssDeclarations(css, selector) {
+  const declarations = {};
+  const source = css.replace(/\/\*[\s\S]*?\*\//g, "");
+  for (const match of source.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    if (!match[1].split(",").map((part) => part.trim()).includes(selector)) continue;
+    for (const declaration of match[2].split(";")) {
+      const separator = declaration.indexOf(":");
+      if (separator < 0) continue;
+      declarations[declaration.slice(0, separator).trim()] = declaration.slice(separator + 1).trim().toLowerCase();
+    }
+  }
+  return declarations;
 }
 
-console.log("Harika clickdummy HTML-first + UIkit theme structure + local Theme Studio checks passed.");
+const nativeComponentSelectors = [
+  ".uk-button-primary", ".uk-card-default", ".uk-input", ".uk-select", ".uk-textarea",
+  ".uk-label", ".uk-alert-primary", ".uk-tab", ".uk-table", ".uk-dropdown",
+  ".uk-modal-dialog", ".uk-offcanvas-bar"
+];
+
+const expectedHarikaPairs = {
+  light: { canvas: "#f7f7fa", surface: "#fff", raised: "#fff", text: "#211c2c", primary: "#5600ff", onPrimary: "#fff" },
+  dark: { canvas: "#101014", surface: "#19191f", raised: "#23232b", text: "#f4f1f8", primary: "#bfa9ff", onPrimary: "#17121f" }
+};
+
+function normalizedColor(value) {
+  return value?.replace(/#([0-9a-f])\1([0-9a-f])\2([0-9a-f])\3\b/g, "#$1$2$3");
+}
+
+for (const mode of ["standard", "harika", "customer-ambra", "pages"]) {
+  const config = await createViteConfig({ mode, command: "build" });
+  const partialPlugin = config.plugins.find((plugin) => plugin.name === "harika-html-partials");
+  const appearancePlugin = config.plugins.find((plugin) => plugin.name === "harika-appearance-stylesheets");
+  assert(appearancePlugin, mode + " must provide the compiled appearance plugin.");
+  const assets = [];
+  appearancePlugin.configResolved({ command: "build", base: config.base });
+  await appearancePlugin.buildStart.call({ emitFile(asset) { assets.push(asset); } });
+  assert(assets.length === 2, mode + " must emit exactly two complete appearance stylesheets.");
+  assert(assets[0].source !== assets[1].source, mode + " must compile distinct Light and Dark CSS.");
+
+  const expanded = partialPlugin.transformIndexHtml(html["websites.html"]);
+  const result = appearancePlugin.transformIndexHtml.handler(expanded);
+  const links = [...result.matchAll(/<link\b[^>]*data-harika-appearance="(light|dark)"[^>]*>/g)];
+  assert(links.length === 2, mode + " must render exactly one Light and one Dark stylesheet link.");
+  assert(!result.includes("harika:appearance-stylesheets"), mode + " must replace the head stylesheet marker.");
+  assert(result.indexOf("data-harika-appearance") < result.indexOf('const key = "ccf-theme-preference"'), mode + " must expose both head links before the early preference script runs.");
+
+  for (const appearance of ["light", "dark"]) {
+    const link = links.find((match) => match[1] === appearance)?.[0];
+    const href = link?.match(/\bhref="([^"]+)"/)?.[1];
+    const asset = assets.find((item) => config.base + item.fileName === href);
+    assert(asset?.source, mode + " " + appearance + " link must reference an emitted CSS asset.");
+    assert(link.includes('media="(prefers-color-scheme: ' + appearance + ')"'), mode + " must retain a System fallback before JavaScript resolves a saved preference.");
+    assert(link.includes('blocking="render"'), mode + " appearance links must participate in first-paint styling.");
+    if (mode === "pages") assert(href.startsWith("/harika-clickdummy/assets/"), "Pages appearance assets must use the repository subpath.");
+    for (const selector of nativeComponentSelectors) {
+      assert(Object.keys(cssDeclarations(asset.source, selector)).length > 0, mode + " " + appearance + " must include the full native component " + selector);
+    }
+    for (const selector of [".uk-checkbox:checked", ".uk-radio:checked", ".uk-select:not([multiple]):not([size])"]) {
+      const backgroundImage = cssDeclarations(asset.source, selector)["background-image"];
+      assert(backgroundImage?.includes("data:image/svg+xml"), mode + " " + appearance + " must embed the native SVG indicator for " + selector + ".");
+    }
+    assert(!asset.source.includes("images/backgrounds/"), mode + " " + appearance + " must not emit unresolved UIkit background-image paths.");
+    const tokens = cssDeclarations(asset.source, ":root");
+    assert(tokens["color-scheme"] === appearance, mode + " must style native controls for " + appearance + ".");
+    if (mode === "standard") {
+      assert(normalizedColor(tokens["--accent"]) !== expectedHarikaPairs[appearance].primary, "Standard must remain a neutral framework reference, not the Harika brand.");
+      continue;
+    }
+    const expected = expectedHarikaPairs[appearance];
+    const primary = cssDeclarations(asset.source, ".uk-button-primary");
+    const card = cssDeclarations(asset.source, ".uk-card-default");
+    assert(normalizedColor(tokens["--paper"]) === expected.canvas, mode + " " + appearance + " must use the approved canvas.");
+    assert(normalizedColor(primary["background-color"]) === expected.primary && normalizedColor(primary.color) === expected.onPrimary, mode + " " + appearance + " must compile the accessible primary-button color pair.");
+    assert(normalizedColor(card["background-color"]) === expected.surface && normalizedColor(card.color) === expected.text, mode + " " + appearance + " must compile the normal card foreground/surface pair.");
+    for (const selector of [".uk-input", ".uk-select", ".uk-textarea"]) {
+      const control = cssDeclarations(asset.source, selector);
+      assert(normalizedColor(control.background) === expected.surface && normalizedColor(control.color) === expected.text, mode + " " + appearance + " must fully theme " + selector + ".");
+    }
+    for (const selector of [".uk-dropdown", ".uk-modal-dialog", ".uk-offcanvas-bar"]) {
+      assert(normalizedColor(cssDeclarations(asset.source, selector).background) === expected.raised, mode + " " + appearance + " must theme the elevated surface " + selector + ".");
+    }
+  }
+
+  for (const [page] of allPages) {
+    const expandedPage = partialPlugin.transformIndexHtml(html[page]);
+    const ids = [...expandedPage.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
+    assert(new Set(ids).size === ids.length, page + " must not duplicate IDs through shared partials.");
+    assert((expandedPage.match(/<main\b/g) ?? []).length === 1, page + " must retain one main landmark.");
+  }
+}
+
+// Execute the actual pre-paint bootstrap against explicit, system, malformed and
+// blocked-storage cases. A storage exception must never force a light flash.
+const bootstrapScript = partials["theme-preference-bootstrap.html"].match(/<script>([\s\S]*?)<\/script>/)?.[1];
+assert(bootstrapScript, "The shared head bootstrap must include executable preference handling.");
+for (const scenario of [
+  { stored: "light", systemDark: true, expected: "light", preference: "light" },
+  { stored: "dark", systemDark: false, expected: "dark", preference: "dark" },
+  { stored: "system", systemDark: true, expected: "dark", preference: "system" },
+  { stored: null, systemDark: false, expected: "light", preference: "system" },
+  { stored: "invalid", systemDark: true, expected: "dark", preference: "system" },
+  { blocked: true, systemDark: true, expected: "dark", preference: "system" }
+]) {
+  const root = { dataset: {}, style: {} };
+  const links = ["light", "dark"].map((appearance) => ({ dataset: { harikaAppearance: appearance } }));
+  runInNewContext(bootstrapScript, {
+    document: { documentElement: root, querySelectorAll: () => links },
+    localStorage: { getItem() { if (scenario.blocked) throw new Error("Storage blocked"); return scenario.stored; } },
+    window: { matchMedia: () => ({ matches: scenario.systemDark }) }
+  }, { timeout: 1000 });
+  assert(root.dataset.ccfTheme === scenario.preference && root.dataset.ccfResolvedTheme === scenario.expected, "The early bootstrap must preserve explicit preference and resolve System even when storage is blocked.");
+  assert(root.style.colorScheme === scenario.expected, "The early bootstrap must set the native-control color scheme.");
+  for (const link of links) {
+    const expectedMedia = scenario.preference === "system" ? `(prefers-color-scheme: ${link.dataset.harikaAppearance})` : link.dataset.harikaAppearance === scenario.expected ? "all" : "not all";
+    assert(link.media === expectedMedia, "The bootstrap must enable only the matching compiled appearance.");
+  }
+}
+
+console.log("Harika HTML-first, complete UIkit Light/Dark themes, first-paint and local Theme Studio checks passed.");

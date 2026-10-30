@@ -81,3 +81,20 @@ Theme Studio is documented separately in:
 
 The Styleguide remains the visual reference; Theme Studio is only its local
 editing surface.
+
+## Light and Dark review
+
+The appearance switch selects a complete compiled UIkit theme in every build
+mode. Review the same examples under System, Hell and Dunkel, including the
+Standard reference and customer inheritance mode. The dark appearance is not
+limited to a few product panels.
+
+Use the website workspace as the accepted Spectrum-design reference. Then check
+the styleguide for ordinary and primary buttons, focus/hover/disabled states,
+input labels and placeholders, select options, alerts, table headers/selection,
+dropdowns, offcanvas panels and modal surfaces. A successful theme toggle does
+not prove that all component states have been themed.
+
+The approved palette, native component mapping and production-transfer boundary
+are recorded in [SPECTRUM-DESIGN.md](SPECTRUM-DESIGN.md). Theme source ownership and
+the dual-build contract are in [THEMES.md](THEMES.md).

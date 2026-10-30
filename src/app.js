@@ -1,6 +1,5 @@
 import UIkit from "uikit";
 import Icons from "uikit/dist/js/uikit-icons";
-import "@harika-theme";
 
 UIkit.use(Icons);
 
@@ -12,6 +11,7 @@ document.querySelectorAll("[data-active-theme]").forEach((node) => {
 
 const themePreferenceStorageKey = "ccf-theme-preference";
 const themePreferences = new Set(["light", "dark", "system"]);
+let currentThemePreference;
 
 function isThemePreference(value) {
   return typeof value === "string" && themePreferences.has(value);
@@ -38,6 +38,11 @@ function applyThemePreference(preference) {
   root.dataset.ccfTheme = preference;
   root.dataset.ccfResolvedTheme = resolved;
   root.style.colorScheme = resolved;
+  document.querySelectorAll("[data-harika-appearance]").forEach((link) => {
+    link.media = preference === "system"
+      ? `(prefers-color-scheme: ${link.dataset.harikaAppearance})`
+      : link.dataset.harikaAppearance === resolved ? "all" : "not all";
+  });
   return resolved;
 }
 
@@ -59,6 +64,7 @@ function syncThemeSwitcherControls(preference) {
 
 function initThemePreference() {
   const initial = readStoredThemePreference();
+  currentThemePreference = initial;
   applyThemePreference(initial);
   syncThemeSwitcherControls(initial);
 
@@ -66,6 +72,7 @@ function initThemePreference() {
     button.addEventListener("click", () => {
       const next = button.dataset.themePreference;
       if (!isThemePreference(next)) return;
+      currentThemePreference = next;
       persistThemePreference(next);
       applyThemePreference(next);
       syncThemeSwitcherControls(next);
@@ -74,8 +81,14 @@ function initThemePreference() {
 
   const media = globalThis.matchMedia?.("(prefers-color-scheme: dark)");
   media?.addEventListener?.("change", () => {
-    const current = readStoredThemePreference();
-    if (current === "system") applyThemePreference("system");
+    if (currentThemePreference === "system") applyThemePreference("system");
+  });
+
+  window.addEventListener("storage", (event) => {
+    if (event.key !== themePreferenceStorageKey && event.key !== null) return;
+    currentThemePreference = readStoredThemePreference();
+    applyThemePreference(currentThemePreference);
+    syncThemeSwitcherControls(currentThemePreference);
   });
 }
 
@@ -119,6 +132,72 @@ function applyCustomerFilter() {
 customerSearch?.addEventListener("input", applyCustomerFilter);
 customerStatus?.addEventListener("change", applyCustomerFilter);
 
+// The website workspace is HTML-first: selection reveals existing detail
+// panels; native UIkit Tabs, Switcher and Modal own their interactions.
+const websiteRows = [...document.querySelectorAll("[data-website-row]")];
+const websiteSearch = document.querySelector("[data-website-search]");
+
+function selectWebsite(id) {
+  const selected = websiteRows.find((row) => row.dataset.websiteRow === id);
+  if (!selected) return;
+  for (const row of websiteRows) {
+    const active = row === selected;
+    row.classList.toggle("uk-active", active);
+    row.querySelector("[data-website-select]")?.setAttribute("aria-pressed", String(active));
+  }
+  document.querySelectorAll("[data-website-detail]").forEach((detail) => {
+    detail.hidden = detail.dataset.websiteDetail !== id;
+  });
+  const fields = {
+    "website-edit-modal-name": selected.dataset.websiteName,
+    "website-edit-modal-origin": selected.dataset.websiteOrigin,
+    "website-edit-modal-environment": selected.dataset.websiteEnvironment
+  };
+  for (const [fieldId, value] of Object.entries(fields)) {
+    const field = document.getElementById(fieldId);
+    if (field && value !== undefined) field.value = value;
+  }
+}
+
+function applyWebsiteFilter() {
+  if (!websiteSearch) return;
+  const needle = websiteSearch.value.trim().toLocaleLowerCase("de");
+  let visible = 0;
+  for (const row of websiteRows) {
+    row.hidden = !(row.dataset.websiteSearchIndex ?? row.textContent).toLocaleLowerCase("de").includes(needle);
+    if (!row.hidden) visible += 1;
+  }
+  const result = document.querySelector("[data-website-result]");
+  if (result) result.textContent = `${visible} ${visible === 1 ? "Website" : "Websites"} · ${document.body.dataset.demoCustomer ?? "Beispielkunde"}`;
+  const empty = document.querySelector("[data-website-empty]");
+  if (empty) empty.hidden = visible !== 0;
+}
+
+document.querySelectorAll("[data-website-select]").forEach((button) => {
+  button.addEventListener("click", () => selectWebsite(button.dataset.websiteSelect));
+});
+document.querySelectorAll("[data-website-edit]").forEach((link) => {
+  link.addEventListener("click", () => selectWebsite(link.dataset.websiteEdit));
+});
+websiteRows.forEach((row) => {
+  row.addEventListener("click", (event) => {
+    if (!event.target.closest("a, button, input, select, label")) selectWebsite(row.dataset.websiteRow);
+  });
+});
+websiteSearch?.addEventListener("input", applyWebsiteFilter);
+if (websiteRows.length) {
+  const selected = websiteRows.find((row) => row.querySelector('[aria-pressed="true"]')) ?? websiteRows[0];
+  selectWebsite(selected.dataset.websiteRow);
+  applyWebsiteFilter();
+}
+
+for (const [attribute, value] of [
+  ["data-workspace-organization", document.body.dataset.demoOrganization],
+  ["data-workspace-customer", document.body.dataset.demoCustomer]
+]) {
+  if (value) document.querySelectorAll(`[${attribute}]`).forEach((node) => { node.textContent = value; });
+}
+
 document.querySelectorAll("[data-demo-form]").forEach((form) => {
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -133,15 +212,18 @@ document.querySelectorAll("[data-demo-form]").forEach((form) => {
 });
 
 document.querySelectorAll("[data-copy-target]").forEach((button) => {
+  const label = button.querySelector("[data-copy-label]") ?? button;
+  const originalLabel = label.textContent;
+  let resetLabelTimer;
   button.addEventListener("click", async () => {
     const target = document.querySelector(button.dataset.copyTarget);
     if (!target) return;
 
     try {
       await navigator.clipboard.writeText(target.textContent || "");
-      const original = button.textContent;
-      button.textContent = "Kopiert";
-      window.setTimeout(() => { button.textContent = original; }, 1600);
+      window.clearTimeout(resetLabelTimer);
+      label.textContent = "Kopiert";
+      resetLabelTimer = window.setTimeout(() => { label.textContent = originalLabel; }, 1600);
     } catch {
       UIkit.notification({
         message: "Kopieren ist in diesem Browser nicht verfügbar.",

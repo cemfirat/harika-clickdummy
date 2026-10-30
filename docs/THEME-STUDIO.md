@@ -12,8 +12,8 @@ Theme Studio currently supports:
 - opening editable Harika/customer LESS files
 - editing them directly in the Styleguide
 - saving to the local working tree
-- validating the affected theme entry with Less before a save is accepted
-- automatic Vite CSS/HMR refresh
+- validating both affected appearance entries with Less before a save is accepted
+- automatic Vite reload after a theme change
 - comparing the saved file with Git `HEAD`
 - restoring the editor contents to the `HEAD` version
 - showing current branch, short HEAD and file Git status.
@@ -89,13 +89,15 @@ The service builds an allowlist from:
 
 ```text
 src/themes/harika.less
+src/themes/harika-light.less
+src/themes/harika-dark.less
 src/themes/harika/*.less
 src/themes/customers/*.less
 src/themes/customers/*/*.less
 ```
 
-`src/themes/standard.less` is intentionally not editable through Theme Studio.
-It remains the UIkit system reference.
+`src/themes/standard.less` and `src/themes/standard-dark.less` are intentionally
+not editable through Theme Studio. They remain the UIkit system reference.
 
 Only `.less` files in the allowlist can be written.
 
@@ -104,19 +106,23 @@ Only `.less` files in the allowlist can be written.
 When **Speichern & kompilieren** is used:
 
 1. the requested path is checked against the allowlist
-2. the file is written to the local working tree
-3. the affected theme entry/entries are compiled with Less
-4. if compilation succeeds, the save is accepted
-5. Vite updates the browser through its normal file watcher/HMR
-6. if compilation fails, the previous file content is restored and the compiler
-   error is returned to the Studio.
+2. the draft is supplied to Less in memory, including when other entries import
+   the edited file
+3. all affected Light and Dark entries are compiled against that draft
+4. only after successful compilation is the file written to the working tree
+5. Vite reloads the page through its file watcher, preserving the appearance
+   preference while recompiling the two development stylesheets
+6. if compilation fails, the file remains untouched and no reload is triggered;
+   the draft and compiler error remain visible in the Studio.
 
 Editing a Harika theme file validates:
 
-- `src/themes/harika.less`
-- every customer theme entry because customer themes inherit Harika.
+- `src/themes/harika-light.less`
+- `src/themes/harika-dark.less`
+- every Light and Dark customer entry because customer themes inherit Harika.
 
-Editing a customer theme validates only that customer's entry.
+Editing a customer theme validates that customer's Light and Dark entries.
+An error in either appearance rejects the edit without changing the local file.
 
 ## Git comparison
 

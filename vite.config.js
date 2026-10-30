@@ -1,4 +1,5 @@
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import less from "less";
@@ -20,11 +21,80 @@ const htmlEntries = {
 };
 
 const themeEntries = {
-  standard: "src/themes/standard.less",
-  harika: "src/themes/harika.less",
-  "customer-ambra": "src/themes/customers/ambra.less",
-  pages: "src/themes/harika.less"
+  standard: { light: "src/themes/standard.less", dark: "src/themes/standard-dark.less" },
+  harika: { light: "src/themes/harika-light.less", dark: "src/themes/harika-dark.less" },
+  "customer-ambra": { light: "src/themes/customers/ambra.less", dark: "src/themes/customers/ambra-dark.less" },
+  pages: { light: "src/themes/harika-light.less", dark: "src/themes/harika-dark.less" }
 };
+
+// Keep full UIkit builds in separate assets: bundling both as JS CSS imports
+// would let the dark component rules override the light rules unconditionally.
+function appearanceStylesheetsPlugin(mode) {
+  const entries = themeEntries[mode] ?? themeEntries.harika;
+  const developmentPrefix = "/__harika-appearance/";
+  const assets = {};
+  let config;
+  const compile = async (appearance) => {
+    const filename = resolve(rootDirectory, entries[appearance]);
+    const result = await less.render(readFileSync(filename, "utf8"), {
+      filename,
+      javascriptEnabled: false,
+      rewriteUrls: "all",
+      compress: true,
+      paths: [rootDirectory, resolve(rootDirectory, "node_modules")]
+    });
+    return result.css;
+  };
+
+  return {
+    name: "harika-appearance-stylesheets",
+    configResolved(resolvedConfig) { config = resolvedConfig; },
+    async buildStart() {
+      if (config.command !== "build") return;
+      const compiled = await Promise.all(["light", "dark"].map(async (appearance) => ({ appearance, css: await compile(appearance) })));
+      for (const { appearance, css } of compiled) {
+        const hash = createHash("sha256").update(css).digest("hex").slice(0, 12);
+        const fileName = `assets/uikit-${mode === "pages" ? "harika" : mode}-${appearance}-${hash}.css`;
+        this.emitFile({ type: "asset", fileName, source: css });
+        assets[appearance] = config.base + fileName;
+      }
+    },
+    transformIndexHtml: {
+      order: "post",
+      handler(html) {
+        const marker = "<!-- harika:appearance-stylesheets -->";
+        if (!html.includes(marker)) throw new Error("Page is missing the early Harika appearance bootstrap.");
+        const links = ["light", "dark"].map((appearance) => {
+          const href = config.command === "build" ? assets[appearance] : `${developmentPrefix}${appearance}.css`;
+          return `<link rel="stylesheet" href="${href}" data-harika-appearance="${appearance}" media="(prefers-color-scheme: ${appearance})" blocking="render">`;
+        }).join("\n  ");
+        return html.replace(marker, links);
+      }
+    },
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const pathname = new URL(req.url ?? "/", "http://127.0.0.1").pathname;
+        const appearance = pathname === `${developmentPrefix}light.css` ? "light" : pathname === `${developmentPrefix}dark.css` ? "dark" : null;
+        if (!appearance) return next();
+        compile(appearance).then((css) => {
+          res.setHeader("Content-Type", "text/css; charset=utf-8");
+          res.setHeader("Cache-Control", "no-cache");
+          res.end(css);
+        }).catch((error) => {
+          res.statusCode = 500;
+          res.setHeader("Content-Type", "text/plain; charset=utf-8");
+          res.end("Harika theme compilation failed. Inspect the LESS compiler output.");
+          server.config.logger.error(String(error));
+        });
+      });
+      server.watcher.on("change", (file) => {
+        if (file.endsWith(".less") && (file.startsWith(resolve(rootDirectory, "src/themes")) || file.startsWith(resolve(rootDirectory, "src/styles")))) {
+          server.ws.send({ type: "full-reload" });
+        }
+      });
+    }
+  };
+}
 
 const includePattern = /<!--\s*@include\s+([^\s]+)(?:\s+(\{[\s\S]*?\}))?\s*-->/g;
 const includeCodePattern = /<!--\s*@include-code\s+([^\s]+)(?:\s+(\{[\s\S]*?\}))?\s*-->/g;
@@ -92,7 +162,7 @@ function normalizeStudioPath(value) {
 }
 
 function listThemeStudioFiles() {
-  const files = ["src/themes/harika.less"];
+  const files = ["src/themes/harika.less", "src/themes/harika-light.less", "src/themes/harika-dark.less"];
   const harikaDirectory = resolve(rootDirectory, "src/themes/harika");
 
   for (const entry of readdirSync(harikaDirectory, { withFileTypes: true })) {
@@ -137,24 +207,44 @@ function customerThemeEntries() {
 }
 
 function affectedThemeEntries(relativePath) {
-  if (relativePath === "src/themes/harika.less" || relativePath.startsWith("src/themes/harika/")) {
-    return ["src/themes/harika.less", ...customerThemeEntries()];
+  if (["src/themes/harika.less", "src/themes/harika-light.less", "src/themes/harika-dark.less"].includes(relativePath) || relativePath.startsWith("src/themes/harika/")) {
+    return ["src/themes/harika-light.less", "src/themes/harika-dark.less", ...customerThemeEntries()];
   }
 
   const customerMatch = relativePath.match(/^src\/themes\/customers\/([^/]+)(?:\/|\.less$)/);
   if (customerMatch) {
-    const entry = "src/themes/customers/" + customerMatch[1] + ".less";
-    return [entry];
+    const family = customerMatch[1].replace(/-dark$/, "");
+    return customerThemeEntries().filter((entry) => entry === `src/themes/customers/${family}.less` || entry === `src/themes/customers/${family}-dark.less`);
   }
 
   return [];
 }
 
-async function compileThemeEntry(relativePath) {
+async function compileThemeEntry(relativePath, draft) {
   const filename = resolve(rootDirectory, relativePath);
-  await less.render(readFileSync(filename, "utf8"), {
+  // Resolve imports through Less itself, then substitute only the edited file.
+  // No provisional disk write means rejected drafts cannot trigger a reload.
+  const draftPlugin = {
+    install(lessApi, pluginManager) {
+      const urlFiles = new lessApi.UrlFileManager();
+      class DraftFileManager extends lessApi.FileManager {
+        supports(...args) { return !urlFiles.supports(...args); }
+        supportsSync() { return false; }
+        async loadFile(...args) {
+          const file = await super.loadFile(...args);
+          return resolve(file.filename) === draft.filename
+            ? { ...file, contents: draft.content }
+            : file;
+        }
+      }
+      pluginManager.addFileManager(new DraftFileManager());
+    }
+  };
+  await less.render(filename === draft.filename ? draft.content : readFileSync(filename, "utf8"), {
     filename,
     javascriptEnabled: false,
+    rewriteUrls: "all",
+    plugins: [draftPlugin],
     paths: [
       rootDirectory,
       resolve(rootDirectory, "node_modules")
@@ -298,28 +388,27 @@ function themeStudioPlugin(mode) {
               return;
             }
 
-            writeFileSync(absolutePath, nextContent, "utf8");
-
+            const compiled = affectedThemeEntries(relativePath);
             try {
-              const compiled = affectedThemeEntries(relativePath);
               for (const entry of compiled) {
-                await compileThemeEntry(entry);
+                await compileThemeEntry(entry, { filename: absolutePath, content: nextContent });
               }
-
-              sendJson(res, 200, {
-                ok: true,
-                compiled,
-                file: studioFilePayload(relativePath)
-              });
             } catch (error) {
-              writeFileSync(absolutePath, previousContent, "utf8");
               sendJson(res, 422, {
                 ok: false,
                 error: error instanceof Error ? error.message : String(error),
-                rolledBack: true,
+                unchanged: true,
                 file: studioFilePayload(relativePath)
               });
+              return;
             }
+
+            writeFileSync(absolutePath, nextContent, "utf8");
+            sendJson(res, 200, {
+              ok: true,
+              compiled,
+              file: studioFilePayload(relativePath)
+            });
             return;
           }
 
@@ -337,22 +426,13 @@ function themeStudioPlugin(mode) {
   };
 }
 
-function resolveThemeEntry(mode) {
-  const relative = themeEntries[mode] ?? themeEntries.harika;
-  return resolve(rootDirectory, relative);
-}
-
 export default defineConfig(({ mode }) => ({
   base: mode === "pages" ? "/harika-clickdummy/" : "/",
   plugins: [
     htmlPartialsPlugin(),
+    appearanceStylesheetsPlugin(mode),
     themeStudioPlugin(mode)
   ],
-  resolve: {
-    alias: {
-      "@harika-theme": resolveThemeEntry(mode)
-    }
-  },
   define: {
     __HARIKA_THEME__: JSON.stringify(mode === "pages" ? "harika" : (themeEntries[mode] ? mode : "harika"))
   },

@@ -1,16 +1,20 @@
 <div id="profile-modal" class="uk-modal" data-uk-modal>
-  <div class="uk-modal-dialog">
-    <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Schließen"></button>
+  <div class="uk-modal-dialog" aria-labelledby="profile-modal-title">
+    <button class="uk-modal-close-default" type="button" data-uk-close aria-label="Konto schließen"></button>
     <div class="uk-modal-header">
-      <p class="eyebrow uk-margin-remove-bottom">Konto</p>
-      <h2 class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Cem Firat</h2>
+      <p class="eyebrow uk-margin-remove-bottom">Mein Konto</p>
+      <h2 id="profile-modal-title" class="uk-modal-title uk-margin-small-top uk-margin-remove-bottom">Cem Firat</h2>
     </div>
     <div class="uk-modal-body">
       <dl class="demo-detail-list">
-        <div><dt>Rolle</dt><dd>Administrator</dd></div>
-        <div><dt>Workspace</dt><dd>AMBRA Sonnenschutzsysteme</dd></div>
+        <div><dt>Profil</dt><dd>Beispielprofil</dd></div>
+        <div><dt>Rolle</dt><dd>Demo-Administrator</dd></div>
         <div><dt>Demo-Modus</dt><dd>Aktiv</dd></div>
       </dl>
+      <div class="uk-margin-top">
+        <p class="uk-form-label">Darstellung</p>
+        <!-- @include partials/theme-switcher.html -->
+      </div>
     </div>
     <div class="uk-modal-footer uk-flex uk-flex-right">
       <button class="uk-button uk-button-default uk-modal-close" type="button">Schließen</button>

@@ -1,30 +1,85 @@
-@button-line-height: @global-control-height - (@button-border-width * 2);
-@button-small-line-height: @global-control-small-height - (@button-border-width * 2);
-@button-large-line-height: @global-control-large-height - (@button-border-width * 2);
+@button-line-height: 34px;
+@button-small-line-height: 30px;
+@button-large-line-height: 42px;
+@button-font-size: 12px;
+@button-small-font-size: 12px;
+@button-padding-horizontal: 12px;
+@button-small-padding-horizontal: 10px;
 @button-border-width: 1px;
-@button-default-background: transparent;
-@button-default-border: @ccf-gray;
-@button-default-hover-border: @ccf-darker-gray;
-@button-default-active-border: @ccf-indigo;
-@button-primary-background: @ccf-indigo;
-@button-primary-color: #fff;
-@button-primary-hover-background: @ccf-darker-violet;
-@button-primary-hover-color: #fff;
-@button-primary-active-background: @ccf-violet;
-@button-primary-active-color: #fff;
-@button-danger-background: @ccf-darker-red;
-@button-danger-color: #fff;
-@button-danger-hover-background: #680029;
-@button-danger-hover-color: #fff;
-@button-danger-active-background: #570022;
-@button-danger-active-color: #fff;
-@button-text-color: @ccf-darker-violet;
-@button-text-hover-color: @ccf-violet;
-@button-text-transform: uppercase;
+@button-text-transform: none;
+@button-default-background: @harika-surface;
+@button-default-color: @harika-text;
+@button-default-border: @harika-control-border;
+@button-default-hover-background: @harika-canvas;
+@button-default-hover-color: @harika-text;
+@button-default-hover-border: @harika-control-border;
+@button-default-active-background: @harika-selected;
+@button-default-active-color: @harika-text;
+@button-default-active-border: @harika-primary;
+@button-primary-background: @harika-primary;
+@button-primary-color: @harika-on-primary;
+@button-primary-hover-background: @harika-primary-hover;
+@button-primary-hover-color: @harika-on-primary;
+@button-primary-active-background: @harika-primary-active;
+@button-primary-active-color: @harika-on-primary;
+@button-secondary-background: @harika-selected;
+@button-secondary-color: @harika-text;
+@button-secondary-hover-background: @harika-line;
+@button-secondary-hover-color: @harika-text;
+@button-secondary-active-background: @harika-line;
+@button-secondary-active-color: @harika-text;
+@button-danger-background: @harika-danger;
+@button-danger-color: @harika-on-danger;
+@button-danger-hover-background: darken(@harika-danger, 5%);
+@button-danger-hover-color: @harika-on-danger;
+@button-danger-active-background: darken(@harika-danger, 10%);
+@button-danger-active-color: @harika-on-danger;
+@button-text-color: @harika-primary;
+@button-text-hover-color: @harika-primary-hover;
+@button-disabled-background: @harika-canvas;
+@button-disabled-color: @harika-muted;
+@button-disabled-border: @harika-line;
 
-.hook-button() { text-transform: @button-text-transform; }
-.hook-button-default() { border: @button-border-width solid @button-default-border; }
-.hook-button-default-hover() { border-color: @button-default-hover-border; }
-.hook-button-default-active() { border-color: @button-default-active-border; }
-.hook-button-primary() { border: @button-border-width solid transparent; }
-.hook-button-danger() { border: @button-border-width solid transparent; }
+.hook-button() { border-radius: 5px; font-weight: 500; }
+.hook-button-misc() {
+  .theme-switcher-group {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid @harika-line;
+    border-radius: 7px;
+    background: @harika-surface;
+  }
+  .theme-switcher-group > .uk-button {
+    min-height: 32px;
+    line-height: 30px;
+    padding: 0 9px;
+    border: 0;
+    border-radius: 4px;
+    color: @harika-muted;
+    background: transparent;
+    font-weight: 400;
+  }
+  .theme-switcher-group > .uk-button:hover { color: @harika-text; background: @harika-canvas; }
+  .theme-switcher-group > .uk-button.uk-active {
+    color: @harika-text;
+    background: @harika-selected;
+    box-shadow: inset 0 -2px @harika-primary;
+  }
+  .website-select.uk-button-text {
+    display: block;
+    width: 100%;
+    text-align: left;
+    color: @harika-text;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: 600;
+    white-space: normal;
+  }
+  .website-select.uk-button-text::before { display: none; }
+  .website-select.uk-button-text:hover { color: @harika-primary; }
+  @media (pointer: coarse) {
+    .uk-button { min-height: 44px; }
+    .theme-switcher-group > .uk-button { min-height: 44px; line-height: 42px; }
+  }
+}

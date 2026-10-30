@@ -1,2 +1,20 @@
-@table-divider-border: @ccf-gray;
-@table-header-cell-color: @ccf-muted;
+@table-cell-padding-vertical: 12px;
+@table-cell-padding-horizontal: 14px;
+@table-small-cell-padding-vertical: 8px;
+@table-small-cell-padding-horizontal: 10px;
+@table-divider-border: @harika-line;
+@table-header-cell-color: @harika-muted;
+@table-header-cell-font-size: 12px;
+@table-row-active-background: @harika-selected;
+@table-hover-row-background: @harika-canvas;
+@table-striped-row-background: @harika-canvas;
+.hook-table-header-cell() { text-transform: none; }
+.hook-table-misc() {
+  .website-table { margin: 0; table-layout: fixed; }
+  .website-table th { padding-top: 10px; padding-bottom: 10px; background: @harika-canvas; border-top: 1px solid @harika-line; }
+  .website-table th:last-child, .website-table td:last-child { width: 100px; text-align: right; }
+  .website-table td { padding-top: 15px; padding-bottom: 15px; vertical-align: top; }
+  .website-table tr.uk-active > td:first-child { box-shadow: inset 3px 0 @harika-primary; }
+  .website-table tbody tr:has(.website-select:hover):not(.uk-active) { background: @harika-canvas; }
+  .website-table tr.uk-active .website-selection-marker { visibility: visible; }
+}

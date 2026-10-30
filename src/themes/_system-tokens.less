@@ -1,32 +1,89 @@
-// Neutral aliases used only by Harika-specific shell/product styles.
-// In standard mode they map to UIkit defaults. Interface/customer themes may override them.
+// Neutral UIkit aliases. Each compiled appearance owns the complete shell roles.
+@harika-appearance: light;
+@harika-canvas: @global-muted-background;
+@harika-surface: @global-background;
+@harika-raised: @global-background;
+@harika-text: @global-emphasis-color;
+@harika-muted: @global-muted-color;
+@harika-line: @global-border;
+@harika-control-border: darken(@global-border, 25%);
+@harika-primary: @global-primary-background;
+@harika-primary-hover: darken(@global-primary-background, 5%);
+@harika-primary-active: darken(@global-primary-background, 10%);
+@harika-on-primary: @global-inverse-color;
+@harika-selected: tint(@global-primary-background, 90%);
+@harika-success: @global-success-background;
+@harika-success-soft: tint(@global-success-background, 92%);
+@harika-warning: @global-warning-background;
+@harika-warning-soft: tint(@global-warning-background, 92%);
+@harika-danger: @global-danger-background;
+@harika-danger-soft: tint(@global-danger-background, 94%);
+@harika-on-danger: @global-inverse-color;
+@harika-ai: @global-primary-background;
+@harika-cyan: @global-primary-background;
+@harika-shadow: rgba(33, 28, 44, .11);
 
-@ccf-light-gray: @global-background;
-@ccf-gray: @global-border;
-@ccf-darker-gray: @global-muted-color;
-@ccf-creme: @global-background;
+// Compatibility aliases used by existing product/styleguide and child themes.
+@ccf-light-gray: @harika-canvas;
+@ccf-gray: @harika-line;
+@ccf-darker-gray: @harika-control-border;
+@ccf-creme: @harika-surface;
+@ccf-sunny: @harika-warning-soft;
+@ccf-yellow: @harika-warning;
+@ccf-darker-yellow: @harika-warning;
+@ccf-light-mint: @harika-success-soft;
+@ccf-mint: @harika-success;
+@ccf-light-indigo: @harika-selected;
+@ccf-indigo: @harika-text;
+@ccf-light-violet: @harika-selected;
+@ccf-violet: @harika-primary;
+@ccf-darker-violet: @harika-primary-hover;
+@ccf-red: @harika-danger;
+@ccf-darker-red: @harika-danger;
+@ccf-ice: @harika-cyan;
+@ccf-magenta: @harika-ai;
+@ccf-muted: @harika-muted;
+@ccf-ready: @harika-success;
+@ccf-warning: @harika-warning;
+@ccf-danger-soft: @harika-danger-soft;
 
-@ccf-sunny: @global-warning-background;
-@ccf-yellow: @global-warning-background;
-@ccf-darker-yellow: darken(@global-warning-background, 8%);
-
-@ccf-light-mint: lighten(@global-success-background, 44%);
-@ccf-mint: @global-success-background;
-
-@ccf-light-indigo: lighten(@global-primary-background, 42%);
-@ccf-indigo: @global-emphasis-color;
-
-@ccf-light-violet: lighten(@global-primary-background, 38%);
-@ccf-violet: @global-primary-background;
-@ccf-darker-violet: darken(@global-primary-background, 20%);
-
-@ccf-red: @global-danger-background;
-@ccf-darker-red: darken(@global-danger-background, 15%);
-
-@ccf-ice: @global-primary-background;
-@ccf-magenta: @global-danger-background;
-
-@ccf-muted: @global-muted-color;
-@ccf-ready: @global-success-background;
-@ccf-warning: @global-warning-background;
-@ccf-danger-soft: lighten(@global-danger-background, 43%);
+:root {
+  color-scheme: @harika-appearance;
+  --ink: @harika-text;
+  --muted: @harika-muted;
+  --paper: @harika-canvas;
+  --panel: @harika-surface;
+  --raised: @harika-raised;
+  --line: @harika-line;
+  --line-dark: @harika-control-border;
+  --accent: @harika-primary;
+  --accent-dark: @harika-primary-hover;
+  --accent-soft: @harika-selected;
+  --on-accent: @harika-on-primary;
+  --ready: @harika-success;
+  --ready-soft: @harika-success-soft;
+  --warning: @harika-warning;
+  --warning-soft: @harika-warning-soft;
+  --danger: @harika-danger;
+  --danger-soft: @harika-danger-soft;
+  --sidebar: @harika-surface;
+  --on-dark: @harika-text;
+  --muted-on-dark: @harika-muted;
+  --dark-line: @harika-line;
+  --control-bg: @harika-surface;
+  --ccf-light-gray: @ccf-light-gray;
+  --ccf-gray: @ccf-gray;
+  --ccf-darker-gray: @ccf-darker-gray;
+  --ccf-creme: @ccf-creme;
+  --ccf-light-mint: @ccf-light-mint;
+  --ccf-mint: @ccf-mint;
+  --ccf-light-indigo: @ccf-light-indigo;
+  --ccf-indigo: @ccf-indigo;
+  --ccf-light-violet: @ccf-light-violet;
+  --ccf-violet: @ccf-violet;
+  --ccf-darker-violet: @ccf-darker-violet;
+  --ccf-red: @ccf-red;
+  --ccf-darker-red: @ccf-darker-red;
+  --ccf-magenta: @ccf-magenta;
+  --ccf-ice: @ccf-ice;
+}
