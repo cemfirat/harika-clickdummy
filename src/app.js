@@ -1,5 +1,6 @@
 import UIkit from "uikit";
 import Icons from "uikit/dist/js/uikit-icons";
+import { initWebsiteAssistant } from "./website-assistant.js";
 
 UIkit.use(Icons);
 
@@ -134,6 +135,7 @@ customerStatus?.addEventListener("change", applyCustomerFilter);
 
 // The website workspace is HTML-first: selection reveals existing detail
 // panels; native UIkit Tabs, Switcher and Modal own their interactions.
+const websiteAssistant = initWebsiteAssistant(UIkit);
 const websiteRows = [...document.querySelectorAll("[data-website-row]")];
 const websiteSearch = document.querySelector("[data-website-search]");
 
@@ -157,6 +159,8 @@ function selectWebsite(id) {
     const field = document.getElementById(fieldId);
     if (field && value !== undefined) field.value = value;
   }
+  document.querySelectorAll("[data-website-picker]").forEach((picker) => { picker.value = id; });
+  websiteAssistant.onWebsiteChange(id);
 }
 
 function applyWebsiteFilter() {
@@ -185,10 +189,18 @@ websiteRows.forEach((row) => {
   });
 });
 websiteSearch?.addEventListener("input", applyWebsiteFilter);
+document.querySelectorAll("[data-website-picker]").forEach((picker) => {
+  picker.addEventListener("change", () => selectWebsite(picker.value));
+});
+document.querySelectorAll("[data-assistant-return]").forEach((button) => {
+  button.addEventListener("click", () => selectWebsite("main"));
+});
 if (websiteRows.length) {
   const selected = websiteRows.find((row) => row.querySelector('[aria-pressed="true"]')) ?? websiteRows[0];
   selectWebsite(selected.dataset.websiteRow);
   applyWebsiteFilter();
+  if (window.location.hash === "#beitraege") UIkit.tab("#website-tabs-main").show(1);
+  if (window.location.hash === "#assistent") document.querySelector("button[data-assistant-open]")?.click();
 }
 
 for (const [attribute, value] of [

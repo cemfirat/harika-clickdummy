@@ -26,6 +26,8 @@ The build-time include mechanism itself is a clickdummy editing aid and is not a
 
 - mock customer/website/metric content
 - demo form behavior
+- `src/website-assistant.js` (in-memory simulated provider/content operations;
+  port reviewed interaction decisions into real domain actions instead)
 - `styleguide.html`
 - `src/styles/prototype.less`
 - `src/harika-source.js`

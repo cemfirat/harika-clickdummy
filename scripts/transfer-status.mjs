@@ -25,7 +25,8 @@ const prototypeOnlyExact = new Set([
   "styleguide.html",
   "src/styles/prototype.less",
   "partials/theme-studio.html",
-  "src/studio.js"
+  "src/studio.js",
+  "src/website-assistant.js"
 ]);
 
 const prototypeOnlyPrefixes = [

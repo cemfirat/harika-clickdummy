@@ -8,8 +8,12 @@ architecture. This change implements that decision in the HTML-first clickdummy.
 
 The website workspace is the reference screen: compact navigation, an explicit
 organization/customer context, a searchable website table and the selected
-website's findings/connections. A finding opens a native UIkit prompt modal.
-Other pages inherit the same shared shell and native component theme.
+website's findings/connections. The accepted #541 extension adds direct post
+editing and a contextual assistant beside the website. Known setup gaps lead
+directly to the relevant setup; the native UIkit prompt modal remains an
+additional path. Other pages inherit the same shared shell and native component
+theme. The first interactive workflow and its simulation boundary are documented
+in [WEBSITE-ASSISTANT-UX.md](WEBSITE-ASSISTANT-UX.md).
 
 The study's custom controls and Lucide icons are replaced by UIkit components and
 UIkit icons. Page structure stays in HTML, global chrome in small partials,
