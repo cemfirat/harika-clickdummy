@@ -6,3 +6,13 @@
 @tile-secondary-color-mode: none;
 @overlay-primary-background: fade(@harika-raised, 95%);
 @overlay-primary-color-mode: none;
+
+// Harika uses flat surfaces. Keep UIkit's native focus outlines, while also
+// removing component shadows that do not inherit the global shadow tokens.
+@navbar-dropdown-box-shadow: none;
+@dropbar-top-box-shadow: none;
+@dropbar-bottom-box-shadow: none;
+@dropbar-left-box-shadow: none;
+@dropbar-right-box-shadow: none;
+@dragover-box-shadow: none;
+@box-shadow-bottom-background: transparent;
