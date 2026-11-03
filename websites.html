@@ -380,9 +380,11 @@ Dieser Beispieltext enthält keine produktspezifische Anleitung. Ergänze die pa
                 </div>
                 <div>
                   <label class="uk-form-label" for="assistant-model">Modell</label>
-                  <select id="assistant-model" class="uk-select uk-form-small" disabled>
-                    <option value="demo-text">Beispielmodell für Text</option>
+                  <select id="assistant-model" class="uk-select uk-form-small" aria-describedby="assistant-model-help" disabled>
+                    <option value="demo-text">Beispielmodell Text · Demo</option>
+                    <option value="demo-analysis">Beispielmodell Analyse · Demo</option>
                   </select>
+                  <p id="assistant-model-help" class="uk-text-meta uk-margin-small-top">Demo-Auswahl · keine reale Modellverfügbarkeit geprüft.</p>
                 </div>
               </div>
               <div id="assistant-connection-required" class="assistant-connection-required">

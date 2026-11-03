@@ -115,7 +115,14 @@
                 <p id="insight-ai-label" class="uk-text-meta" data-ai-connection-label>Kein persönlicher Demo-Zugang verbunden</p>
                 <button class="uk-button uk-button-text" type="button" data-ai-settings data-ai-focus-target="#insight-task">Meine KI-Verbindungen</button>
                 <div id="insight-ai-required" class="assistant-connection-required"><span data-uk-icon="icon: link" aria-hidden="true"></span><div><strong>Persönlichen Demo-Zugang verbinden</strong><p>Du kannst den Arbeitsplan auch direkt selbst bearbeiten.</p></div></div>
-                <p class="uk-text-meta uk-margin-small-top">Modell: Beispielmodell für Text</p>
+                <div class="uk-margin-small-top">
+                  <label class="uk-form-label" for="insight-model">Modell</label>
+                  <select id="insight-model" class="uk-select uk-form-small" aria-describedby="insight-model-help" disabled>
+                    <option value="demo-text">Beispielmodell Text · Demo</option>
+                    <option value="demo-analysis">Beispielmodell Analyse · Demo</option>
+                  </select>
+                  <p id="insight-model-help" class="uk-text-meta uk-margin-small-top">Demo-Auswahl · keine reale Modellverfügbarkeit geprüft.</p>
+                </div>
                 <div class="assistant-conversation"><span id="insight-assistant-stage" class="uk-label assistant-state-label">Bereit zur Einordnung</span><h4 id="insight-assistant-response-title" class="uk-h4 uk-margin-small-top">Erst verstehen, dann handeln</h4><p id="insight-assistant-response">Ich kann einen Beispielplan zur Messabweichung vorbereiten. Die Ursache bleibt bis zu einer fachlichen Prüfung offen.</p><p id="insight-sent-task" class="prompt-preview uk-text-meta" hidden></p><button id="insight-edit-plan" class="uk-button uk-button-default" type="button" data-insight-edit hidden>Arbeitsplan bearbeiten</button></div>
                 <details class="assistant-evidence"><summary>Verwendeter Kontext</summary><p>Der ausgewählte Demo-Fall, die sichtbaren Quellwerte und dein aktueller Arbeitsplan. Keine externen KI-Anfragen oder weiteren Kundendaten.</p></details>
               </div>

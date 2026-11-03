@@ -155,6 +155,16 @@ assert(html["search-seo.html"].includes("data-uk-switcher"), "Search & SEO tabs 
 assert(html["kunden.html"].includes("data-customer-search"), "Customer page must preserve direct HTML filter hooks.");
 assert(html["prompt-center.html"].includes("data-copy-target"), "Prompt Center must preserve clipboard hooks in HTML.");
 
+for (const [page, modelId] of [
+  ["index.html", "insight-model"],
+  ["ads.html", "ads-model"],
+  ["websites.html", "assistant-model"]
+]) {
+  assert(html[page].includes(`id="${modelId}"`), page + " must expose an explicit demo model choice.");
+  assert(html[page].includes('value="demo-text"') && html[page].includes('value="demo-analysis"'), page + " must offer both documented demo model choices.");
+  assert(html[page].includes("keine reale Modellverfügbarkeit geprüft"), page + " must state that demo model choice is not provider availability.");
+}
+
 assert(!/\bfetch\s*\(/.test(appSource), "Clickdummy must not call remote APIs.");
 assert(!/XMLHttpRequest/.test(appSource), "Clickdummy must not use XMLHttpRequest.");
 for (const [name, source] of [["app.js", appSource], ["website-assistant.js", assistantSource], ...demoBehaviorSources]) {
