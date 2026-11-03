@@ -151,6 +151,7 @@ export function initInsightWorkspace(UIkit, aiConnections) {
     one("#insight-run").disabled = busy || !current.prepared || (!needsCheck(current) && !needsDraft(current));
     one("#insight-retry").disabled = busy || !current.failedDraft;
     one("#insight-analyse").disabled = busy || !connected;
+    one("#insight-model").disabled = busy || !connected;
     one("#insight-analyse").textContent = current.prepared ? "Arbeitsstand besprechen" : "Prüfplan vorbereiten";
     one("#insight-stop").disabled = !busy;
     task.disabled = busy;

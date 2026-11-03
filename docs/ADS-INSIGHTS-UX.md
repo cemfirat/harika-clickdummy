@@ -136,6 +136,14 @@ keine Identitäten und erweitert keine Berechtigungen. Sie ist keine Änderung
 an der produktiven Harika-Authentifizierung. Alle drei neuen Verhaltensmodule
 sind für die Übernahme in Harika ausdrücklich als prototype-only klassifiziert.
 
+Fortsetzung 03.11.2026: Die drei gemeinsamen Arbeitsflächen zeigen nun dieselben
+zwei ausdrücklich als Demo gekennzeichneten Modelloptionen. Die Modellwahl wird
+erst nach dem persönlichen Demo-Zugang bedienbar und während eines laufenden
+Schritts gesperrt. Sie ist reine Interaktionsdarstellung: Die Namen belegen
+weder reale Provider-/Modellverfügbarkeit noch einen Modellkatalog oder eine
+ausgeführte Modellanfrage. Quellen, Fortschritt, Abbruch, Datenlücken und die
+bestehenden fachlichen Demo-Grenzen bleiben unverändert.
+
 Die UI bleibt im bestehenden Light-/Dark-UIkit-Design. Auf breiten Ansichten
 stehen Facharbeit und Assistent nebeneinander; auf schmalen Ansichten wechselt
 die Arbeitsfläche. Struktur und Beispielinhalte bleiben im HTML. JavaScript
